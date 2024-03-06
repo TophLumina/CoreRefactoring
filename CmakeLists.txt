@@ -1,0 +1,13 @@
+cmake_minimum_required(VERSION 3.5)
+
+project(Draft)
+
+set(CMAKE_CXX_STANDARD 17)
+set(CMAKE_CXX_STANDARD_REQUIRED ON)
+set(CMAKE_CXX_EXTENSIONS OFF)
+
+aux_source_directory(. DIR_SRC)
+
+target_include_directories(${PROJECT_NAME} PUBLIC ${CMAKE_CURRENT_SOURCE_DIR}\Math)
+
+add_executable(${PROJECT_NAME} ${DIR_SRC})
