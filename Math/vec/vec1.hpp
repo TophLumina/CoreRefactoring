@@ -1,6 +1,6 @@
 #pragma once
 
-#include "vec.hpp"
+#include "../sturctures.hpp"
 
 MATH_NAMESPACE_BEGIN
 
@@ -15,30 +15,42 @@ struct vec<1, T>
     };
 
     // --accessors-- //
-    MATH_CONSTEXPR int length() const
+    MATH_CONSTEXPR LENGTH_TYPE size() const
     {
         return 1;
     }
 
-    MATH_CONSTEXPR T &operator[](int i)
+    MATH_CONSTEXPR T &operator[](LENGTH_TYPE i)
     {
-        static_assert(i >= 0 && i < 1, "Index out of range");
-        switch (i)
+        try
         {
-        default:
-        case 0:
-            return x;
+            if (i < 0 || i >= 1)
+            {
+                throw std::out_of_range(OUT_OF_RANGE_MSG("vec1"));
+            }
+            return *(reinterpret_cast<T *>(reinterpret_cast<char *>(this) + offsetof(vec, x)) + i);
+        }
+        catch (const std::out_of_range &e)
+        {
+            std::cerr << e.what();
+            return *(reinterpret_cast<T *>(reinterpret_cast<char *>(this) + offsetof(vec, x)) + 0);
         }
     }
 
-    MATH_CONSTEXPR T &operator[](int i) const
+    MATH_CONSTEXPR T const &operator[](LENGTH_TYPE i) const
     {
-        static_assert(i >= 0 && i < 1, "Index out of range");
-        switch (i)
+        try
         {
-        default:
-        case 0:
-            return x;
+            if (i < 0 || i >= 1)
+            {
+                throw std::out_of_range(OUT_OF_RANGE_MSG("vec1"));
+            }
+            return *(reinterpret_cast<T const *>(reinterpret_cast<char const *>(this) + offsetof(vec, x)) + i);
+        }
+        catch (const std::out_of_range &e)
+        {
+            std::cerr << e.what();
+            return *(reinterpret_cast<T const *>(reinterpret_cast<char const *>(this) + offsetof(vec, x)) + 0);
         }
     }
 
@@ -48,9 +60,6 @@ struct vec<1, T>
     MATH_CONSTEXPR vec &operator=(const vec &v) = default;
     MATH_CONSTEXPR vec(vec &&v) = default;
     MATH_CONSTEXPR vec &operator=(vec &&v) = default;
-
-    // --explicit basic constructors-- //
-    MATH_CONSTEXPR MATH_EXPLICIT vec(T scalar) : x(static_cast<T>(scalar)) {}
 
     // --explicit conversion constructors-- //
     template <typename U>
@@ -69,6 +78,16 @@ struct vec<1, T>
     MATH_CONSTEXPR MATH_EXPLICIT vec(const vec<4, U> &v) : x(static_cast<T>(v.x)) {}
 
     // --unary arithmetic operators-- //
+    MATH_CONSTEXPR vec operator+() const
+    {
+        return *this;
+    }
+
+    MATH_CONSTEXPR vec operator-() const
+    {
+        return vec(-x);
+    }
+
     template <typename U>
     MATH_CONSTEXPR vec &operator+=(U scalar)
     {
@@ -154,17 +173,6 @@ struct vec<1, T>
 
     // TODO:: implement bit operators
 
-    // --unary arithmetic operators-- //
-    MATH_CONSTEXPR vec operator+() const
-    {
-        return *this;
-    }
-
-    MATH_CONSTEXPR vec operator-() const
-    {
-        return vec(-x);
-    }
-
     // --binary arithmetic operators-- //
     friend MATH_CONSTEXPR vec operator+(const vec &v, T scalar)
     {
@@ -236,6 +244,8 @@ struct vec<1, T>
     {
         return x != v.x;
     }
+
+    
 };
 
 #ifdef _MATH_DEBUG_
@@ -248,9 +258,11 @@ struct vec<1, T>
     }
 #endif
 
+#ifdef MATH_TEMPLATE_ALIASES
 using vec1i = vec<1, int>;
 using vec1u = vec<1, unsigned int>;
 using vec1f = vec<1, float>;
 using vec1d = vec<1, double>;
+#endif
 
 MATH_NAMESPACE_END

@@ -19,3 +19,5 @@
 #else
     #define MATH_EXPLICIT
 #endif
+
+#define _RANDOM_DEVICE_
