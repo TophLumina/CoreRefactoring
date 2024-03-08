@@ -261,12 +261,12 @@ struct vec<3, T>
         return vec(scalar + v.x, scalar + v.y, scalar + v.z);
     }
 
-    friend MATH_CONSTEXPR vec operator+(const vec<1, T>& v1, const vec &v2)
+    friend MATH_CONSTEXPR vec operator+(const vec<1, T> &v1, const vec &v2)
     {
         return vec(v1.x + v2.x, v1.x + v2.y, v1.x + v2.z);
     }
 
-    friend MATH_CONSTEXPR vec operator+(const vec &v1, const vec<1, T>& v2)
+    friend MATH_CONSTEXPR vec operator+(const vec &v1, const vec<1, T> &v2)
     {
         return vec(v1.x + v2.x, v1.y + v2.x, v1.z + v2.x);
     }
@@ -286,12 +286,12 @@ struct vec<3, T>
         return vec(scalar - v.x, scalar - v.y, scalar - v.z);
     }
 
-    friend MATH_CONSTEXPR vec operator-(const vec<1, T>& v1, const vec &v2)
+    friend MATH_CONSTEXPR vec operator-(const vec<1, T> &v1, const vec &v2)
     {
         return vec(v1.x - v2.x, v1.x - v2.y, v1.x - v2.z);
     }
 
-    friend MATH_CONSTEXPR vec operator-(const vec &v1, const vec<1, T>& v2)
+    friend MATH_CONSTEXPR vec operator-(const vec &v1, const vec<1, T> &v2)
     {
         return vec(v1.x - v2.x, v1.y - v2.x, v1.z - v2.x);
     }
@@ -311,12 +311,12 @@ struct vec<3, T>
         return vec(scalar * v.x, scalar * v.y, scalar * v.z);
     }
 
-    friend MATH_CONSTEXPR vec operator*(const vec<1, T>& v1, const vec &v2)
+    friend MATH_CONSTEXPR vec operator*(const vec<1, T> &v1, const vec &v2)
     {
         return vec(v1.x * v2.x, v1.x * v2.y, v1.x * v2.z);
     }
 
-    friend MATH_CONSTEXPR vec operator*(const vec &v1, const vec<1, T>& v2)
+    friend MATH_CONSTEXPR vec operator*(const vec &v1, const vec<1, T> &v2)
     {
         return vec(v1.x * v2.x, v1.y * v2.x, v1.z * v2.x);
     }
@@ -336,12 +336,12 @@ struct vec<3, T>
         return vec(scalar / v.x, scalar / v.y, scalar / v.z);
     }
 
-    friend MATH_CONSTEXPR vec operator/(const vec<1, T>& v1, const vec &v2)
+    friend MATH_CONSTEXPR vec operator/(const vec<1, T> &v1, const vec &v2)
     {
         return vec(v1.x / v2.x, v1.x / v2.y, v1.x / v2.z);
     }
 
-    friend MATH_CONSTEXPR vec operator/(const vec &v1, const vec<1, T>& v2)
+    friend MATH_CONSTEXPR vec operator/(const vec &v1, const vec<1, T> &v2)
     {
         return vec(v1.x / v2.x, v1.y / v2.x, v1.z / v2.x);
     }
@@ -363,14 +363,13 @@ struct vec<3, T>
     }
 };
 
-#ifdef _MATH_DEBUG_
+// --stream operators-- //
 template <typename T>
 std::ostream &operator<<(std::ostream &os, const vec<3, T> &v)
 {
     os << "vec3<" << typeid(T).name() << ">(" << v.x << ", " << v.y << ", " << v.z << ")";
     return os;
 }
-#endif
 
 #ifdef MATH_TEMPLATE_ALIASES
 using vec3i = vec<3, int>;

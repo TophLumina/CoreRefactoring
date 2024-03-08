@@ -9,7 +9,7 @@
 
 MATH_NAMESPACE_BEGIN
 
-static struct Random final
+static struct Random
 {
 #ifndef _RANDOM_DEVICE_
     template <typename T>
@@ -19,7 +19,7 @@ static struct Random final
     }
 #else
     template <typename T>
-    static MATH_CONSTEXPR T random_range(T const &min, T const &max)
+    static MATH_CONSTEXPR T random_range(T const &min = std::numeric_limits<T>::min(), T const &max = std::numeric_limits<T>::max())
     {
         static_assert(std::is_arithmetic<T>::value, "T must be an arithmetic type");
 
@@ -31,15 +31,9 @@ static struct Random final
 #endif
 
     template <typename T>
-    static MATH_CONSTEXPR T random()
+    static MATH_CONSTEXPR T random(T const &max = std::numeric_limits<T>::max())
     {
-        return random_range(std::numeric_limits<T>::min(), std::numeric_limits<T>::max());
-    }
-
-    template <typename T>
-    static MATH_CONSTEXPR T random(T const &max)
-    {
-        return random_range(std::numeric_limits<T>::min(), max);
+        return Random::random_range(std::numeric_limits<T>::min(), max);
     }
 };
 

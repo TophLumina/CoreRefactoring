@@ -244,19 +244,15 @@ struct vec<1, T>
     {
         return x != v.x;
     }
-
-    
 };
 
-#ifdef _MATH_DEBUG_
-    // --stream operators-- //
-    template <typename T>
-    std::ostream &operator<<(std::ostream &os, const vec<1, T> &v)
-    {
-        os << "vec1<" << typeid(T).name() << ">(" << v.x << ")";
-        return os;
-    }
-#endif
+// --stream operators-- //
+template <typename T>
+std::ostream &operator<<(std::ostream &os, const vec<1, T> &v)
+{
+    os << "vec1<" << typeid(T).name() << ">(" << v.x << ")";
+    return os;
+}
 
 #ifdef MATH_TEMPLATE_ALIASES
 using vec1i = vec<1, int>;

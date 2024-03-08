@@ -37,12 +37,12 @@ struct vec<2, T>
             {
                 throw std::out_of_range(OUT_OF_RANGE_MSG("vec2"));
             }
-            return *(reinterpret_cast<T*>(reinterpret_cast<char*>(this) + offsetof(vec, x)) + i);
+            return *(reinterpret_cast<T *>(reinterpret_cast<char *>(this) + offsetof(vec, x)) + i);
         }
         catch (const std::out_of_range &e)
         {
             std::cerr << e.what();
-            return *(reinterpret_cast<T*>(reinterpret_cast<char*>(this) + offsetof(vec, x)));
+            return *(reinterpret_cast<T *>(reinterpret_cast<char *>(this) + offsetof(vec, x)));
         }
     }
 
@@ -343,7 +343,6 @@ struct vec<2, T>
     }
 };
 
-#ifdef _MATH_DEBUG_
 // --stream operators-- //
 template <typename T>
 std::ostream &operator<<(std::ostream &os, const vec<2, T> &v)
@@ -351,7 +350,6 @@ std::ostream &operator<<(std::ostream &os, const vec<2, T> &v)
     os << "vec2<" << typeid(T).name() << ">(" << v.x << ", " << v.y << ")";
     return os;
 }
-#endif
 
 #ifdef MATH_TEMPLATE_ALIASES
 using vec2i = vec<2, int>;

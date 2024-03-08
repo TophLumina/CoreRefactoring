@@ -389,14 +389,13 @@ struct vec<4, T>
     }
 };
 
-#ifdef _MATH_DEBUG_
+// --stream operators-- //
 template <typename T>
 std::ostream &operator<<(std::ostream &os, const vec<4, T> &v)
 {
     os << "vec4<" << typeid(T).name() << ">(" << v.x << ", " << v.y << ", " << v.z << ", " << v.w << ")";
     return os;
 }
-#endif
 
 #ifdef MATH_TEMPLATE_ALIASES
 using vec4i = vec<4, int>;

@@ -1,9 +1,7 @@
 #pragma once
 
-#ifdef _MATH_DEBUG_
 #include <iostream>
 #include <typeinfo>
-#endif
 
 #define MATH_NAMESPACE_BEGIN namespace Math {
 #define MATH_NAMESPACE_END }
