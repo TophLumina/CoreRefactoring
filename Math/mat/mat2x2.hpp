@@ -13,6 +13,7 @@ struct mat2x2
     union
     {
         vec<2, T> c[2];
+        T data[4];
         struct
         {
             T m00, m01;
@@ -244,8 +245,6 @@ struct mat2x2
         --*this;
         return temp;
     }
-
-    // TODO:: implement bit operators
 
     // --binary arithmetic operators-- //
     friend MATH_CONSTEXPR mat2x2 operator+(const mat2x2 &m, T scalar)
