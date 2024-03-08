@@ -2,6 +2,8 @@
 
 #include "../sturctures.hpp"
 
+#include <initializer_list>
+
 MATH_NAMESPACE_BEGIN
 
 template <typename T>
@@ -9,6 +11,7 @@ struct vec<4, T>
 {
     union
     {
+        T c[4];
         struct
         {
             T x, y, z, w;
@@ -31,36 +34,20 @@ struct vec<4, T>
 
     MATH_CONSTEXPR T &operator[](LENGTH_TYPE i)
     {
-        try
+        if (i < 0 || i >= 4)
         {
-            if (i < 0 || i >= 4)
-            {
-                throw std::out_of_range(OUT_OF_RANGE_MSG("vec4"));
-            }
-            return *(reinterpret_cast<T *>(reinterpret_cast<char *>(this) + offsetof(vec, x)) + i);
+            throw std::out_of_range(OUT_OF_RANGE_MSG("vec4"));
         }
-        catch (const std::out_of_range &e)
-        {
-            std::cerr << e.what();
-            return *(reinterpret_cast<T *>(reinterpret_cast<char *>(this) + offsetof(vec, x)));
-        }
+        return c[i];
     }
 
     MATH_CONSTEXPR T const &operator[](LENGTH_TYPE i) const
     {
-        try
+        if (i < 0 || i >= 4)
         {
-            if (i < 0 || i >= 4)
-            {
-                throw std::out_of_range(OUT_OF_RANGE_MSG("vec4"));
-            }
-            return *(reinterpret_cast<T const *>(reinterpret_cast<char const *>(this) + offsetof(vec, x)) + i);
+            throw std::out_of_range(OUT_OF_RANGE_MSG("vec4"));
         }
-        catch (const std::out_of_range &e)
-        {
-            std::cerr << e.what();
-            return *(reinterpret_cast<T const *>(reinterpret_cast<char const *>(this) + offsetof(vec, x)));
-        }
+        return c[i];
     }
 
     // --implicit basic constructors-- //
@@ -109,6 +96,20 @@ struct vec<4, T>
 
     template <typename A, typename B, typename C, typename D>
     MATH_CONSTEXPR MATH_EXPLICIT vec(A x, B y, C z, const vec<1, D> &v4) : x(static_cast<T>(x)), y(static_cast<T>(y)), z(static_cast<T>(z)), w(static_cast<T>(v4.x)) {}
+
+    // --initialization list constructor-- //
+    MATH_CONSTEXPR vec(std::initializer_list<T> list)
+    {
+        if (list.size() != 4)
+        {
+            throw std::invalid_argument(INVALID_INITIALIZER_LIST_ARGS_MSG("vec4", list.size()));
+        }
+        auto it = list.begin();
+        x = *it;
+        y = *(++it);
+        z = *(++it);
+        w = *(++it);
+    }
 
     // --unary arithmetic operators-- //
     MATH_CONSTEXPR vec operator+() const

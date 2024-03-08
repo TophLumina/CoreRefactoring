@@ -199,6 +199,22 @@ static MATH_CONSTEXPR R length(vec<N, T> const &v)
 }
 
 template <LENGTH_TYPE N, typename T, typename R = T>
+static MATH_CONSTEXPR R squared_distance(vec<N, T> const &v, vec<N, T> const &u)
+{
+    static_assert(std::is_floating_point<R>::value, "R must be a floating point type");
+
+    return squared_length<N, T, R>(v - u);
+}
+
+template <LENGTH_TYPE N, typename T, typename R = T>
+static MATH_CONSTEXPR R distance(vec<N, T> const &v, vec<N, T> const &u)
+{
+    static_assert(std::is_floating_point<R>::value, "R must be a floating point type");
+
+    return length<N, T, R>(v - u);
+}
+
+template <LENGTH_TYPE N, typename T, typename R = T>
 static MATH_CONSTEXPR vec<N, R> normalize(vec<N, T> const &v)
 {
     static_assert(std::is_floating_point<R>::value, "R must be a floating point type");

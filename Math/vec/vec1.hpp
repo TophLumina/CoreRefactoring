@@ -2,6 +2,8 @@
 
 #include "../sturctures.hpp"
 
+#include <initializer_list>
+
 MATH_NAMESPACE_BEGIN
 
 template <typename T>
@@ -9,6 +11,7 @@ struct vec<1, T>
 {
     union
     {
+        T c[1];
         T x;
         T r;
         T s;
@@ -22,36 +25,20 @@ struct vec<1, T>
 
     MATH_CONSTEXPR T &operator[](LENGTH_TYPE i)
     {
-        try
+        if (i < 0 || i >= 1)
         {
-            if (i < 0 || i >= 1)
-            {
-                throw std::out_of_range(OUT_OF_RANGE_MSG("vec1"));
-            }
-            return *(reinterpret_cast<T *>(reinterpret_cast<char *>(this) + offsetof(vec, x)) + i);
+            throw std::out_of_range(OUT_OF_RANGE_MSG("vec1"));
         }
-        catch (const std::out_of_range &e)
-        {
-            std::cerr << e.what();
-            return *(reinterpret_cast<T *>(reinterpret_cast<char *>(this) + offsetof(vec, x)) + 0);
-        }
+        return c[i];
     }
 
     MATH_CONSTEXPR T const &operator[](LENGTH_TYPE i) const
     {
-        try
+        if (i < 0 || i >= 1)
         {
-            if (i < 0 || i >= 1)
-            {
-                throw std::out_of_range(OUT_OF_RANGE_MSG("vec1"));
-            }
-            return *(reinterpret_cast<T const *>(reinterpret_cast<char const *>(this) + offsetof(vec, x)) + i);
+            throw std::out_of_range(OUT_OF_RANGE_MSG("vec1"));
         }
-        catch (const std::out_of_range &e)
-        {
-            std::cerr << e.what();
-            return *(reinterpret_cast<T const *>(reinterpret_cast<char const *>(this) + offsetof(vec, x)) + 0);
-        }
+        return c[i];
     }
 
     // --implicit basic constructors-- //
@@ -76,6 +63,17 @@ struct vec<1, T>
 
     template <typename U>
     MATH_CONSTEXPR MATH_EXPLICIT vec(const vec<4, U> &v) : x(static_cast<T>(v.x)) {}
+
+    // --initializer list constructor-- //
+    MATH_CONSTEXPR vec(std::initializer_list<T> list)
+    {
+        if (list.size() != 1)
+        {
+            throw std::invalid_argument(INVALID_INITIALIZER_LIST_ARGS_MSG("vec1", list.size()));
+        }
+        auto it = list.begin();
+        x = *it;
+    }
 
     // --unary arithmetic operators-- //
     MATH_CONSTEXPR vec operator+() const
