@@ -216,6 +216,8 @@ struct mat2x2
     // --increment and decrement operators-- //
     MATH_CONSTEXPR mat2x2 &operator++()
     {
+        static_assert(std::is_integral<T>::value, "mat2x2<T>::operator++(): T must be an integral type.");
+
         ++m00;
         ++m01;
         ++m10;
@@ -225,6 +227,8 @@ struct mat2x2
 
     MATH_CONSTEXPR mat2x2 operator++(int)
     {
+        static_assert(std::is_integral<T>::value, "mat2x2<T>::operator++(int): T must be an integral type.");
+
         mat2x2 temp(*this);
         ++*this;
         return temp;
@@ -232,6 +236,8 @@ struct mat2x2
 
     MATH_CONSTEXPR mat2x2 &operator--()
     {
+        static_assert(std::is_integral<T>::value, "mat2x2<T>::operator--(): T must be an integral type.");
+
         --m00;
         --m01;
         --m10;
@@ -241,6 +247,8 @@ struct mat2x2
 
     MATH_CONSTEXPR mat2x2 operator--(int)
     {
+        static_assert(std::is_integral<T>::value, "mat2x2<T>::operator--(int): T must be an integral type.");
+
         mat2x2 temp(*this);
         --*this;
         return temp;

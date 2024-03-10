@@ -349,6 +349,8 @@ struct mat4x4
     // --increment and decrement operators-- //
     MATH_CONSTEXPR mat4x4 &operator++()
     {
+        static_assert(std::is_integral<T>::value, "mat4x4<T>::operator++(): T must be an integral type.")
+
         ++m00;
         ++m01;
         ++m02;
@@ -370,6 +372,8 @@ struct mat4x4
 
     MATH_CONSTEXPR mat4x4 operator++(int)
     {
+        static_assert(std::is_integral<T>::value, "mat4x4<T>::operator++(int): T must be an integral type.")
+
         mat4x4 temp(*this);
         ++*this;
         return temp;
@@ -377,6 +381,8 @@ struct mat4x4
 
     MATH_CONSTEXPR mat4x4 &operator--()
     {
+        static_assert(std::is_integral<T>::value, "mat4x4<T>::operator--(): T must be an integral type.")
+
         --m00;
         --m01;
         --m02;
@@ -398,6 +404,8 @@ struct mat4x4
 
     MATH_CONSTEXPR mat4x4 operator--(int)
     {
+        static_assert(std::is_integral<T>::value, "mat4x4<T>::operator--(int): T must be an integral type.")
+
         mat4x4 temp(*this);
         --*this;
         return temp;
