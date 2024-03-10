@@ -346,12 +346,14 @@ struct vec<2, T>
 };
 
 // --stream operators-- //
+#ifdef MATH_IOS
 template <typename T>
 std::ostream &operator<<(std::ostream &os, const vec<2, T> &v)
 {
     os << "vec2<" << typeid(T).name() << ">(" << v.x << ", " << v.y << ")";
     return os;
 }
+#endif
 
 #ifdef MATH_TEMPLATE_ALIASES
 using vec2i = vec<2, int>;

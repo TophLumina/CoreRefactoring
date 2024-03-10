@@ -326,6 +326,7 @@ struct mat2x2
 };
 
 // --stream operators-- //
+#ifdef MATH_IOS
 template <typename T>
 std::ostream &operator<<(std::ostream &os, const mat2x2<T> &m)
 {
@@ -333,6 +334,7 @@ std::ostream &operator<<(std::ostream &os, const mat2x2<T> &m)
                                                 << m.m10 << ", " << m.m11 << ")";
     return os;
 }
+#endif
 
 #ifdef MATH_TEMPLATE_ALIASES
 using mat2x2i = mat2x2<int>;

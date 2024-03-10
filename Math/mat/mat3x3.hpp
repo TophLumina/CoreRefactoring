@@ -397,6 +397,7 @@ struct mat3x3
 };
 
 // --stream operators-- //
+#ifdef MATH_IOS
 template <typename T>
 std::ostream &operator<<(std::ostream &os, const mat3x3<T> &m)
 {
@@ -404,6 +405,7 @@ std::ostream &operator<<(std::ostream &os, const mat3x3<T> &m)
                                                 << m.m10 << ", " << m.m11 << ", " << m.m12 << ", "
                                                 << m.m20 << ", " << m.m21 << ", " << m.m22 << ")";
 }
+#endif
 
 #ifdef MATH_TEMPLATE_ALIASES
 using mat3x3i = mat3x3<int>;

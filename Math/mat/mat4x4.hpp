@@ -519,6 +519,7 @@ struct mat4x4
 };
 
 // --stream operators-- //
+#ifdef MATH_IOS
 template <typename T>
 std::ostream &operator<<(std::ostream &os, const mat4x4<T> &m)
 {
@@ -528,6 +529,7 @@ std::ostream &operator<<(std::ostream &os, const mat4x4<T> &m)
                                                 << m.m30 << ", " << m.m31 << ", " << m.m32 << ", " << m.m33 << ")";
     return os;
 }
+#endif
 
 #ifdef MATH_TEMPLATE_ALIASES
 using mat4x4i = mat4x4<int>;
