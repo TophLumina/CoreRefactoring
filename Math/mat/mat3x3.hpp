@@ -125,7 +125,7 @@ struct mat3x3
         m22 = *it;
     }
 
-    MATH_CONSTEXPR mat3x3(std::initializer_list<vector<3, T>> list)
+    MATH_CONSTEXPR mat3x3(std::initializer_list<vec<3, T>> list)
     {
         if (list.size() != 3)
         {

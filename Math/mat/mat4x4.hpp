@@ -12,7 +12,7 @@ struct mat4x4
 {
     union
     {
-        vec4<T> c[4];
+        vec<4, T> c[4];
         T data[16];
         struct
         {
@@ -29,7 +29,7 @@ struct mat4x4
         return 4;
     }
 
-    MATH_CONSTEXPR vec4<T> &operator[](LENGTH_TYPE i)
+    MATH_CONSTEXPR vec<4, T> &operator[](LENGTH_TYPE i)
     {
         if (i < 0 || i >= 4)
         {
@@ -38,7 +38,7 @@ struct mat4x4
         return c[i];
     }
 
-    MATH_CONSTEXPR vec4<T> const &operator[](LENGTH_TYPE i) const
+    MATH_CONSTEXPR vec<4, T> const &operator[](LENGTH_TYPE i) const
     {
         if (i < 0 || i >= 4)
         {
@@ -143,7 +143,7 @@ struct mat4x4
         m33 = *it;
     }
 
-    MATH_CONSTEXPR mat4x4(std::initializer_list<<vec<4, T>> list)
+    MATH_CONSTEXPR mat4x4(std::initializer_list<vec<4, T>> list)
     {
         if (list.size() != 4)
         {
