@@ -13,6 +13,7 @@ struct mat2x2
     union
     {
         vec<2, T> c[2];
+        T data[4];
         struct
         {
             T m00, m01;
@@ -245,8 +246,6 @@ struct mat2x2
         return temp;
     }
 
-    // TODO:: implement bit operators
-
     // --binary arithmetic operators-- //
     friend MATH_CONSTEXPR mat2x2 operator+(const mat2x2 &m, T scalar)
     {
@@ -330,7 +329,8 @@ struct mat2x2
 template <typename T>
 std::ostream &operator<<(std::ostream &os, const mat2x2<T> &m)
 {
-    os << "mat2x2<" << typeid(T).name() << ">(" << m.m00 << ", " << m.m01 << ", " << m.m10 << ", " << m.m11 << ")";
+    os << "mat2x2<" << typeid(T).name() << ">(" << m.m00 << ", " << m.m01 << ", "
+                                                << m.m10 << ", " << m.m11 << ")";
     return os;
 }
 

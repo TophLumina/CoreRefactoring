@@ -12,6 +12,7 @@ struct vec<4, T>
     union
     {
         T c[4];
+        T data[4];
         struct
         {
             T x, y, z, w;
@@ -56,6 +57,8 @@ struct vec<4, T>
     MATH_CONSTEXPR vec &operator=(const vec &v) = default;
     MATH_CONSTEXPR vec(vec &&v) = default;
     MATH_CONSTEXPR vec &operator=(vec &&v) = default;
+
+    // TODO :: replace all constructors with initializer list
 
     // --explicit conversion constructors-- //
     template <typename U>
