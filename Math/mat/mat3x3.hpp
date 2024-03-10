@@ -271,7 +271,7 @@ struct mat3x3
     // --increment and decrement operators-- //
     MATH_CONSTEXPR mat3x3<T> &operator++()
     {
-        static_assert(std::is_integral<T>::value, "mat3x3<T>::operator++(): T must be an integral type.")
+        static_assert(std::is_integral<T>::value, "mat3x3<T>::operator++(): T must be an integral type.");
 
         ++m00;
         ++m01;
@@ -287,7 +287,7 @@ struct mat3x3
 
     MATH_CONSTEXPR mat3x3<T> operator++(int)
     {
-        static_assert(std::is_integral<T>::value, "mat3x3<T>::operator++(int): T must be an integral type.")
+        static_assert(std::is_integral<T>::value, "mat3x3<T>::operator++(int): T must be an integral type.");
 
         mat temp(*this);
         ++*this;
@@ -296,7 +296,7 @@ struct mat3x3
 
     MATH_CONSTEXPR mat3x3<T> &operator--()
     {
-        static_assert(std::is_integral<T>::value, "mat3x3<T>::operator--(): T must be an integral type.")
+        static_assert(std::is_integral<T>::value, "mat3x3<T>::operator--(): T must be an integral type.");
 
         --m00;
         --m01;
@@ -312,7 +312,7 @@ struct mat3x3
 
     MATH_CONSTEXPR mat3x3<T> operator--(int)
     {
-        static_assert(std::is_integral<T>::value, "mat3x3<T>::operator--(int): T must be an integral type.")
+        static_assert(std::is_integral<T>::value, "mat3x3<T>::operator--(int): T must be an integral type.");
 
         mat temp(*this);
         --*this;

@@ -204,7 +204,7 @@ struct vec<2, T>
     // --increment and decrement operators-- //
     MATH_CONSTEXPR vec &operator++()
     {
-        static_assert(std::is_integral<T>::value, "vec2<T>::operator++(): T must be an integral type.")
+        static_assert(std::is_integral<T>::value, "vec2<T>::operator++(): T must be an integral type.");
 
         ++x;
         ++y;
@@ -213,7 +213,7 @@ struct vec<2, T>
 
     MATH_CONSTEXPR vec operator++(int)
     {
-        static_assert(std::is_integral<T>::value, "vec2<T>::operator++(int): T must be an integral type.")
+        static_assert(std::is_integral<T>::value, "vec2<T>::operator++(int): T must be an integral type.");
 
         vec temp(*this);
         ++*this;
@@ -222,7 +222,7 @@ struct vec<2, T>
 
     MATH_CONSTEXPR vec &operator--()
     {
-        static_assert(std::is_integral<T>::value, "vec2<T>::operator--(): T must be an integral type.")
+        static_assert(std::is_integral<T>::value, "vec2<T>::operator--(): T must be an integral type.");
 
         --x;
         --y;
@@ -231,7 +231,7 @@ struct vec<2, T>
 
     MATH_CONSTEXPR vec operator--(int)
     {
-        static_assert(std::is_integral<T>::value, "vec2<T>::operator--(int): T must be an integral type.")
+        static_assert(std::is_integral<T>::value, "vec2<T>::operator--(int): T must be an integral type.");
 
         vec temp(*this);
         --*this;
