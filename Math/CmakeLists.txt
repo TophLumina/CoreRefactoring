@@ -11,6 +11,5 @@ aux_source_directory(. DIR_SRC)
 add_compile_definitions(MATH_SUPPORT_CONSTEXPR)
 add_compile_definitions(MATH_TEMPLATE_ALIASES)
 add_compile_definitions(MATH_IOS)
-add_compile_definitions(_MATH_DEBUG_)
 
 add_executable(${PROJECT_NAME} ${DIR_SRC})
