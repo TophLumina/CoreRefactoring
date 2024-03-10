@@ -204,6 +204,8 @@ struct vec<2, T>
     // --increment and decrement operators-- //
     MATH_CONSTEXPR vec &operator++()
     {
+        static_assert(std::is_integral<T>::value, "vec2<T>::operator++(): T must be an integral type.")
+
         ++x;
         ++y;
         return *this;
@@ -211,6 +213,8 @@ struct vec<2, T>
 
     MATH_CONSTEXPR vec operator++(int)
     {
+        static_assert(std::is_integral<T>::value, "vec2<T>::operator++(int): T must be an integral type.")
+
         vec temp(*this);
         ++*this;
         return temp;
@@ -218,6 +222,8 @@ struct vec<2, T>
 
     MATH_CONSTEXPR vec &operator--()
     {
+        static_assert(std::is_integral<T>::value, "vec2<T>::operator--(): T must be an integral type.")
+
         --x;
         --y;
         return *this;
@@ -225,6 +231,8 @@ struct vec<2, T>
 
     MATH_CONSTEXPR vec operator--(int)
     {
+        static_assert(std::is_integral<T>::value, "vec2<T>::operator--(int): T must be an integral type.")
+
         vec temp(*this);
         --*this;
         return temp;
@@ -346,12 +354,14 @@ struct vec<2, T>
 };
 
 // --stream operators-- //
+#ifdef MATH_IOS
 template <typename T>
 std::ostream &operator<<(std::ostream &os, const vec<2, T> &v)
 {
     os << "vec2<" << typeid(T).name() << ">(" << v.x << ", " << v.y << ")";
     return os;
 }
+#endif
 
 #ifdef MATH_TEMPLATE_ALIASES
 using vec2i = vec<2, int>;

@@ -223,6 +223,8 @@ struct vec<3, T>
     // --increment and decrement operators-- //
     MATH_CONSTEXPR vec &operator++()
     {
+        static_assert(std::is_integral<T>::value, "vec3<T>::operator++(): T must be an integral type.")
+
         ++x;
         ++y;
         ++z;
@@ -231,6 +233,8 @@ struct vec<3, T>
 
     MATH_CONSTEXPR vec operator++(int)
     {
+        static_assert(std::is_integral<T>::value, "vec3<T>::operator++(int): T must be an integral type.")
+
         vec temp(*this);
         ++(*this);
         return temp;
@@ -238,6 +242,8 @@ struct vec<3, T>
 
     MATH_CONSTEXPR vec &operator--()
     {
+        static_assert(std::is_integral<T>::value, "vec3<T>::operator--(): T must be an integral type.")
+
         --x;
         --y;
         --z;
@@ -246,6 +252,8 @@ struct vec<3, T>
 
     MATH_CONSTEXPR vec operator--(int)
     {
+        static_assert(std::is_integral<T>::value, "vec3<T>::operator--(int): T must be an integral type.")
+
         vec temp(*this);
         --(*this);
         return temp;
@@ -367,12 +375,14 @@ struct vec<3, T>
 };
 
 // --stream operators-- //
+#ifdef MATH_IOS
 template <typename T>
 std::ostream &operator<<(std::ostream &os, const vec<3, T> &v)
 {
     os << "vec3<" << typeid(T).name() << ">(" << v.x << ", " << v.y << ", " << v.z << ")";
     return os;
 }
+#endif
 
 #ifdef MATH_TEMPLATE_ALIASES
 using vec3i = vec<3, int>;

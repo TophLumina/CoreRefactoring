@@ -12,7 +12,7 @@ struct mat4x4
 {
     union
     {
-        vec4<T> c[4];
+        vec<4, T> c[4];
         T data[16];
         struct
         {
@@ -29,7 +29,7 @@ struct mat4x4
         return 4;
     }
 
-    MATH_CONSTEXPR vec4<T> &operator[](LENGTH_TYPE i)
+    MATH_CONSTEXPR vec<4, T> &operator[](LENGTH_TYPE i)
     {
         if (i < 0 || i >= 4)
         {
@@ -38,7 +38,7 @@ struct mat4x4
         return c[i];
     }
 
-    MATH_CONSTEXPR vec4<T> const &operator[](LENGTH_TYPE i) const
+    MATH_CONSTEXPR vec<4, T> const &operator[](LENGTH_TYPE i) const
     {
         if (i < 0 || i >= 4)
         {
@@ -143,7 +143,7 @@ struct mat4x4
         m33 = *it;
     }
 
-    MATH_CONSTEXPR mat4x4(std::initializer_list<<vec<4, T>> list)
+    MATH_CONSTEXPR mat4x4(std::initializer_list<vec<4, T>> list)
     {
         if (list.size() != 4)
         {
@@ -349,6 +349,8 @@ struct mat4x4
     // --increment and decrement operators-- //
     MATH_CONSTEXPR mat4x4 &operator++()
     {
+        static_assert(std::is_integral<T>::value, "mat4x4<T>::operator++(): T must be an integral type.")
+
         ++m00;
         ++m01;
         ++m02;
@@ -370,6 +372,8 @@ struct mat4x4
 
     MATH_CONSTEXPR mat4x4 operator++(int)
     {
+        static_assert(std::is_integral<T>::value, "mat4x4<T>::operator++(int): T must be an integral type.")
+
         mat4x4 temp(*this);
         ++*this;
         return temp;
@@ -377,6 +381,8 @@ struct mat4x4
 
     MATH_CONSTEXPR mat4x4 &operator--()
     {
+        static_assert(std::is_integral<T>::value, "mat4x4<T>::operator--(): T must be an integral type.")
+
         --m00;
         --m01;
         --m02;
@@ -398,6 +404,8 @@ struct mat4x4
 
     MATH_CONSTEXPR mat4x4 operator--(int)
     {
+        static_assert(std::is_integral<T>::value, "mat4x4<T>::operator--(int): T must be an integral type.")
+
         mat4x4 temp(*this);
         --*this;
         return temp;
@@ -519,6 +527,7 @@ struct mat4x4
 };
 
 // --stream operators-- //
+#ifdef MATH_IOS
 template <typename T>
 std::ostream &operator<<(std::ostream &os, const mat4x4<T> &m)
 {
@@ -528,6 +537,7 @@ std::ostream &operator<<(std::ostream &os, const mat4x4<T> &m)
                                                 << m.m30 << ", " << m.m31 << ", " << m.m32 << ", " << m.m33 << ")";
     return os;
 }
+#endif
 
 #ifdef MATH_TEMPLATE_ALIASES
 using mat4x4i = mat4x4<int>;

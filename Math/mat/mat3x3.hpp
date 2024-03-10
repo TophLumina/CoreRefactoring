@@ -125,7 +125,7 @@ struct mat3x3
         m22 = *it;
     }
 
-    MATH_CONSTEXPR mat3x3(std::initializer_list<vector<3, T>> list)
+    MATH_CONSTEXPR mat3x3(std::initializer_list<vec<3, T>> list)
     {
         if (list.size() != 3)
         {
@@ -271,6 +271,8 @@ struct mat3x3
     // --increment and decrement operators-- //
     MATH_CONSTEXPR mat3x3<T> &operator++()
     {
+        static_assert(std::is_integral<T>::value, "mat3x3<T>::operator++(): T must be an integral type.")
+
         ++m00;
         ++m01;
         ++m02;
@@ -285,6 +287,8 @@ struct mat3x3
 
     MATH_CONSTEXPR mat3x3<T> operator++(int)
     {
+        static_assert(std::is_integral<T>::value, "mat3x3<T>::operator++(int): T must be an integral type.")
+
         mat temp(*this);
         ++*this;
         return temp;
@@ -292,6 +296,8 @@ struct mat3x3
 
     MATH_CONSTEXPR mat3x3<T> &operator--()
     {
+        static_assert(std::is_integral<T>::value, "mat3x3<T>::operator--(): T must be an integral type.")
+
         --m00;
         --m01;
         --m02;
@@ -306,6 +312,8 @@ struct mat3x3
 
     MATH_CONSTEXPR mat3x3<T> operator--(int)
     {
+        static_assert(std::is_integral<T>::value, "mat3x3<T>::operator--(int): T must be an integral type.")
+
         mat temp(*this);
         --*this;
         return temp;
@@ -397,6 +405,7 @@ struct mat3x3
 };
 
 // --stream operators-- //
+#ifdef MATH_IOS
 template <typename T>
 std::ostream &operator<<(std::ostream &os, const mat3x3<T> &m)
 {
@@ -404,6 +413,7 @@ std::ostream &operator<<(std::ostream &os, const mat3x3<T> &m)
                                                 << m.m10 << ", " << m.m11 << ", " << m.m12 << ", "
                                                 << m.m20 << ", " << m.m21 << ", " << m.m22 << ")";
 }
+#endif
 
 #ifdef MATH_TEMPLATE_ALIASES
 using mat3x3i = mat3x3<int>;
