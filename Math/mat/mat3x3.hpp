@@ -137,127 +137,134 @@ struct mat3x3
         c[2] = *it;
     }
 
-    // TODO :: template this
     // --unary arithmetic operators-- //
-    MATH_CONSTEXPR mat3x3 operator+() const
+    MATH_CONSTEXPR mat3x3<T> operator+() const
     {
         return *this;
     }
 
-    MATH_CONSTEXPR mat3x3 operator-() const
+    MATH_CONSTEXPR mat3x3<T> operator-() const
     {
         return {-m00, -m01, -m02, -m10, -m11, -m12, -m20, -m21, -m22};
     }
 
-    MATH_CONSTEXPR mat3x3 &operator+=(T scalar)
+    template <typename U>
+    MATH_CONSTEXPR mat3x3<T> &operator+=(U scalar)
     {
-        m00 += scalar;
-        m01 += scalar;
-        m02 += scalar;
-        m10 += scalar;
-        m11 += scalar;
-        m12 += scalar;
-        m20 += scalar;
-        m21 += scalar;
-        m22 += scalar;
+        m00 += static_cast<T>(scalar);
+        m01 += static_cast<T>(scalar);
+        m02 += static_cast<T>(scalar);
+        m10 += static_cast<T>(scalar);
+        m11 += static_cast<T>(scalar);
+        m12 += static_cast<T>(scalar);
+        m20 += static_cast<T>(scalar);
+        m21 += static_cast<T>(scalar);
+        m22 += static_cast<T>(scalar);
         return *this;
     }
 
-    MATH_CONSTEXPR mat3x3 &operator+=(const mat3x3<T> &m)
+    template <typename U>
+    MATH_CONSTEXPR mat3x3<T> &operator+=(const mat3x3<U> &m)
     {
-        m00 += m.m00;
-        m01 += m.m01;
-        m02 += m.m02;
-        m10 += m.m10;
-        m11 += m.m11;
-        m12 += m.m12;
-        m20 += m.m20;
-        m21 += m.m21;
-        m22 += m.m22;
+        m00 += static_cast<T>(m.m00);
+        m01 += static_cast<T>(m.m01);
+        m02 += static_cast<T>(m.m02);
+        m10 += static_cast<T>(m.m10);
+        m11 += static_cast<T>(m.m11);
+        m12 += static_cast<T>(m.m12);
+        m20 += static_cast<T>(m.m20);
+        m21 += static_cast<T>(m.m21);
+        m22 += static_cast<T>(m.m22);
         return *this;
     }
 
-    MATH_CONSTEXPR mat3x3 &operator-=(T scalar)
+    template <typename U>
+    MATH_CONSTEXPR mat3x3<T> &operator-=(U scalar)
     {
-        m00 -= scalar;
-        m01 -= scalar;
-        m02 -= scalar;
-        m10 -= scalar;
-        m11 -= scalar;
-        m12 -= scalar;
-        m20 -= scalar;
-        m21 -= scalar;
-        m22 -= scalar;
+        m00 -= static_cast<T>(scalar);
+        m01 -= static_cast<T>(scalar);
+        m02 -= static_cast<T>(scalar);
+        m10 -= static_cast<T>(scalar);
+        m11 -= static_cast<T>(scalar);
+        m12 -= static_cast<T>(scalar);
+        m20 -= static_cast<T>(scalar);
+        m21 -= static_cast<T>(scalar);
+        m22 -= static_cast<T>(scalar);
         return *this;
     }
 
-    MATH_CONSTEXPR mat3x3<T> &operator-=(const mat3x3<T> &m)
+    template <typename U>
+    MATH_CONSTEXPR mat3x3<T> &operator-=(const mat3x3<U> &m)
     {
-        m00 -= m.m00;
-        m01 -= m.m01;
-        m02 -= m.m02;
-        m10 -= m.m10;
-        m11 -= m.m11;
-        m12 -= m.m12;
-        m20 -= m.m20;
-        m21 -= m.m21;
-        m22 -= m.m22;
+        m00 -= static_cast<T>(m.m00);
+        m01 -= static_cast<T>(m.m01);
+        m02 -= static_cast<T>(m.m02);
+        m10 -= static_cast<T>(m.m10);
+        m11 -= static_cast<T>(m.m11);
+        m12 -= static_cast<T>(m.m12);
+        m20 -= static_cast<T>(m.m20);
+        m21 -= static_cast<T>(m.m21);
+        m22 -= static_cast<T>(m.m22);
         return *this;
     }
 
-    MATH_CONSTEXPR mat3x3<T> &operator*=(T scalar)
+    template <typename U>
+    MATH_CONSTEXPR mat3x3<T> &operator*=(U scalar)
     {
-        m00 *= scalar;
-        m01 *= scalar;
-        m02 *= scalar;
-        m10 *= scalar;
-        m11 *= scalar;
-        m12 *= scalar;
-        m20 *= scalar;
-        m21 *= scalar;
-        m22 *= scalar;
+        m00 *= static_cast<T>(scalar);
+        m01 *= static_cast<T>(scalar);
+        m02 *= static_cast<T>(scalar);
+        m10 *= static_cast<T>(scalar);
+        m11 *= static_cast<T>(scalar);
+        m12 *= static_cast<T>(scalar);
+        m20 *= static_cast<T>(scalar);
+        m21 *= static_cast<T>(scalar);
+        m22 *= static_cast<T>(scalar);
         return *this;
     }
 
-    MATH_CONSTEXPR mat3x3<T> &operator*=(const mat3x3<T> &m)
+    template <typename U>
+    MATH_CONSTEXPR mat3x3<T> &operator*=(const mat3x3<U> &m)
     {
-        m00 *= m.m00;
-        m01 *= m.m01;
-        m02 *= m.m02;
-        m10 *= m.m10;
-        m11 *= m.m11;
-        m12 *= m.m12;
-        m20 *= m.m20;
-        m21 *= m.m21;
-        m22 *= m.m22;
+        m00 *= static_cast<T>(m.m00);
+        m01 *= static_cast<T>(m.m01);
+        m02 *= static_cast<T>(m.m02);
+        m10 *= static_cast<T>(m.m10);
+        m11 *= static_cast<T>(m.m11);
+        m12 *= static_cast<T>(m.m12);
+        m20 *= static_cast<T>(m.m20);
+        m21 *= static_cast<T>(m.m21);
+        m22 *= static_cast<T>(m.m22);
         return *this;
     }
 
-    MATH_CONSTEXPR mat3x3<T> &operator/=(T scalar)
+    template <typename U>
+    MATH_CONSTEXPR mat3x3<T> &operator/=(U scalar)
     {
-        m00 /= scalar;
-        m01 /= scalar;
-        m02 /= scalar;
-        m10 /= scalar;
-        m11 /= scalar;
-        m12 /= scalar;
-        m20 /= scalar;
-        m21 /= scalar;
-        m22 /= scalar;
+        m00 /= static_cast<T>(scalar);
+        m01 /= static_cast<T>(scalar);
+        m02 /= static_cast<T>(scalar);
+        m10 /= static_cast<T>(scalar);
+        m11 /= static_cast<T>(scalar);
+        m12 /= static_cast<T>(scalar);
+        m20 /= static_cast<T>(scalar);
+        m21 /= static_cast<T>(scalar);
+        m22 /= static_cast<T>(scalar);
         return *this;
     }
 
-    MATH_CONSTEXPR mat3x3<T> &operator/=(const mat3x3<T> &m)
+    template <typename U>
+    MATH_CONSTEXPR mat3x3<T> &operator/=(const mat3x3<U> &m)
     {
-        m00 /= m.m00;
-        m01 /= m.m01;
-        m02 /= m.m02;
-        m10 /= m.m10;
-        m11 /= m.m11;
-        m12 /= m.m12;
-        m20 /= m.m20;
-        m21 /= m.m21;
-        m22 /= m.m22;
+        m00 /= static_cast<T>(m.m00);
+        m01 /= static_cast<T>(m.m01);
+        m02 /= static_cast<T>(m.m02);
+        m10 /= static_cast<T>(m.m10);
+        m11 /= static_cast<T>(m.m11);
+        m12 /= static_cast<T>(m.m12);
+        m20 /= static_cast<T>(m.m20);
+        m21 /= static_cast<T>(m.m21);
+        m22 /= static_cast<T>(m.m22);
         return *this;
     }
 
@@ -278,9 +285,9 @@ struct mat3x3
 
     MATH_CONSTEXPR mat3x3<T> operator++(int)
     {
-        mat3x3<T> result(*this);
+        mat temp(*this);
         ++*this;
-        return result;
+        return temp;
     }
 
     MATH_CONSTEXPR mat3x3<T> &operator--()
@@ -299,9 +306,9 @@ struct mat3x3
 
     MATH_CONSTEXPR mat3x3<T> operator--(int)
     {
-        mat3x3<T> result(*this);
+        mat temp(*this);
         --*this;
-        return result;
+        return temp;
     }
 
     // --binary arithmetic operators-- //
@@ -393,10 +400,9 @@ struct mat3x3
 template <typename T>
 std::ostream &operator<<(std::ostream &os, const mat3x3<T> &m)
 {
-    os << m.m00 << ", " << m.m01 << ", " << m.m02 << std::endl;
-    os << m.m10 << ", " << m.m11 << ", " << m.m12 << std::endl;
-    os << m.m20 << ", " << m.m21 << ", " << m.m22;
-    return os;
+    os << "mat3x3<" << typeid(T).name() << ">(" << m.m00 << ", " << m.m01 << ", " << m.m02 << ", "
+                                                << m.m10 << ", " << m.m11 << ", " << m.m12 << ", "
+                                                << m.m20 << ", " << m.m21 << ", " << m.m22 << ")";
 }
 
 #ifdef MATH_TEMPLATE_ALIASES

@@ -329,7 +329,8 @@ struct mat2x2
 template <typename T>
 std::ostream &operator<<(std::ostream &os, const mat2x2<T> &m)
 {
-    os << "mat2x2<" << typeid(T).name() << ">(" << m.m00 << ", " << m.m01 << ", " << m.m10 << ", " << m.m11 << ")";
+    os << "mat2x2<" << typeid(T).name() << ">(" << m.m00 << ", " << m.m01 << ", "
+                                                << m.m10 << ", " << m.m11 << ")";
     return os;
 }
 
