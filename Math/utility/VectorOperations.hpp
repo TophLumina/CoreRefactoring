@@ -2,12 +2,13 @@
 
 #include "../numeric/Numeric.hpp"
 #include "../numeric/Random.hpp"
-#include "../vec/vec.hpp"
+#include "../include/vec.h"
 
 MATH_NAMESPACE_BEGIN
+VECTOR_NAMESPACE_BEGIN
 
 template <LENGTH_TYPE N, typename T>
-static MATH_CONSTEXPR vec<N, T> abs(vec<N, T> const &v)
+static MATH_FUNCTION_QUALIFIERS vec<N, T> abs(vec<N, T> const &v)
 {
     vec<N, T> result;
     for (LENGTH_TYPE i = 0; i < N; ++i)
@@ -18,7 +19,7 @@ static MATH_CONSTEXPR vec<N, T> abs(vec<N, T> const &v)
 }
 
 template <LENGTH_TYPE N, typename T>
-static MATH_CONSTEXPR vec<N, T>random_range(vec<N, T> const &min, vec<N, T> const &max)
+static MATH_FUNCTION_QUALIFIERS vec<N, T>random_range(vec<N, T> const &min, vec<N, T> const &max)
 {
     vec<N, T> result;
     for (LENGTH_TYPE i = 0; i < N; ++i)
@@ -29,7 +30,7 @@ static MATH_CONSTEXPR vec<N, T>random_range(vec<N, T> const &min, vec<N, T> cons
 }
 
 template <LENGTH_TYPE N, typename T>
-static MATH_CONSTEXPR vec<N, T> min(vec<N, T> const &v, vec<N, T> const &u)
+static MATH_FUNCTION_QUALIFIERS vec<N, T> min(vec<N, T> const &v, vec<N, T> const &u)
 {
     vec<N, T> result;
     for (LENGTH_TYPE i = 0; i < N; ++i)
@@ -40,7 +41,7 @@ static MATH_CONSTEXPR vec<N, T> min(vec<N, T> const &v, vec<N, T> const &u)
 }
 
 template <LENGTH_TYPE N, typename T>
-static MATH_CONSTEXPR vec<N, T> max(vec<N, T> const &v, vec<N, T> const &u)
+static MATH_FUNCTION_QUALIFIERS vec<N, T> max(vec<N, T> const &v, vec<N, T> const &u)
 {
     vec<N, T> result;
     for (LENGTH_TYPE i = 0; i < N; ++i)
@@ -51,7 +52,7 @@ static MATH_CONSTEXPR vec<N, T> max(vec<N, T> const &v, vec<N, T> const &u)
 }
 
 template <LENGTH_TYPE N, typename T>
-static MATH_CONSTEXPR vec<N, T> floor(vec<N, T> const &v)
+static MATH_FUNCTION_QUALIFIERS vec<N, T> floor(vec<N, T> const &v)
 {
     vec<N, T> result;
     for (LENGTH_TYPE i = 0; i < N; ++i)
@@ -62,7 +63,7 @@ static MATH_CONSTEXPR vec<N, T> floor(vec<N, T> const &v)
 }
 
 template <LENGTH_TYPE N, typename T>
-static MATH_CONSTEXPR vec<N, T> ceil(vec<N, T> const &v)
+static MATH_FUNCTION_QUALIFIERS vec<N, T> ceil(vec<N, T> const &v)
 {
     vec<N, T> result;
     for (LENGTH_TYPE i = 0; i < N; ++i)
@@ -73,7 +74,7 @@ static MATH_CONSTEXPR vec<N, T> ceil(vec<N, T> const &v)
 }
 
 template <LENGTH_TYPE N, typename T>
-static MATH_CONSTEXPR vec<N, T> round(vec<N, T> const &v)
+static MATH_FUNCTION_QUALIFIERS vec<N, T> round(vec<N, T> const &v)
 {
     vec<N, T> result;
     for (LENGTH_TYPE i = 0; i < N; ++i)
@@ -84,34 +85,33 @@ static MATH_CONSTEXPR vec<N, T> round(vec<N, T> const &v)
 }
 
 template <LENGTH_TYPE N, typename T>
-static MATH_CONSTEXPR bool is_zero(vec<N, T> const &v, T const &epsilon = std::numeric_limits<T>::epsilon())
+static MATH_FUNCTION_QUALIFIERS bool is_zero(vec<N, T> const &v, T const &epsilon = std::numeric_limits<T>::epsilon())
 {
-    if MATH_CONSTEXPR (std::is_floating_point<T>::value)
+    if MATH_FUNCTION_QUALIFIERS (std::is_floating_point<T>::value)
     {
         for (LENGTH_TYPE i = 0; i < N; ++i)
         {
-            if (abs(v[i]) < epsilon)
+            if (Math::abs(v[i]) > epsilon)
             {
-                return true;
+                return false;
             }
         }
-        return false;
     }
     else
     {
         for (LENGTH_TYPE i = 0; i < N; ++i)
         {
-            if (v[i] == 0)
+            if (v[i] != 0)
             {
-                return true;
+                return false;
             }
         }
-        return false;
     }
+    return true;
 }
 
 template <LENGTH_TYPE N, typename T>
-static MATH_CONSTEXPR vec<N, T> clamp(vec<N, T> const &v, vec<N, T> const &min, vec<N, T> const &max)
+static MATH_FUNCTION_QUALIFIERS vec<N, T> clamp(vec<N, T> const &v, vec<N, T> const &min, vec<N, T> const &max)
 {
     vec<N, T> result;
     for (LENGTH_TYPE i = 0; i < N; ++i)
@@ -122,7 +122,7 @@ static MATH_CONSTEXPR vec<N, T> clamp(vec<N, T> const &v, vec<N, T> const &min, 
 }
 
 template <LENGTH_TYPE N, typename T>
-static MATH_CONSTEXPR vec<N, T> saturate(vec<N, T> const &v)
+static MATH_FUNCTION_QUALIFIERS vec<N, T> saturate(vec<N, T> const &v)
 {
     vec<N, T> result;
     for (LENGTH_TYPE i = 0; i < N; ++i)
@@ -133,7 +133,7 @@ static MATH_CONSTEXPR vec<N, T> saturate(vec<N, T> const &v)
 }
 
 template <LENGTH_TYPE N, typename T>
-static MATH_CONSTEXPR vec<N, T> linear_lerp(vec<N, T> const &v, vec<N, T> const &u, vec<N, T> const &a)
+static MATH_FUNCTION_QUALIFIERS vec<N, T> linear_lerp(vec<N, T> const &v, vec<N, T> const &u, vec<N, T> const &a)
 {
 
     vec<N, T> result;
@@ -145,7 +145,7 @@ static MATH_CONSTEXPR vec<N, T> linear_lerp(vec<N, T> const &v, vec<N, T> const 
 }
 
 template <LENGTH_TYPE N, typename T>
-static MATH_CONSTEXPR vec<N, T> quadratic_lerp(vec<N, T> const &v, vec<N, T> const &u, vec<N, T> const &a)
+static MATH_FUNCTION_QUALIFIERS vec<N, T> quadratic_lerp(vec<N, T> const &v, vec<N, T> const &u, vec<N, T> const &a)
 {
     vec<N, T> result;
     for (LENGTH_TYPE i = 0; i < N; ++i)
@@ -156,7 +156,7 @@ static MATH_CONSTEXPR vec<N, T> quadratic_lerp(vec<N, T> const &v, vec<N, T> con
 }
 
 template <LENGTH_TYPE N, typename T>
-static MATH_CONSTEXPR vec<N, T> cubic_lerp(vec<N, T> const &v, vec<N, T> const &u, vec<N, T> const &a)
+static MATH_FUNCTION_QUALIFIERS vec<N, T> cubic_lerp(vec<N, T> const &v, vec<N, T> const &u, vec<N, T> const &a)
 {
     vec<N, T> result;
     for (LENGTH_TYPE i = 0; i < N; ++i)
@@ -167,7 +167,7 @@ static MATH_CONSTEXPR vec<N, T> cubic_lerp(vec<N, T> const &v, vec<N, T> const &
 }
 
 template <LENGTH_TYPE N, typename T>
-static MATH_CONSTEXPR vec<N, T> spherical_lerp(vec<N, T> const &v, vec<N, T> const &u, T const &a)
+static MATH_FUNCTION_QUALIFIERS vec<N, T> spherical_lerp(vec<N, T> const &v, vec<N, T> const &u, T const &a)
 {
     static_assert(N == 3, "spherical lerp is only defined for 3D vectors");
 
@@ -178,7 +178,7 @@ static MATH_CONSTEXPR vec<N, T> spherical_lerp(vec<N, T> const &v, vec<N, T> con
 }
 
 template <LENGTH_TYPE N, typename T, typename R = T>
-static MATH_CONSTEXPR R squared_length(vec<N, T> const &v)
+static MATH_FUNCTION_QUALIFIERS R squared_length(vec<N, T> const &v)
 {
     static_assert(std::is_floating_point<R>::value, "R must be a floating point type");
 
@@ -191,7 +191,7 @@ static MATH_CONSTEXPR R squared_length(vec<N, T> const &v)
 }
 
 template <LENGTH_TYPE N, typename T, typename R = T>
-static MATH_CONSTEXPR R length(vec<N, T> const &v)
+static MATH_FUNCTION_QUALIFIERS R length(vec<N, T> const &v)
 {
     static_assert(std::is_floating_point<R>::value, "R must be a floating point type");
 
@@ -199,7 +199,7 @@ static MATH_CONSTEXPR R length(vec<N, T> const &v)
 }
 
 template <LENGTH_TYPE N, typename T, typename R = T>
-static MATH_CONSTEXPR R squared_distance(vec<N, T> const &v, vec<N, T> const &u)
+static MATH_FUNCTION_QUALIFIERS R squared_distance(vec<N, T> const &v, vec<N, T> const &u)
 {
     static_assert(std::is_floating_point<R>::value, "R must be a floating point type");
 
@@ -207,7 +207,7 @@ static MATH_CONSTEXPR R squared_distance(vec<N, T> const &v, vec<N, T> const &u)
 }
 
 template <LENGTH_TYPE N, typename T, typename R = T>
-static MATH_CONSTEXPR R distance(vec<N, T> const &v, vec<N, T> const &u)
+static MATH_FUNCTION_QUALIFIERS R distance(vec<N, T> const &v, vec<N, T> const &u)
 {
     static_assert(std::is_floating_point<R>::value, "R must be a floating point type");
 
@@ -215,7 +215,7 @@ static MATH_CONSTEXPR R distance(vec<N, T> const &v, vec<N, T> const &u)
 }
 
 template <LENGTH_TYPE N, typename T, typename R = T>
-static MATH_CONSTEXPR vec<N, R> normalize(vec<N, T> const &v)
+static MATH_FUNCTION_QUALIFIERS vec<N, R> normalize(vec<N, T> const &v)
 {
     static_assert(std::is_floating_point<R>::value, "R must be a floating point type");
 
@@ -224,7 +224,7 @@ static MATH_CONSTEXPR vec<N, R> normalize(vec<N, T> const &v)
 }
 
 template <LENGTH_TYPE N, typename T, typename R = T>
-static MATH_CONSTEXPR R dot(vec<N, T> const &v, vec<N, R> const &u)
+static MATH_FUNCTION_QUALIFIERS R dot(vec<N, T> const &v, vec<N, R> const &u)
 {
     static_assert(std::is_floating_point<R>::value, "R must be a floating point type");
 
@@ -237,7 +237,7 @@ static MATH_CONSTEXPR R dot(vec<N, T> const &v, vec<N, R> const &u)
 }
 
 template <LENGTH_TYPE N, typename T, typename R = T>
-static MATH_CONSTEXPR vec<N, R> cross(vec<N, T> const &v, vec<N, R> const &u)
+static MATH_FUNCTION_QUALIFIERS vec<N, R> cross(vec<N, T> const &v, vec<N, R> const &u)
 {
     static_assert(std::is_floating_point<R>::value, "R must be a floating point type");
     static_assert(N == 3, "cross product is only defined for 3D vectors");
@@ -250,7 +250,7 @@ static MATH_CONSTEXPR vec<N, R> cross(vec<N, T> const &v, vec<N, R> const &u)
 }
 
 template <LENGTH_TYPE N, typename T, typename R = T>
-static MATH_CONSTEXPR vec<N, R> reflect(vec<N, T> const &v, vec<N, R> const &n)
+static MATH_FUNCTION_QUALIFIERS vec<N, R> reflect(vec<N, T> const &v, vec<N, R> const &n)
 {
     static_assert(std::is_floating_point<R>::value, "R must be a floating point type");
 
@@ -258,7 +258,7 @@ static MATH_CONSTEXPR vec<N, R> reflect(vec<N, T> const &v, vec<N, R> const &n)
 }
 
 template <LENGTH_TYPE N, typename T, typename R = T>
-static MATH_CONSTEXPR vec<N, R> refract(vec<N, T> const &v, vec<N, R> const &n, R const &eta)
+static MATH_FUNCTION_QUALIFIERS vec<N, R> refract(vec<N, T> const &v, vec<N, R> const &n, R const &eta)
 {
     static_assert(std::is_floating_point<R>::value, "R must be a floating point type");
 
@@ -274,4 +274,5 @@ static MATH_CONSTEXPR vec<N, R> refract(vec<N, T> const &v, vec<N, R> const &n, 
     }
 }
 
+VECTOR_NAMESPACE_END
 MATH_NAMESPACE_END
