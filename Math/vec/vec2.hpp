@@ -28,12 +28,12 @@ struct vec<2, T>
     };
 
     // --accessors-- //
-    MATH_CONSTEXPR LENGTH_TYPE size() const
+    MATH_FUNCTION_QUALIFIERS LENGTH_TYPE size() const
     {
         return 2;
     }
 
-    MATH_CONSTEXPR T &operator[](LENGTH_TYPE i)
+    MATH_FUNCTION_QUALIFIERS T &operator[](LENGTH_TYPE i)
     {
         if (i < 0 || i >= 2)
         {
@@ -42,7 +42,7 @@ struct vec<2, T>
         return c[i];
     }
 
-    MATH_CONSTEXPR T const &operator[](LENGTH_TYPE i) const
+    MATH_FUNCTION_QUALIFIERS T const &operator[](LENGTH_TYPE i) const
     {
         if (i < 0 || i >= 2)
         {
@@ -52,38 +52,38 @@ struct vec<2, T>
     }
 
     // --implicit basic constructors-- //
-    MATH_CONSTEXPR vec() = default;
-    MATH_CONSTEXPR vec(const vec &v) = default;
-    MATH_CONSTEXPR vec &operator=(const vec &v) = default;
-    MATH_CONSTEXPR vec(vec &&v) = default;
-    MATH_CONSTEXPR vec &operator=(vec &&v) = default;
+    MATH_FUNCTION_QUALIFIERS vec() = default;
+    MATH_FUNCTION_QUALIFIERS vec(const vec &v) = default;
+    MATH_FUNCTION_QUALIFIERS vec &operator=(const vec &v) = default;
+    MATH_FUNCTION_QUALIFIERS vec(vec &&v) = default;
+    MATH_FUNCTION_QUALIFIERS vec &operator=(vec &&v) = default;
 
     // TODO :: replace all constructors with initializer list
 
     // --explicit conversion constructors-- //
     template <typename U>
-    MATH_CONSTEXPR MATH_EXPLICIT vec(U scalar) : x(static_cast<T>(scalar)), y(static_cast<T>(scalar)) {}
+    MATH_FUNCTION_QUALIFIERS MATH_EXPLICIT vec(U scalar) : x(static_cast<T>(scalar)), y(static_cast<T>(scalar)) {}
 
     template <typename U>
-    MATH_CONSTEXPR MATH_EXPLICIT vec(const vec<2, U> &v) : x(static_cast<T>(v.x)), y(static_cast<T>(v.y)) {}
+    MATH_FUNCTION_QUALIFIERS MATH_EXPLICIT vec(const vec<2, U> &v) : x(static_cast<T>(v.x)), y(static_cast<T>(v.y)) {}
 
     template <typename U>
-    MATH_CONSTEXPR MATH_EXPLICIT vec(const vec<3, U> &v) : x(static_cast<T>(v.x)), y(static_cast<T>(v.y)) {}
+    MATH_FUNCTION_QUALIFIERS MATH_EXPLICIT vec(const vec<3, U> &v) : x(static_cast<T>(v.x)), y(static_cast<T>(v.y)) {}
 
     template <typename U>
-    MATH_CONSTEXPR MATH_EXPLICIT vec(const vec<4, U> &v) : x(static_cast<T>(v.x)), y(static_cast<T>(v.y)) {}
+    MATH_FUNCTION_QUALIFIERS MATH_EXPLICIT vec(const vec<4, U> &v) : x(static_cast<T>(v.x)), y(static_cast<T>(v.y)) {}
 
     template <typename A, typename B>
-    MATH_CONSTEXPR MATH_EXPLICIT vec(A x, B y) : x(static_cast<T>(x)), y(static_cast<T>(y)) {}
+    MATH_FUNCTION_QUALIFIERS MATH_EXPLICIT vec(A x, B y) : x(static_cast<T>(x)), y(static_cast<T>(y)) {}
 
     template <typename A, typename B>
-    MATH_CONSTEXPR MATH_EXPLICIT vec(const vec<1, A> &v, B y) : x(static_cast<T>(v.x)), y(static_cast<T>(y)) {}
+    MATH_FUNCTION_QUALIFIERS MATH_EXPLICIT vec(const vec<1, A> &v, B y) : x(static_cast<T>(v.x)), y(static_cast<T>(y)) {}
 
     template <typename A, typename B>
-    MATH_CONSTEXPR MATH_EXPLICIT vec(A x, const vec<1, B> &v) : x(static_cast<T>(x)), y(static_cast<T>(v.x)) {}
+    MATH_FUNCTION_QUALIFIERS MATH_EXPLICIT vec(A x, const vec<1, B> &v) : x(static_cast<T>(x)), y(static_cast<T>(v.x)) {}
 
     // --initialization list constructors-- //
-    MATH_CONSTEXPR vec(std::initializer_list<T> list)
+    MATH_FUNCTION_QUALIFIERS vec(std::initializer_list<T> list)
     {
         if (list.size() != 2)
         {
@@ -95,18 +95,18 @@ struct vec<2, T>
     }
 
     // --unary arithmetic operators-- //
-    MATH_CONSTEXPR vec operator+() const
+    MATH_FUNCTION_QUALIFIERS vec operator+() const
     {
         return *this;
     }
 
-    MATH_CONSTEXPR vec operator-() const
+    MATH_FUNCTION_QUALIFIERS vec operator-() const
     {
         return vec(-x, -y);
     }
 
     template <typename U>
-    MATH_CONSTEXPR vec &operator+=(U scalar)
+    MATH_FUNCTION_QUALIFIERS vec &operator+=(U scalar)
     {
         x += static_cast<T>(scalar);
         y += static_cast<T>(scalar);
@@ -114,7 +114,7 @@ struct vec<2, T>
     }
 
     template <typename U>
-    MATH_CONSTEXPR vec &operator+=(const vec<1, U> &v)
+    MATH_FUNCTION_QUALIFIERS vec &operator+=(const vec<1, U> &v)
     {
         x += static_cast<T>(v.x);
         y += static_cast<T>(v.x);
@@ -122,7 +122,7 @@ struct vec<2, T>
     }
 
     template <typename U>
-    MATH_CONSTEXPR vec &operator+=(const vec<2, U> &v)
+    MATH_FUNCTION_QUALIFIERS vec &operator+=(const vec<2, U> &v)
     {
         x += static_cast<T>(v.x);
         y += static_cast<T>(v.y);
@@ -130,7 +130,7 @@ struct vec<2, T>
     }
 
     template <typename U>
-    MATH_CONSTEXPR vec &operator-=(U scalar)
+    MATH_FUNCTION_QUALIFIERS vec &operator-=(U scalar)
     {
         x -= static_cast<T>(scalar);
         y -= static_cast<T>(scalar);
@@ -138,7 +138,7 @@ struct vec<2, T>
     }
 
     template <typename U>
-    MATH_CONSTEXPR vec &operator-=(const vec<1, U> &v)
+    MATH_FUNCTION_QUALIFIERS vec &operator-=(const vec<1, U> &v)
     {
         x -= static_cast<T>(v.x);
         y -= static_cast<T>(v.x);
@@ -146,7 +146,7 @@ struct vec<2, T>
     }
 
     template <typename U>
-    MATH_CONSTEXPR vec &operator-=(const vec<2, U> &v)
+    MATH_FUNCTION_QUALIFIERS vec &operator-=(const vec<2, U> &v)
     {
         x -= static_cast<T>(v.x);
         y -= static_cast<T>(v.y);
@@ -154,7 +154,7 @@ struct vec<2, T>
     }
 
     template <typename U>
-    MATH_CONSTEXPR vec &operator*=(U scalar)
+    MATH_FUNCTION_QUALIFIERS vec &operator*=(U scalar)
     {
         x *= static_cast<T>(scalar);
         y *= static_cast<T>(scalar);
@@ -162,7 +162,7 @@ struct vec<2, T>
     }
 
     template <typename U>
-    MATH_CONSTEXPR vec &operator*=(const vec<1, U> &v)
+    MATH_FUNCTION_QUALIFIERS vec &operator*=(const vec<1, U> &v)
     {
         x *= static_cast<T>(v.x);
         y *= static_cast<T>(v.x);
@@ -170,7 +170,7 @@ struct vec<2, T>
     }
 
     template <typename U>
-    MATH_CONSTEXPR vec &operator*=(const vec<2, U> &v)
+    MATH_FUNCTION_QUALIFIERS vec &operator*=(const vec<2, U> &v)
     {
         x *= static_cast<T>(v.x);
         y *= static_cast<T>(v.y);
@@ -178,7 +178,7 @@ struct vec<2, T>
     }
 
     template <typename U>
-    MATH_CONSTEXPR vec &operator/=(U scalar)
+    MATH_FUNCTION_QUALIFIERS vec &operator/=(U scalar)
     {
         x /= static_cast<T>(scalar);
         y /= static_cast<T>(scalar);
@@ -186,7 +186,7 @@ struct vec<2, T>
     }
 
     template <typename U>
-    MATH_CONSTEXPR vec &operator/=(const vec<1, U> &v)
+    MATH_FUNCTION_QUALIFIERS vec &operator/=(const vec<1, U> &v)
     {
         x /= static_cast<T>(v.x);
         y /= static_cast<T>(v.x);
@@ -194,7 +194,7 @@ struct vec<2, T>
     }
 
     template <typename U>
-    MATH_CONSTEXPR vec &operator/=(const vec<2, U> &v)
+    MATH_FUNCTION_QUALIFIERS vec &operator/=(const vec<2, U> &v)
     {
         x /= static_cast<T>(v.x);
         y /= static_cast<T>(v.y);
@@ -202,7 +202,7 @@ struct vec<2, T>
     }
 
     // --increment and decrement operators-- //
-    MATH_CONSTEXPR vec &operator++()
+    MATH_FUNCTION_QUALIFIERS vec &operator++()
     {
         static_assert(std::is_integral<T>::value, "vec2<T>::operator++(): T must be an integral type.");
 
@@ -211,7 +211,7 @@ struct vec<2, T>
         return *this;
     }
 
-    MATH_CONSTEXPR vec operator++(int)
+    MATH_FUNCTION_QUALIFIERS vec operator++(int)
     {
         static_assert(std::is_integral<T>::value, "vec2<T>::operator++(int): T must be an integral type.");
 
@@ -220,7 +220,7 @@ struct vec<2, T>
         return temp;
     }
 
-    MATH_CONSTEXPR vec &operator--()
+    MATH_FUNCTION_QUALIFIERS vec &operator--()
     {
         static_assert(std::is_integral<T>::value, "vec2<T>::operator--(): T must be an integral type.");
 
@@ -229,7 +229,7 @@ struct vec<2, T>
         return *this;
     }
 
-    MATH_CONSTEXPR vec operator--(int)
+    MATH_FUNCTION_QUALIFIERS vec operator--(int)
     {
         static_assert(std::is_integral<T>::value, "vec2<T>::operator--(int): T must be an integral type.");
 
@@ -241,113 +241,113 @@ struct vec<2, T>
     // TODO:: implement bit operators
 
     // --binary arithmetic operators-- //
-    friend MATH_CONSTEXPR vec operator+(const vec &v, T scalar)
+    friend MATH_FUNCTION_QUALIFIERS vec operator+(const vec &v, T scalar)
     {
-        return vec(v.x + scalar, v.y + scalar);
+        return {v.x + scalar, v.y + scalar};
     }
 
-    friend MATH_CONSTEXPR vec operator+(T scalar, const vec &v)
+    friend MATH_FUNCTION_QUALIFIERS vec operator+(T scalar, const vec &v)
     {
-        return vec(scalar + v.x, scalar + v.y);
+        return {scalar + v.x, scalar + v.y};
     }
 
-    friend MATH_CONSTEXPR vec operator+(const vec<1, T> &v1, const vec &v2)
+    friend MATH_FUNCTION_QUALIFIERS vec operator+(const vec<1, T> &v1, const vec &v2)
     {
-        return vec(v1.x + v2.x, v1.x + v2.y);
+        return {v1.x + v2.x, v1.x + v2.y};
     }
 
-    friend MATH_CONSTEXPR vec operator+(const vec &v1, const vec<1, T> &v2)
+    friend MATH_FUNCTION_QUALIFIERS vec operator+(const vec &v1, const vec<1, T> &v2)
     {
-        return vec(v1.x + v2.x, v1.y + v2.x);
+        return {v1.x + v2.x, v1.y + v2.x};
     }
 
-    friend MATH_CONSTEXPR vec operator+(const vec &v1, const vec &v2)
+    friend MATH_FUNCTION_QUALIFIERS vec operator+(const vec &v1, const vec &v2)
     {
-        return vec(v1.x + v2.x, v1.y + v2.y);
+        return {v1.x + v2.x, v1.y + v2.y};
     }
 
-    friend MATH_CONSTEXPR vec operator-(const vec &v, T scalar)
+    friend MATH_FUNCTION_QUALIFIERS vec operator-(const vec &v, T scalar)
     {
-        return vec(v.x - scalar, v.y - scalar);
+        return {v.x - scalar, v.y - scalar};
     }
 
-    friend MATH_CONSTEXPR vec operator-(T scalar, const vec &v)
+    friend MATH_FUNCTION_QUALIFIERS vec operator-(T scalar, const vec &v)
     {
-        return vec(scalar - v.x, scalar - v.y);
+        return {scalar - v.x, scalar - v.y};
     }
 
-    friend MATH_CONSTEXPR vec operator-(const vec<1, T> &v1, const vec &v2)
+    friend MATH_FUNCTION_QUALIFIERS vec operator-(const vec<1, T> &v1, const vec &v2)
     {
-        return vec(v1.x - v2.x, v1.x - v2.y);
+        return {v1.x - v2.x, v1.x - v2.y};
     }
 
-    friend MATH_CONSTEXPR vec operator-(const vec &v1, const vec<1, T> &v2)
+    friend MATH_FUNCTION_QUALIFIERS vec operator-(const vec &v1, const vec<1, T> &v2)
     {
-        return vec(v1.x - v2.x, v1.y - v2.x);
+        return {v1.x - v2.x, v1.y - v2.x};
     }
 
-    friend MATH_CONSTEXPR vec operator-(const vec &v1, const vec &v2)
+    friend MATH_FUNCTION_QUALIFIERS vec operator-(const vec &v1, const vec &v2)
     {
-        return vec(v1.x - v2.x, v1.y - v2.y);
+        return {v1.x - v2.x, v1.y - v2.y};
     }
 
-    friend MATH_CONSTEXPR vec operator*(const vec &v, T scalar)
+    friend MATH_FUNCTION_QUALIFIERS vec operator*(const vec &v, T scalar)
     {
-        return vec(v.x * scalar, v.y * scalar);
+        return {v.x * scalar, v.y * scalar};
     }
 
-    friend MATH_CONSTEXPR vec operator*(T scalar, const vec &v)
+    friend MATH_FUNCTION_QUALIFIERS vec operator*(T scalar, const vec &v)
     {
-        return vec(scalar * v.x, scalar * v.y);
+        return {scalar * v.x, scalar * v.y};
     }
 
-    friend MATH_CONSTEXPR vec operator*(const vec<1, T> &v1, const vec &v2)
+    friend MATH_FUNCTION_QUALIFIERS vec operator*(const vec<1, T> &v1, const vec &v2)
     {
-        return vec(v1.x * v2.x, v1.x * v2.y);
+        return {v1.x * v2.x, v1.x * v2.y};
     }
 
-    friend MATH_CONSTEXPR vec operator*(const vec &v1, const vec<1, T> &v2)
+    friend MATH_FUNCTION_QUALIFIERS vec operator*(const vec &v1, const vec<1, T> &v2)
     {
-        return vec(v1.x * v2.x, v1.y * v2.x);
+        return {v1.x * v2.x, v1.y * v2.x};
     }
 
-    friend MATH_CONSTEXPR vec operator*(const vec &v1, const vec &v2)
+    friend MATH_FUNCTION_QUALIFIERS vec operator*(const vec &v1, const vec &v2)
     {
-        return vec(v1.x * v2.x, v1.y * v2.y);
+        return {v1.x * v2.x, v1.y * v2.y};
     }
 
-    friend MATH_CONSTEXPR vec operator/(const vec &v, T scalar)
+    friend MATH_FUNCTION_QUALIFIERS vec operator/(const vec &v, T scalar)
     {
-        return vec(v.x / scalar, v.y / scalar);
+        return {v.x / scalar, v.y / scalar};
     }
 
-    friend MATH_CONSTEXPR vec operator/(T scalar, const vec &v)
+    friend MATH_FUNCTION_QUALIFIERS vec operator/(T scalar, const vec &v)
     {
-        return vec(scalar / v.x, scalar / v.y);
+        return {scalar / v.x, scalar / v.y};
     }
 
-    friend MATH_CONSTEXPR vec operator/(const vec<1, T> &v1, const vec &v2)
+    friend MATH_FUNCTION_QUALIFIERS vec operator/(const vec<1, T> &v1, const vec &v2)
     {
-        return vec(v1.x / v2.x, v1.x / v2.y);
+        return {v1.x / v2.x, v1.x / v2.y};
     }
 
-    friend MATH_CONSTEXPR vec operator/(const vec &v1, const vec<1, T> &v2)
+    friend MATH_FUNCTION_QUALIFIERS vec operator/(const vec &v1, const vec<1, T> &v2)
     {
-        return vec(v1.x / v2.x, v1.y / v2.x);
+        return {v1.x / v2.x, v1.y / v2.x};
     }
 
-    friend MATH_CONSTEXPR vec operator/(const vec &v1, const vec &v2)
+    friend MATH_FUNCTION_QUALIFIERS vec operator/(const vec &v1, const vec &v2)
     {
-        return vec(v1.x / v2.x, v1.y / v2.y);
+        return {v1.x / v2.x, v1.y / v2.y};
     }
 
     // --comparison operators-- //
-    MATH_CONSTEXPR bool operator==(const vec &v) const
+    MATH_FUNCTION_QUALIFIERS bool operator==(const vec &v) const
     {
         return x == v.x && y == v.y;
     }
 
-    MATH_CONSTEXPR bool operator!=(const vec &v) const
+    MATH_FUNCTION_QUALIFIERS bool operator!=(const vec &v) const
     {
         return x != v.x || y != v.y;
     }

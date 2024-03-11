@@ -16,18 +16,22 @@ struct mat2x2
         T data[4];
         struct
         {
+            // Stored in column major order
+            // source matrix:
+            // | m00 m10 |
+            // | m01 m11 |
             T m00, m01;
             T m10, m11;
         };
     };
 
     // --accessors-- //
-    MATH_CONSTEXPR LENGTH_TYPE size() const
+    MATH_FUNCTION_QUALIFIERS LENGTH_TYPE size() const
     {
         return 2;
     }
 
-    MATH_CONSTEXPR vec<2, T> &operator[](LENGTH_TYPE i)
+    MATH_FUNCTION_QUALIFIERS vec<2, T> &operator[](LENGTH_TYPE i)
     {
         if (i < 0 || i >= 2)
         {
@@ -36,7 +40,7 @@ struct mat2x2
         return c[i];
     }
 
-    MATH_CONSTEXPR vec<2, T> const &operator[](LENGTH_TYPE i) const
+    MATH_FUNCTION_QUALIFIERS vec<2, T> const &operator[](LENGTH_TYPE i) const
     {
         if (i < 0 || i >= 2)
         {
@@ -46,59 +50,63 @@ struct mat2x2
     }
 
     // --implicit basic constructors-- //
-    MATH_CONSTEXPR mat2x2() = default;
-    MATH_CONSTEXPR mat2x2(const mat2x2 &m) = default;
-    MATH_CONSTEXPR mat2x2 &operator=(const mat2x2 &m) = default;
-    MATH_CONSTEXPR mat2x2(mat2x2 &&m) = default;
-    MATH_CONSTEXPR mat2x2 &operator=(mat2x2 &&m) = default;
+    MATH_FUNCTION_QUALIFIERS mat2x2() = default;
+    MATH_FUNCTION_QUALIFIERS mat2x2(const mat2x2 &m) = default;
+    MATH_FUNCTION_QUALIFIERS mat2x2 &operator=(const mat2x2 &m) = default;
+    MATH_FUNCTION_QUALIFIERS mat2x2(mat2x2 &&m) = default;
+    MATH_FUNCTION_QUALIFIERS mat2x2 &operator=(mat2x2 &&m) = default;
 
     // --explicit conversion constructors-- //
     template <typename U>
-    MATH_CONSTEXPR MATH_EXPLICIT mat2x2(U scalar) : m00(static_cast<T>(scalar)), m01(static_cast<T>(0)),
-                                                    m10(static_cast<T>(0)), m11(static_cast<T>(scalar)) {}
+    MATH_FUNCTION_QUALIFIERS MATH_EXPLICIT mat2x2(U scalar) : m00(static_cast<T>(scalar)), m01(static_cast<T>(0)),
+                                                              m10(static_cast<T>(0)), m11(static_cast<T>(scalar)) {}
 
     template <typename U>
-    MATH_CONSTEXPR MATH_EXPLICIT mat2x2(const mat2x2<U> &m) : m00(static_cast<T>(m.m00)), m01(static_cast<T>(m.m01)),
-                                                              m10(static_cast<T>(m.m10)), m11(static_cast<T>(m.m11)) {}
+    MATH_FUNCTION_QUALIFIERS MATH_EXPLICIT mat2x2(const mat2x2<U> &m) : m00(static_cast<T>(m.m00)), m01(static_cast<T>(m.m01)),
+                                                                        m10(static_cast<T>(m.m10)), m11(static_cast<T>(m.m11)) {}
 
     template <typename U>
-    MATH_CONSTEXPR MATH_EXPLICIT mat2x2(const mat<3, 2, U> &m) : m00(static_cast<T>(m.m00)), m01(static_cast<T>(m.m01)),
-                                                                 m10(static_cast<T>(m.m10)), m11(static_cast<T>(m.m11)) {}
+    MATH_FUNCTION_QUALIFIERS MATH_EXPLICIT mat2x2(const mat<3, 2, U> &m) : m00(static_cast<T>(m.m00)), m01(static_cast<T>(m.m01)),
+                                                                           m10(static_cast<T>(m.m10)), m11(static_cast<T>(m.m11)) {}
 
     template <typename U>
-    MATH_CONSTEXPR MATH_EXPLICIT mat2x2(const mat<4, 2, U> &m) : m00(static_cast<T>(m.m00)), m01(static_cast<T>(m.m01)),
-                                                                 m10(static_cast<T>(m.m10)), m11(static_cast<T>(m.m11)) {}
+    MATH_FUNCTION_QUALIFIERS MATH_EXPLICIT mat2x2(const mat<4, 2, U> &m) : m00(static_cast<T>(m.m00)), m01(static_cast<T>(m.m01)),
+                                                                           m10(static_cast<T>(m.m10)), m11(static_cast<T>(m.m11)) {}
 
     template <typename U>
-    MATH_CONSTEXPR MATH_EXPLICIT mat2x2(const mat<2, 3, U> &m) : m00(static_cast<T>(m.m00)), m01(static_cast<T>(m.m01)),
-                                                                 m10(static_cast<T>(m.m10)), m11(static_cast<T>(m.m11)) {}
+    MATH_FUNCTION_QUALIFIERS MATH_EXPLICIT mat2x2(const mat<2, 3, U> &m) : m00(static_cast<T>(m.m00)), m01(static_cast<T>(m.m01)),
+                                                                           m10(static_cast<T>(m.m10)), m11(static_cast<T>(m.m11)) {}
 
     template <typename U>
-    MATH_CONSTEXPR MATH_EXPLICIT mat2x2(const mat<3, 3, U> &m) : m00(static_cast<T>(m.m00)), m01(static_cast<T>(m.m01)),
-                                                                 m10(static_cast<T>(m.m10)), m11(static_cast<T>(m.m11)) {}
+    MATH_FUNCTION_QUALIFIERS MATH_EXPLICIT mat2x2(const mat<3, 3, U> &m) : m00(static_cast<T>(m.m00)), m01(static_cast<T>(m.m01)),
+                                                                           m10(static_cast<T>(m.m10)), m11(static_cast<T>(m.m11)) {}
 
     template <typename U>
-    MATH_CONSTEXPR MATH_EXPLICIT mat2x2(const mat<4, 3, U> &m) : m00(static_cast<T>(m.m00)), m01(static_cast<T>(m.m01)),
-                                                                 m10(static_cast<T>(m.m10)), m11(static_cast<T>(m.m11)) {}
+    MATH_FUNCTION_QUALIFIERS MATH_EXPLICIT mat2x2(const mat<4, 3, U> &m) : m00(static_cast<T>(m.m00)), m01(static_cast<T>(m.m01)),
+                                                                           m10(static_cast<T>(m.m10)), m11(static_cast<T>(m.m11)) {}
 
     template <typename U>
-    MATH_CONSTEXPR MATH_EXPLICIT mat2x2(const mat<2, 4, U> &m) : m00(static_cast<T>(m.m00)), m01(static_cast<T>(m.m01)),
-                                                                 m10(static_cast<T>(m.m10)), m11(static_cast<T>(m.m11)) {}
+    MATH_FUNCTION_QUALIFIERS MATH_EXPLICIT mat2x2(const mat<2, 4, U> &m) : m00(static_cast<T>(m.m00)), m01(static_cast<T>(m.m01)),
+                                                                           m10(static_cast<T>(m.m10)), m11(static_cast<T>(m.m11)) {}
 
     template <typename U>
-    MATH_CONSTEXPR MATH_EXPLICIT mat2x2(const mat<3, 4, U> &m) : m00(static_cast<T>(m.m00)), m01(static_cast<T>(m.m01)),
-                                                                 m10(static_cast<T>(m.m10)), m11(static_cast<T>(m.m11)) {}
+    MATH_FUNCTION_QUALIFIERS MATH_EXPLICIT mat2x2(const mat<3, 4, U> &m) : m00(static_cast<T>(m.m00)), m01(static_cast<T>(m.m01)),
+                                                                           m10(static_cast<T>(m.m10)), m11(static_cast<T>(m.m11)) {}
 
     template <typename U>
-    MATH_CONSTEXPR MATH_EXPLICIT mat2x2(const mat<4, 4, U> &m) : m00(static_cast<T>(m.m00)), m01(static_cast<T>(m.m01)),
-                                                                 m10(static_cast<T>(m.m10)), m11(static_cast<T>(m.m11)) {}
+    MATH_FUNCTION_QUALIFIERS MATH_EXPLICIT mat2x2(const mat<4, 4, U> &m) : m00(static_cast<T>(m.m00)), m01(static_cast<T>(m.m01)),
+                                                                           m10(static_cast<T>(m.m10)), m11(static_cast<T>(m.m11)) {}
 
     template <typename U>
-    MATH_CONSTEXPR MATH_EXPLICIT mat2x2(const vec<2, U> v0, vec<2, U> v1) : m00(static_cast<T>(v0.x)), m01(static_cast<T>(v0.y)),
-                                                                            m10(static_cast<T>(v1.x)), m11(static_cast<T>(v1.y)) {}
+    MATH_FUNCTION_QUALIFIERS MATH_EXPLICIT mat2x2(U m00, U m01, U m10, U m11) : m00(static_cast<T>(m00)), m01(static_cast<T>(m01)),
+                                                                                m10(static_cast<T>(m10)), m11(static_cast<T>(m11)) {}
+
+    template <typename U>
+    MATH_FUNCTION_QUALIFIERS MATH_EXPLICIT mat2x2(const vec<2, U> v0, vec<2, U> v1) : m00(static_cast<T>(v0.x)), m01(static_cast<T>(v0.y)),
+                                                                                      m10(static_cast<T>(v1.x)), m11(static_cast<T>(v1.y)) {}
 
     // --initialization list constructors-- //
-    MATH_CONSTEXPR mat2x2(std::initializer_list<T> list)
+    MATH_FUNCTION_QUALIFIERS mat2x2(std::initializer_list<T> list)
     {
         if (list.size() < 4)
         {
@@ -111,7 +119,7 @@ struct mat2x2
         m11 = *it;
     }
 
-    MATH_CONSTEXPR mat2x2(std::initializer_list<vec<2, T>> list)
+    MATH_FUNCTION_QUALIFIERS mat2x2(std::initializer_list<vec<2, T>> list)
     {
         if (list.size() < 2)
         {
@@ -123,18 +131,18 @@ struct mat2x2
     }
 
     // --unary arithmetic operators-- //
-    MATH_CONSTEXPR mat2x2 operator+() const
+    MATH_FUNCTION_QUALIFIERS mat2x2 operator+() const
     {
         return *this;
     }
 
-    MATH_CONSTEXPR mat2x2 operator-() const
+    MATH_FUNCTION_QUALIFIERS mat2x2 operator-() const
     {
         return mat2x2(-m00, -m01, -m10, -m11);
     }
 
     template <typename U>
-    MATH_CONSTEXPR mat2x2 &operator+=(U scalar)
+    MATH_FUNCTION_QUALIFIERS mat2x2 &operator+=(U scalar)
     {
         m00 += static_cast<T>(scalar);
         m01 += static_cast<T>(scalar);
@@ -144,7 +152,7 @@ struct mat2x2
     }
 
     template <typename U>
-    MATH_CONSTEXPR mat2x2 &operator+=(const mat2x2<U> &m)
+    MATH_FUNCTION_QUALIFIERS mat2x2 &operator+=(const mat2x2<U> &m)
     {
         m00 += static_cast<T>(m.m00);
         m01 += static_cast<T>(m.m01);
@@ -154,7 +162,7 @@ struct mat2x2
     }
 
     template <typename U>
-    MATH_CONSTEXPR mat2x2 &operator-=(U scalar)
+    MATH_FUNCTION_QUALIFIERS mat2x2 &operator-=(U scalar)
     {
         m00 -= static_cast<T>(scalar);
         m01 -= static_cast<T>(scalar);
@@ -164,7 +172,7 @@ struct mat2x2
     }
 
     template <typename U>
-    MATH_CONSTEXPR mat2x2 &operator-=(const mat2x2<U> &m)
+    MATH_FUNCTION_QUALIFIERS mat2x2 &operator-=(const mat2x2<U> &m)
     {
         m00 -= static_cast<T>(m.m00);
         m01 -= static_cast<T>(m.m01);
@@ -174,7 +182,7 @@ struct mat2x2
     }
 
     template <typename U>
-    MATH_CONSTEXPR mat2x2 &operator*=(U scalar)
+    MATH_FUNCTION_QUALIFIERS mat2x2 &operator*=(U scalar)
     {
         m00 *= static_cast<T>(scalar);
         m01 *= static_cast<T>(scalar);
@@ -184,7 +192,7 @@ struct mat2x2
     }
 
     template <typename U>
-    MATH_CONSTEXPR mat2x2 &operator*=(const mat2x2<U> &m)
+    MATH_FUNCTION_QUALIFIERS mat2x2 &operator*=(const mat2x2<U> &m)
     {
         m00 *= static_cast<T>(m.m00);
         m01 *= static_cast<T>(m.m01);
@@ -194,7 +202,7 @@ struct mat2x2
     }
 
     template <typename U>
-    MATH_CONSTEXPR mat2x2 &operator/=(U scalar)
+    MATH_FUNCTION_QUALIFIERS mat2x2 &operator/=(U scalar)
     {
         m00 /= static_cast<T>(scalar);
         m01 /= static_cast<T>(scalar);
@@ -204,7 +212,7 @@ struct mat2x2
     }
 
     template <typename U>
-    MATH_CONSTEXPR mat2x2 &operator/=(const mat2x2<U> &m)
+    MATH_FUNCTION_QUALIFIERS mat2x2 &operator/=(const mat2x2<U> &m)
     {
         m00 /= static_cast<T>(m.m00);
         m01 /= static_cast<T>(m.m01);
@@ -214,7 +222,7 @@ struct mat2x2
     }
 
     // --increment and decrement operators-- //
-    MATH_CONSTEXPR mat2x2 &operator++()
+    MATH_FUNCTION_QUALIFIERS mat2x2 &operator++()
     {
         static_assert(std::is_integral<T>::value, "mat2x2<T>::operator++(): T must be an integral type.");
 
@@ -225,7 +233,7 @@ struct mat2x2
         return *this;
     }
 
-    MATH_CONSTEXPR mat2x2 operator++(int)
+    MATH_FUNCTION_QUALIFIERS mat2x2 operator++(int)
     {
         static_assert(std::is_integral<T>::value, "mat2x2<T>::operator++(int): T must be an integral type.");
 
@@ -234,7 +242,7 @@ struct mat2x2
         return temp;
     }
 
-    MATH_CONSTEXPR mat2x2 &operator--()
+    MATH_FUNCTION_QUALIFIERS mat2x2 &operator--()
     {
         static_assert(std::is_integral<T>::value, "mat2x2<T>::operator--(): T must be an integral type.");
 
@@ -245,7 +253,7 @@ struct mat2x2
         return *this;
     }
 
-    MATH_CONSTEXPR mat2x2 operator--(int)
+    MATH_FUNCTION_QUALIFIERS mat2x2 operator--(int)
     {
         static_assert(std::is_integral<T>::value, "mat2x2<T>::operator--(int): T must be an integral type.");
 
@@ -255,79 +263,73 @@ struct mat2x2
     }
 
     // --binary arithmetic operators-- //
-    friend MATH_CONSTEXPR mat2x2 operator+(const mat2x2 &m, T scalar)
+    friend MATH_FUNCTION_QUALIFIERS mat2x2 operator+(const mat2x2 &m, T scalar)
     {
-        return mat2x2(m.m00 + scalar, m.m01 + scalar, m.m10 + scalar, m.m11 + scalar);
+        return {m.m00 + scalar, m.m01 + scalar, m.m10 + scalar, m.m11 + scalar};
     }
 
-    friend MATH_CONSTEXPR mat2x2 operator+(T scalar, const mat2x2 &m)
+    friend MATH_FUNCTION_QUALIFIERS mat2x2 operator+(T scalar, const mat2x2 &m)
     {
-        return mat2x2(scalar + m.m00, scalar + m.m01, scalar + m.m10, scalar + m.m11);
+        return {scalar + m.m00, scalar + m.m01, scalar + m.m10, scalar + m.m11};
     }
 
-    friend MATH_CONSTEXPR mat2x2 operator+(const mat2x2 &m1, const mat2x2 &m2)
+    friend MATH_FUNCTION_QUALIFIERS mat2x2 operator+(const mat2x2 &m1, const mat2x2 &m2)
     {
-        return mat2x2(m1.m00 + m2.m00, m1.m01 + m2.m01, m1.m10 + m2.m10, m1.m11 + m2.m11);
+        return {m1.m00 + m2.m00, m1.m01 + m2.m01, m1.m10 + m2.m10, m1.m11 + m2.m11};
     }
 
-    friend MATH_CONSTEXPR mat2x2 operator-(const mat2x2 &m, T scalar)
+    friend MATH_FUNCTION_QUALIFIERS mat2x2 operator-(const mat2x2 &m, T scalar)
     {
-        return mat2x2(m.m00 - scalar, m.m01 - scalar, m.m10 - scalar, m.m11 - scalar);
+        return {m.m00 - scalar, m.m01 - scalar, m.m10 - scalar, m.m11 - scalar};
     }
 
-    friend MATH_CONSTEXPR mat2x2 operator-(T scalar, const mat2x2 &m)
+    friend MATH_FUNCTION_QUALIFIERS mat2x2 operator-(T scalar, const mat2x2 &m)
     {
-        return mat2x2(scalar - m.m00, scalar - m.m01, scalar - m.m10, scalar - m.m11);
+        return {scalar - m.m00, scalar - m.m01, scalar - m.m10, scalar - m.m11};
     }
 
-    friend MATH_CONSTEXPR mat2x2 operator-(const mat2x2 &m1, const mat2x2 &m2)
+    friend MATH_FUNCTION_QUALIFIERS mat2x2 operator-(const mat2x2 &m1, const mat2x2 &m2)
     {
-        return mat2x2(m1.m00 - m2.m00, m1.m01 - m2.m01, m1.m10 - m2.m10, m1.m11 - m2.m11);
+        return {m1.m00 - m2.m00, m1.m01 - m2.m01, m1.m10 - m2.m10, m1.m11 - m2.m11};
     }
 
-    friend MATH_CONSTEXPR mat2x2 operator*(const mat2x2 &m, T scalar)
+    friend MATH_FUNCTION_QUALIFIERS mat2x2 operator*(const mat2x2 &m, T scalar)
     {
-        return mat2x2(m.m00 * scalar, m.m01 * scalar, m.m10 * scalar, m.m11 * scalar);
+        return {m.m00 * scalar, m.m01 * scalar, m.m10 * scalar, m.m11 * scalar};
     }
 
-    friend MATH_CONSTEXPR mat2x2 operator*(T scalar, const mat2x2 &m)
+    friend MATH_FUNCTION_QUALIFIERS mat2x2 operator*(T scalar, const mat2x2 &m)
     {
-        return mat2x2(scalar * m.m00, scalar * m.m01, scalar * m.m10, scalar * m.m11);
+        return {scalar * m.m00, scalar * m.m01, scalar * m.m10, scalar * m.m11};
     }
 
-    friend MATH_CONSTEXPR vec<2, T> operator*(const mat2x2 &m, const vec<2, T> &v)
+    friend MATH_FUNCTION_QUALIFIERS mat2x2 operator*(const mat2x2 &m1, const mat2x2 &m2)
     {
-        return vec<2, T>(m.m00 * v.x + m.m01 * v.y, m.m10 * v.x + m.m11 * v.y);
+        return mat2x2(m1.m00 * m2.m00, m1.m01 * m2.m01, m1.m10 * m2.m10, m1.m11 * m2.m11);
     }
 
-    friend MATH_CONSTEXPR mat2x2 operator*(const mat2x2 &m1, const mat2x2 &m2)
-    {
-        return mat2x2(m1.m00 * m2.m00 + m1.m01 * m2.m10, m1.m00 * m2.m01 + m1.m01 * m2.m11,
-                      m1.m10 * m2.m00 + m1.m11 * m2.m10, m1.m10 * m2.m01 + m1.m11 * m2.m11);
-    }
-
-    friend MATH_CONSTEXPR mat2x2 operator/(const mat2x2 &m, T scalar)
+    friend MATH_FUNCTION_QUALIFIERS mat2x2 operator/(const mat2x2 &m, T scalar)
     {
         return mat2x2(m.m00 / scalar, m.m01 / scalar, m.m10 / scalar, m.m11 / scalar);
     }
 
-    friend MATH_CONSTEXPR mat2x2 operator/(T scalar, const mat2x2 &m)
+    friend MATH_FUNCTION_QUALIFIERS mat2x2 operator/(T scalar, const mat2x2 &m)
     {
         return mat2x2(scalar / m.m00, scalar / m.m01, scalar / m.m10, scalar / m.m11);
     }
 
-    friend MATH_CONSTEXPR mat2x2 operator/(const mat2x2 &m1, const mat2x2 &m2)
+    friend MATH_FUNCTION_QUALIFIERS mat2x2 operator/(const mat2x2 &m1, const mat2x2 &m2)
     {
         return mat2x2(m1.m00 / m2.m00, m1.m01 / m2.m01, m1.m10 / m2.m10, m1.m11 / m2.m11);
     }
 
     // --comparison operators-- //
-    friend MATH_CONSTEXPR bool operator==(const mat2x2 &m1, const mat2x2 &m2)
+    friend MATH_FUNCTION_QUALIFIERS bool operator==(const mat2x2 &m1, const mat2x2 &m2)
     {
         return m1.m00 == m2.m00 && m1.m01 == m2.m01 && m1.m10 == m2.m10 && m1.m11 == m2.m11;
     }
 
-    friend MATH_CONSTEXPR bool operator!=(const mat2x2 &m1, const mat2x2 &m2)
+    friend MATH_FUNCTION_QUALIFIERS bool operator!=(const mat2x2 &m1, const mat2x2 &m2)
     {
         return m1.m00 != m2.m00 || m1.m01 != m2.m01 || m1.m10 != m2.m10 || m1.m11 != m2.m11;
     }

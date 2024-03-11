@@ -18,4 +18,13 @@
     #define MATH_EXPLICIT
 #endif
 
+// FUNCS IN HEADERS ARE INLINE BY DEFAULT
+#ifdef MATH_FORCE_INLINE
+    #define MATH_INLINE inline
+#else
+    #define MATH_INLINE
+#endif
+
+#define MATH_FUNCTION_QUALIFIERS MATH_CONSTEXPR MATH_INLINE
+
 #define _RANDOM_DEVICE_
