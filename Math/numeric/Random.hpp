@@ -1,13 +1,14 @@
 #pragma once
 
 #include "Numeric.hpp"
+#include "../include/vec.h"
 
 #include <random>
 
 MATH_NAMESPACE_BEGIN
 
 template <typename T>
-static MATH_FUNCTION_QUALIFIERS T random_range(T const &min = std::numeric_limits<T>::min(), T const &max = std::numeric_limits<T>::max())
+static MATH_INLINE T random_range(T const &min = std::numeric_limits<T>::min(), T const &max = std::numeric_limits<T>::max())
 {
     static_assert(std::is_arithmetic<T>::value, "T must be an arithmetic type");
 
@@ -18,7 +19,7 @@ static MATH_FUNCTION_QUALIFIERS T random_range(T const &min = std::numeric_limit
 }
 
 template <typename T>
-static MATH_FUNCTION_QUALIFIERS T random_gaussian(T const &mean = static_cast<T>(0), T const &stddev = static_cast<T>(1))
+static MATH_INLINE T random_gaussian(T const &mean = static_cast<T>(0), T const &stddev = static_cast<T>(1))
 {
     static_assert(std::is_arithmetic<T>::value, "T must be an arithmetic type");
 
@@ -30,7 +31,7 @@ static MATH_FUNCTION_QUALIFIERS T random_gaussian(T const &mean = static_cast<T>
 
 VECTOR_NAMESPACE_BEGIN
 template <LENGTH_TYPE N = 2, typename T = float>
-static MATH_FUNCTION_QUALIFIERS vec<N, T> random_disk(T const &radius = static_cast<T>(1))
+static MATH_INLINE vec<N, T> random_disk(T const &radius = static_cast<T>(1))
 {
     static_assert(N == 2, "random disk is only defined for 2D vectors");
     static_assert(std::is_floating_point<T>::value, "T must be a floating point type");
@@ -41,7 +42,7 @@ static MATH_FUNCTION_QUALIFIERS vec<N, T> random_disk(T const &radius = static_c
 }
 
 template <LENGTH_TYPE N = 3, typename T = float>
-static MATH_FUNCTION_QUALIFIERS vec<N, T> random_spherical(T const &radius = static_cast<T>(1))
+static MATH_INLINE vec<N, T> random_spherical(T const &radius = static_cast<T>(1))
 {
     static_assert(N == 3, "random sphere is only defined for 3D vectors");
     static_assert(std::is_floating_point<T>::value, "T must be a floating point type");
@@ -53,7 +54,7 @@ static MATH_FUNCTION_QUALIFIERS vec<N, T> random_spherical(T const &radius = sta
 }
 
 template <LENGTH_TYPE N = 3, typename T = float>
-static MATH_FUNCTION_QUALIFIERS vec<N, T> random_spherical_surface(T const &radius = static_cast<T>(1))
+static MATH_INLINE vec<N, T> random_spherical_surface(T const &radius = static_cast<T>(1))
 {
     static_assert(N == 3, "random sphere is only defined for 3D vectors");
     static_assert(std::is_floating_point<T>::value, "T must be a floating point type");
@@ -64,7 +65,7 @@ static MATH_FUNCTION_QUALIFIERS vec<N, T> random_spherical_surface(T const &radi
 }
 
 template <LENGTH_TYPE N = 3, typename T = float>
-static MATH_FUNCTION_QUALIFIERS vec<N, T> random_hemisphere(vec<N, T> const &normal, T const &radius = static_cast<T>(1))
+static MATH_INLINE vec<N, T> random_hemisphere(vec<N, T> const &normal, T const &radius = static_cast<T>(1))
 {
     static_assert(N == 3, "random hemisphere is only defined for 3D vectors");
     static_assert(std::is_floating_point<T>::value, "T must be a floating point type");
@@ -74,7 +75,7 @@ static MATH_FUNCTION_QUALIFIERS vec<N, T> random_hemisphere(vec<N, T> const &nor
 }
 
 template <LENGTH_TYPE N = 3, typename T = float>
-static MATH_FUNCTION_QUALIFIERS vec<N, T> random_hemisphere_surface(vec<N, T> const &normal, T const &radius = static_cast<T>(1))
+static MATH_INLINE vec<N, T> random_hemisphere_surface(vec<N, T> const &normal, T const &radius = static_cast<T>(1))
 {
     static_assert(N == 3, "random hemisphere is only defined for 3D vectors");
     static_assert(std::is_floating_point<T>::value, "T must be a floating point type");
