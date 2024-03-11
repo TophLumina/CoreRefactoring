@@ -5,6 +5,7 @@
 #include <initializer_list>
 
 MATH_NAMESPACE_BEGIN
+VECTOR_NAMESPACE_BEGIN
 
 template <typename T>
 struct vec<4, T>
@@ -416,4 +417,5 @@ using vec4f = vec<4, float>;
 using vec4d = vec<4, double>;
 #endif
 
+VECTOR_NAMESPACE_END
 MATH_NAMESPACE_END

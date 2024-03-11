@@ -5,6 +5,7 @@
 #include <initializer_list>
 
 MATH_NAMESPACE_BEGIN
+VECTOR_NAMESPACE_BEGIN
 
 template <typename T>
 struct vec<2, T>
@@ -368,4 +369,5 @@ using vec2f = vec<2, float>;
 using vec2d = vec<2, double>;
 #endif
 
+VECTOR_NAMESPACE_END
 MATH_NAMESPACE_END

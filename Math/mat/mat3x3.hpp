@@ -6,6 +6,7 @@
 #include <initializer_list>
 
 MATH_NAMESPACE_BEGIN
+MATRIX_NAMESPACE_BEGIN
 
 template <typename T>
 struct mat3x3
@@ -395,4 +396,5 @@ using mat3x3f = mat3x3<float>;
 using mat3x3d = mat3x3<double>;
 #endif
 
+MATRIX_NAMESPACE_END
 MATH_NAMESPACE_END

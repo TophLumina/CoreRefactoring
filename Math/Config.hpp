@@ -5,6 +5,10 @@
 
 #define MATH_NAMESPACE_BEGIN namespace Math {
 #define MATH_NAMESPACE_END }
+#define VECTOR_NAMESPACE_BEGIN namespace Vector {
+#define VECTOR_NAMESPACE_END }
+#define MATRIX_NAMESPACE_BEGIN namespace Matrix {
+#define MATRIX_NAMESPACE_END }
 
 #ifdef MATH_SUPPORT_CONSTEXPR
     #define MATH_CONSTEXPR constexpr
@@ -26,5 +30,3 @@
 #endif
 
 #define MATH_FUNCTION_QUALIFIERS MATH_CONSTEXPR MATH_INLINE
-
-#define _RANDOM_DEVICE_

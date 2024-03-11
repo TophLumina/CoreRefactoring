@@ -6,6 +6,7 @@
 #include <initializer_list>
 
 MATH_NAMESPACE_BEGIN
+MATRIX_NAMESPACE_BEGIN
 
 template <typename T>
 struct mat2x2
@@ -330,4 +331,5 @@ using mat2x2f = mat2x2<float>;
 using mat2x2d = mat2x2<double>;
 #endif
 
+MATRIX_NAMESPACE_END
 MATH_NAMESPACE_END

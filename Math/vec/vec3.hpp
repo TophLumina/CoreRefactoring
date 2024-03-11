@@ -5,6 +5,7 @@
 #include <initializer_list>
 
 MATH_NAMESPACE_BEGIN
+VECTOR_NAMESPACE_BEGIN
 
 template <typename T>
 struct vec<3, T>
@@ -389,4 +390,5 @@ using vec3f = vec<3, float>;
 using vec3d = vec<3, double>;
 #endif
 
+VECTOR_NAMESPACE_END
 MATH_NAMESPACE_END

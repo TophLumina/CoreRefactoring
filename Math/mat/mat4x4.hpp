@@ -6,6 +6,7 @@
 #include <initializer_list>
 
 MATH_NAMESPACE_BEGIN
+MATRIX_NAMESPACE_BEGIN
 
 template <typename T>
 struct mat4x4
@@ -527,4 +528,5 @@ using mat4x4f = mat4x4<float>;
 using mat4x4d = mat4x4<double>;
 #endif
 
+MATRIX_NAMESPACE_END
 MATH_NAMESPACE_END

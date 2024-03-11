@@ -1,8 +1,8 @@
 #pragma once
 
 #include "../Config.hpp"
+#include "Constants.hpp"
 
-#define _USE_MATH_DEFINES
 #include <cmath>
 #include <limits>
 
