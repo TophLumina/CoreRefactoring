@@ -58,8 +58,6 @@ struct vec<4, T>
     MATH_FUNCTION_QUALIFIERS vec(vec &&v) = default;
     MATH_FUNCTION_QUALIFIERS vec &operator=(vec &&v) = default;
 
-    // TODO :: replace all constructors with initializer list
-
     // --explicit conversion constructors-- //
     template <typename U>
     MATH_FUNCTION_QUALIFIERS MATH_EXPLICIT vec(U scalar) : x(static_cast<T>(scalar)), y(static_cast<T>(scalar)), z(static_cast<T>(scalar)), w(static_cast<T>(scalar)) {}

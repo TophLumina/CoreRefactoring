@@ -66,31 +66,7 @@ struct mat2x2
                                                                         m10(static_cast<T>(m.m10)), m11(static_cast<T>(m.m11)) {}
 
     template <typename U>
-    MATH_FUNCTION_QUALIFIERS MATH_EXPLICIT mat2x2(const mat<3, 2, U> &m) : m00(static_cast<T>(m.m00)), m01(static_cast<T>(m.m01)),
-                                                                           m10(static_cast<T>(m.m10)), m11(static_cast<T>(m.m11)) {}
-
-    template <typename U>
-    MATH_FUNCTION_QUALIFIERS MATH_EXPLICIT mat2x2(const mat<4, 2, U> &m) : m00(static_cast<T>(m.m00)), m01(static_cast<T>(m.m01)),
-                                                                           m10(static_cast<T>(m.m10)), m11(static_cast<T>(m.m11)) {}
-
-    template <typename U>
-    MATH_FUNCTION_QUALIFIERS MATH_EXPLICIT mat2x2(const mat<2, 3, U> &m) : m00(static_cast<T>(m.m00)), m01(static_cast<T>(m.m01)),
-                                                                           m10(static_cast<T>(m.m10)), m11(static_cast<T>(m.m11)) {}
-
-    template <typename U>
     MATH_FUNCTION_QUALIFIERS MATH_EXPLICIT mat2x2(const mat<3, 3, U> &m) : m00(static_cast<T>(m.m00)), m01(static_cast<T>(m.m01)),
-                                                                           m10(static_cast<T>(m.m10)), m11(static_cast<T>(m.m11)) {}
-
-    template <typename U>
-    MATH_FUNCTION_QUALIFIERS MATH_EXPLICIT mat2x2(const mat<4, 3, U> &m) : m00(static_cast<T>(m.m00)), m01(static_cast<T>(m.m01)),
-                                                                           m10(static_cast<T>(m.m10)), m11(static_cast<T>(m.m11)) {}
-
-    template <typename U>
-    MATH_FUNCTION_QUALIFIERS MATH_EXPLICIT mat2x2(const mat<2, 4, U> &m) : m00(static_cast<T>(m.m00)), m01(static_cast<T>(m.m01)),
-                                                                           m10(static_cast<T>(m.m10)), m11(static_cast<T>(m.m11)) {}
-
-    template <typename U>
-    MATH_FUNCTION_QUALIFIERS MATH_EXPLICIT mat2x2(const mat<3, 4, U> &m) : m00(static_cast<T>(m.m00)), m01(static_cast<T>(m.m01)),
                                                                            m10(static_cast<T>(m.m10)), m11(static_cast<T>(m.m11)) {}
 
     template <typename U>
@@ -340,8 +316,9 @@ struct mat2x2
 template <typename T>
 std::ostream &operator<<(std::ostream &os, const mat2x2<T> &m)
 {
-    os << "mat2x2<" << typeid(T).name() << ">(" << m.m00 << ", " << m.m01 << ", "
-                                                << m.m10 << ", " << m.m11 << ")";
+    os << "mat2x2<" << typeid(T).name() << ">{" << '\n'
+       << m.m00 << ", " << m.m10 << ", " << '\n'
+       << m.m01 << ", " << m.m11 << "}";
     return os;
 }
 #endif

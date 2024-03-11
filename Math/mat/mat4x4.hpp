@@ -60,8 +60,6 @@ struct mat4x4
     MATH_FUNCTION_QUALIFIERS mat4x4(mat4x4 &&m) = default;
     MATH_FUNCTION_QUALIFIERS mat4x4 &operator=(mat4x4 &&m) = default;
 
-    // TODO :: replace all constructors with initializer list
-
     // --explicit conversion constructors-- //
     template <typename U>
     MATH_FUNCTION_QUALIFIERS MATH_EXPLICIT mat4x4(U scalar) : m00(scalar), m01(scalar), m02(scalar), m03(scalar),
@@ -76,45 +74,9 @@ struct mat4x4
                                                                            m30(0), m31(0), m32(0), m33(1) {}
 
     template <typename U>
-    MATH_FUNCTION_QUALIFIERS MATH_EXPLICIT mat4x4(const mat<3, 2, U> &m) : m00(static_cast<T>(m.m00)), m01(static_cast<T>(m.m01)), m02(0), m03(0),
-                                                                           m10(static_cast<T>(m.m10)), m11(static_cast<T>(m.m11)), m12(0), m13(0),
-                                                                           m20(static_cast<T>(m.m20)), m21(static_cast<T>(m.m21)), m22(1), m23(0),
-                                                                           m30(0), m31(0), m32(0), m33(1) {}
-
-    template <typename U>
-    MATH_FUNCTION_QUALIFIERS MATH_EXPLICIT mat4x4(const mat<4, 2, U> &m) : m00(static_cast<T>(m.m00)), m01(static_cast<T>(m.m01)), m02(0), m03(0),
-                                                                           m10(static_cast<T>(m.m10)), m11(static_cast<T>(m.m11)), m12(0), m13(0),
-                                                                           m20(static_cast<T>(m.m20)), m21(static_cast<T>(m.m21)), m22(1), m23(0),
-                                                                           m30(static_cast<T>(m.m30)), m31(static_cast<T>(m.m31)), m32(0), m33(1) {}
-
-    template <typename U>
-    MATH_FUNCTION_QUALIFIERS MATH_EXPLICIT mat4x4(const mat<2, 3, U> &m) : m00(static_cast<T>(m.m00)), m01(static_cast<T>(m.m01)), m02(static_cast<T>(m.m02)), m03(0),
-                                                                           m10(static_cast<T>(m.m10)), m11(static_cast<T>(m.m11)), m12(static_cast<T>(m.m12)), m13(0),
-                                                                           m20(0), m21(0), m22(1), m23(0),
-                                                                           m30(0), m31(0), m32(0), m33(1) {}
-
-    template <typename U>
     MATH_FUNCTION_QUALIFIERS MATH_EXPLICIT mat4x4(const mat<3, 3, U> &m) : m00(static_cast<T>(m.m00)), m01(static_cast<T>(m.m01)), m02(static_cast<T>(m.m02)), m03(0),
                                                                            m10(static_cast<T>(m.m10)), m11(static_cast<T>(m.m11)), m12(static_cast<T>(m.m12)), m13(0),
                                                                            m20(static_cast<T>(m.m20)), m21(static_cast<T>(m.m21)), m22(static_cast<T>(m.m22)), m23(0),
-                                                                           m30(0), m31(0), m32(0), m33(1) {}
-
-    template <typename U>
-    MATH_FUNCTION_QUALIFIERS MATH_EXPLICIT mat4x4(const mat<4, 3, U> &m) : m00(static_cast<T>(m.m00)), m01(static_cast<T>(m.m01)), m02(static_cast<T>(m.m02)), m03(0),
-                                                                           m10(static_cast<T>(m.m10)), m11(static_cast<T>(m.m11)), m12(static_cast<T>(m.m12)), m13(0),
-                                                                           m20(static_cast<T>(m.m20)), m21(static_cast<T>(m.m21)), m22(static_cast<T>(m.m22)), m23(0),
-                                                                           m30(static_cast<T>(m.m30)), m31(static_cast<T>(m.m31)), m32(static_cast<T>(m.m32)), m33(1) {}
-
-    template <typename U>
-    MATH_FUNCTION_QUALIFIERS MATH_EXPLICIT mat4x4(const mat<2, 4, U> &m) : m00(static_cast<T>(m.m00)), m01(static_cast<T>(m.m01)), m02(static_cast<T>(m.m02)), m03(static_cast<T>(m.m03)),
-                                                                           m10(static_cast<T>(m.m10)), m11(static_cast<T>(m.m11)), m12(static_cast<T>(m.m12)), m13(static_cast<T>(m.m13)),
-                                                                           m20(0), m21(0), m22(1), m23(0),
-                                                                           m30(0), m31(0), m32(0), m33(1) {}
-
-    template <typename U>
-    MATH_FUNCTION_QUALIFIERS MATH_EXPLICIT mat4x4(const mat<3, 4, U> &m) : m00(static_cast<T>(m.m00)), m01(static_cast<T>(m.m01)), m02(static_cast<T>(m.m02)), m03(static_cast<T>(m.m03)),
-                                                                           m10(static_cast<T>(m.m10)), m11(static_cast<T>(m.m11)), m12(static_cast<T>(m.m12)), m13(static_cast<T>(m.m13)),
-                                                                           m20(static_cast<T>(m.m20)), m21(static_cast<T>(m.m21)), m22(static_cast<T>(m.m22)), m23(static_cast<T>(m.m23)),
                                                                            m30(0), m31(0), m32(0), m33(1) {}
 
     template <typename U>
@@ -122,6 +84,18 @@ struct mat4x4
                                                                            m10(static_cast<T>(m.m10)), m11(static_cast<T>(m.m11)), m12(static_cast<T>(m.m12)), m13(static_cast<T>(m.m13)),
                                                                            m20(static_cast<T>(m.m20)), m21(static_cast<T>(m.m21)), m22(static_cast<T>(m.m22)), m23(static_cast<T>(m.m23)),
                                                                            m30(static_cast<T>(m.m30)), m31(static_cast<T>(m.m31)), m32(static_cast<T>(m.m32)), m33(static_cast<T>(m.m33)) {}
+
+    template <typename U>
+    MATH_FUNCTION_QUALIFIERS MATH_EXPLICIT mat4x4(U m00, U m01, U m02, U m03,
+                                                  U m10, U m11, U m12, U m13,
+                                                  U m20, U m21, U m22, U m23,
+                                                  U m30, U m31, U m32, U m33) : m00(static_cast<T>(m00)), m01(static_cast<T>(m01)), m02(static_cast<T>(m02)), m03(static_cast<T>(m03)),
+                                                                                m10(static_cast<T>(m10)), m11(static_cast<T>(m11)), m12(static_cast<T>(m12)), m13(static_cast<T>(m13)),
+                                                                                m20(static_cast<T>(m20)), m21(static_cast<T>(m21)), m22(static_cast<T>(m22)), m23(static_cast<T>(m23)),
+                                                                                m30(static_cast<T>(m30)), m31(static_cast<T>(m31)), m32(static_cast<T>(m32)), m33(static_cast<T>(m33)) {}
+
+    template <typename U>
+    MATH_FUNCTION_QUALIFIERS MATH_EXPLICIT mat4x4(const vec<4, U> &v0, const vec<4, U> &v1, const vec<4, U> &v2, const vec<4, U> &v3) : c{v0, v1, v2, v3} {}
 
     // --initializer list constructor-- //
     MATH_FUNCTION_QUALIFIERS mat4x4(std::initializer_list<T> list)
@@ -537,10 +511,11 @@ struct mat4x4
 template <typename T>
 std::ostream &operator<<(std::ostream &os, const mat4x4<T> &m)
 {
-    os << "mat4x4<" << typeid(T).name() << ">(" << m.m00 << ", " << m.m01 << ", " << m.m02 << ", " << m.m03 << ", "
-       << m.m10 << ", " << m.m11 << ", " << m.m12 << ", " << m.m13 << ", "
-       << m.m20 << ", " << m.m21 << ", " << m.m22 << ", " << m.m23 << ", "
-       << m.m30 << ", " << m.m31 << ", " << m.m32 << ", " << m.m33 << ")";
+    os << "mat4x4<" << typeid(T).name() << ">{" << '\n'
+       << m.m00 << ", " << m.m01 << ", " << m.m02 << ", " << m.m03 << ", " << '\n'
+       << m.m10 << ", " << m.m11 << ", " << m.m12 << ", " << m.m13 << ", " << '\n'
+       << m.m20 << ", " << m.m21 << ", " << m.m22 << ", " << m.m23 << ", " << '\n'
+       << m.m30 << ", " << m.m31 << ", " << m.m32 << ", " << m.m33 << "}";
     return os;
 }
 #endif

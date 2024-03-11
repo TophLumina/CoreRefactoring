@@ -58,8 +58,6 @@ struct mat3x3
     MATH_FUNCTION_QUALIFIERS mat3x3(mat3x3<T> &&m) = default;
     MATH_FUNCTION_QUALIFIERS mat3x3<T> &operator=(mat3x3<T> &&m) = default;
 
-    // TODO :: replace all constructors with initializer list
-
     // --explicit conversion constructors-- //
     template <typename U>
     MATH_FUNCTION_QUALIFIERS MATH_EXPLICIT mat3x3(U scalar) : m00(static_cast<T>(scalar)), m01(static_cast<T>(0)), m02(static_cast<T>(0)),
@@ -72,37 +70,7 @@ struct mat3x3
                                                                            m20(static_cast<T>(0)), m21(static_cast<T>(0)), m22(static_cast<T>(1)) {}
 
     template <typename U>
-    MATH_FUNCTION_QUALIFIERS MATH_EXPLICIT mat3x3(const mat<3, 2, U> &m) : m00(static_cast<T>(m.m00)), m01(static_cast<T>(m.m01)), m02(static_cast<T>(0)),
-                                                                           m10(static_cast<T>(m.m10)), m11(static_cast<T>(m.m11)), m12(static_cast<T>(0)),
-                                                                           m20(static_cast<T>(m.m20)), m21(static_cast<T>(m.m21)), m22(static_cast<T>(1)) {}
-
-    template <typename U>
-    MATH_FUNCTION_QUALIFIERS MATH_EXPLICIT mat3x3(const mat<4, 2, U> &m) : m00(static_cast<T>(m.m00)), m01(static_cast<T>(m.m01)), m02(static_cast<T>(0)),
-                                                                           m10(static_cast<T>(m.m10)), m11(static_cast<T>(m.m11)), m12(static_cast<T>(0)),
-                                                                           m20(static_cast<T>(m.m20)), m21(static_cast<T>(m.m21)), m22(static_cast<T>(1)) {}
-
-    template <typename U>
-    MATH_FUNCTION_QUALIFIERS MATH_EXPLICIT mat3x3(const mat<2, 3, U> &m) : m00(static_cast<T>(m.m00)), m01(static_cast<T>(m.m01)), m02(static_cast<T>(m.m02)),
-                                                                           m10(static_cast<T>(m.m10)), m11(static_cast<T>(m.m11)), m12(static_cast<T>(m.m12)),
-                                                                           m20(static_cast<T>(0)), m21(static_cast<T>(0)), m22(static_cast<T>(1)) {}
-
-    template <typename U>
     MATH_FUNCTION_QUALIFIERS MATH_EXPLICIT mat3x3(const mat<3, 3, U> &m) : m00(static_cast<T>(m.m00)), m01(static_cast<T>(m.m01)), m02(static_cast<T>(m.m02)),
-                                                                           m10(static_cast<T>(m.m10)), m11(static_cast<T>(m.m11)), m12(static_cast<T>(m.m12)),
-                                                                           m20(static_cast<T>(m.m20)), m21(static_cast<T>(m.m21)), m22(static_cast<T>(m.m22)) {}
-
-    template <typename U>
-    MATH_FUNCTION_QUALIFIERS MATH_EXPLICIT mat3x3(const mat<4, 3, U> &m) : m00(static_cast<T>(m.m00)), m01(static_cast<T>(m.m01)), m02(static_cast<T>(m.m02)),
-                                                                           m10(static_cast<T>(m.m10)), m11(static_cast<T>(m.m11)), m12(static_cast<T>(m.m12)),
-                                                                           m20(static_cast<T>(m.m20)), m21(static_cast<T>(m.m21)), m22(static_cast<T>(m.m22)) {}
-
-    template <typename U>
-    MATH_FUNCTION_QUALIFIERS MATH_EXPLICIT mat3x3(const mat<2, 4, U> &m) : m00(static_cast<T>(m.m00)), m01(static_cast<T>(m.m01)), m02(static_cast<T>(0)),
-                                                                           m10(static_cast<T>(m.m10)), m11(static_cast<T>(m.m11)), m12(static_cast<T>(0)),
-                                                                           m20(static_cast<T>(m.m20)), m21(static_cast<T>(m.m21)), m22(static_cast<T>(1)) {}
-
-    template <typename U>
-    MATH_FUNCTION_QUALIFIERS MATH_EXPLICIT mat3x3(const mat<3, 4, U> &m) : m00(static_cast<T>(m.m00)), m01(static_cast<T>(m.m01)), m02(static_cast<T>(m.m02)),
                                                                            m10(static_cast<T>(m.m10)), m11(static_cast<T>(m.m11)), m12(static_cast<T>(m.m12)),
                                                                            m20(static_cast<T>(m.m20)), m21(static_cast<T>(m.m21)), m22(static_cast<T>(m.m22)) {}
 
@@ -412,9 +380,10 @@ struct mat3x3
 template <typename T>
 std::ostream &operator<<(std::ostream &os, const mat3x3<T> &m)
 {
-    os << "mat3x3<" << typeid(T).name() << ">(" << m.m00 << ", " << m.m01 << ", " << m.m02 << ", "
-       << m.m10 << ", " << m.m11 << ", " << m.m12 << ", "
-       << m.m20 << ", " << m.m21 << ", " << m.m22 << ")";
+    os << "mat3x3<" << typeid(T).name() << ">{" << '\n'
+       << m.m00 << ", " << m.m10 << ", " << m.m20 << ", " << '\n'
+       << m.m01 << ", " << m.m11 << ", " << m.m21 << ", " << '\n'
+       << m.m02 << ", " << m.m12 << ", " << m.m22 << "}";
     return os;
 }
 #endif

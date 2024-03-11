@@ -90,24 +90,23 @@ static MATH_CONSTEXPR bool is_zero(vec<N, T> const &v, T const &epsilon = std::n
     {
         for (LENGTH_TYPE i = 0; i < N; ++i)
         {
-            if (abs(v[i]) < epsilon)
+            if (abs(v[i]) > epsilon)
             {
-                return true;
+                return false;
             }
         }
-        return false;
     }
     else
     {
         for (LENGTH_TYPE i = 0; i < N; ++i)
         {
-            if (v[i] == 0)
+            if (v[i] != 0)
             {
-                return true;
+                return false;
             }
         }
-        return false;
     }
+    return true;
 }
 
 template <LENGTH_TYPE N, typename T>
