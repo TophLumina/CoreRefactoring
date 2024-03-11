@@ -1,7 +1,7 @@
 #pragma once
 
-#include "../Config.hpp"
-#include "Constants.hpp"
+#include "../Config.h"
+#include "Constants.h"
 
 #include <cmath>
 #include <limits>

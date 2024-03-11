@@ -1,6 +1,6 @@
 #pragma once
 
-#include "Config.hpp"
+#include "Config.h"
 
 #include <stdexcept>
 #include <string>

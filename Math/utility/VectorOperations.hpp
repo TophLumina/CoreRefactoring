@@ -2,7 +2,7 @@
 
 #include "../numeric/Numeric.hpp"
 #include "../numeric/Random.hpp"
-#include "../vec/vec.hpp"
+#include "../include/vec.h"
 
 MATH_NAMESPACE_BEGIN
 VECTOR_NAMESPACE_BEGIN

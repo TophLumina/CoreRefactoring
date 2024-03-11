@@ -1,6 +1,6 @@
 #pragma once
 
-#include "../sturctures.hpp"
+#include "../sturctures.h"
 
 #include <initializer_list>
 
