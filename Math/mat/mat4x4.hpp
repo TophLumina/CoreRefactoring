@@ -31,12 +31,12 @@ struct mat<4, 4, T>
     };
 
     // --accessors-- //
-    MATH_FUNCTION_QUALIFIERS LENGTH_TYPE size() const
+    MATH_INLINE LENGTH_TYPE size() const
     {
         return 4;
     }
 
-    MATH_FUNCTION_QUALIFIERS vec<4, T> &operator[](LENGTH_TYPE i)
+    MATH_INLINE vec<4, T> &operator[](LENGTH_TYPE i)
     {
         if (i < 0 || i >= 4)
         {
@@ -45,7 +45,7 @@ struct mat<4, 4, T>
         return c[i];
     }
 
-    MATH_FUNCTION_QUALIFIERS vec<4, T> const &operator[](LENGTH_TYPE i) const
+    MATH_INLINE vec<4, T> const &operator[](LENGTH_TYPE i) const
     {
         if (i < 0 || i >= 4)
         {
@@ -55,39 +55,42 @@ struct mat<4, 4, T>
     }
 
     // --implicit basic constructors-- //
-    MATH_FUNCTION_QUALIFIERS mat() = default;
-    MATH_FUNCTION_QUALIFIERS mat(const mat &m) = default;
-    MATH_FUNCTION_QUALIFIERS mat &operator=(const mat &m) = default;
-    MATH_FUNCTION_QUALIFIERS mat(mat &&m) = default;
-    MATH_FUNCTION_QUALIFIERS mat &operator=(mat &&m) = default;
+    MATH_INLINE mat() : m00(0), m01(0), m02(0), m03(0),
+                                     m10(0), m11(0), m12(0), m13(0),
+                                     m20(0), m21(0), m22(0), m23(0),
+                                     m30(0), m31(0), m32(0), m33(0) {}
+    MATH_INLINE mat(const mat &m) = default;
+    MATH_INLINE mat &operator=(const mat &m) = default;
+    MATH_INLINE mat(mat &&m) = default;
+    MATH_INLINE mat &operator=(mat &&m) = default;
 
     // --explicit conversion constructors-- //
     template <typename U>
-    MATH_FUNCTION_QUALIFIERS MATH_EXPLICIT mat(U scalar) : m00(scalar), m01(scalar), m02(scalar), m03(scalar),
-                                                           m10(scalar), m11(scalar), m12(scalar), m13(scalar),
-                                                           m20(scalar), m21(scalar), m22(scalar), m23(scalar),
-                                                           m30(scalar), m31(scalar), m32(scalar), m33(scalar) {}
+    MATH_INLINE MATH_EXPLICIT mat(U scalar) : m00(static_cast<T>(scalar)), m01(static_cast<T>(0)), m02(static_cast<T>(0)), m03(static_cast<T>(0)),
+                                                           m10(static_cast<T>(0)), m11(static_cast<T>(scalar)), m12(static_cast<T>(0)), m13(static_cast<T>(0)),
+                                                           m20(static_cast<T>(0)), m21(static_cast<T>(0)), m22(static_cast<T>(scalar)), m23(static_cast<T>(0)),
+                                                           m30(static_cast<T>(0)), m31(static_cast<T>(0)), m32(static_cast<T>(0)), m33(static_cast<T>(scalar)) {}
 
     template <typename U>
-    MATH_FUNCTION_QUALIFIERS MATH_EXPLICIT mat(const mat<2, 2, U> &m) : m00(static_cast<T>(m.m00)), m01(static_cast<T>(m.m01)), m02(0), m03(0),
+    MATH_INLINE MATH_EXPLICIT mat(const mat<2, 2, U> &m) : m00(static_cast<T>(m.m00)), m01(static_cast<T>(m.m01)), m02(0), m03(0),
                                                                         m10(static_cast<T>(m.m10)), m11(static_cast<T>(m.m11)), m12(0), m13(0),
                                                                         m20(0), m21(0), m22(1), m23(0),
                                                                         m30(0), m31(0), m32(0), m33(1) {}
 
     template <typename U>
-    MATH_FUNCTION_QUALIFIERS MATH_EXPLICIT mat(const mat<3, 3, U> &m) : m00(static_cast<T>(m.m00)), m01(static_cast<T>(m.m01)), m02(static_cast<T>(m.m02)), m03(0),
+    MATH_INLINE MATH_EXPLICIT mat(const mat<3, 3, U> &m) : m00(static_cast<T>(m.m00)), m01(static_cast<T>(m.m01)), m02(static_cast<T>(m.m02)), m03(0),
                                                                         m10(static_cast<T>(m.m10)), m11(static_cast<T>(m.m11)), m12(static_cast<T>(m.m12)), m13(0),
                                                                         m20(static_cast<T>(m.m20)), m21(static_cast<T>(m.m21)), m22(static_cast<T>(m.m22)), m23(0),
                                                                         m30(0), m31(0), m32(0), m33(1) {}
 
     template <typename U>
-    MATH_FUNCTION_QUALIFIERS MATH_EXPLICIT mat(const mat<4, 4, U> &m) : m00(static_cast<T>(m.m00)), m01(static_cast<T>(m.m01)), m02(static_cast<T>(m.m02)), m03(static_cast<T>(m.m03)),
+    MATH_INLINE MATH_EXPLICIT mat(const mat<4, 4, U> &m) : m00(static_cast<T>(m.m00)), m01(static_cast<T>(m.m01)), m02(static_cast<T>(m.m02)), m03(static_cast<T>(m.m03)),
                                                                         m10(static_cast<T>(m.m10)), m11(static_cast<T>(m.m11)), m12(static_cast<T>(m.m12)), m13(static_cast<T>(m.m13)),
                                                                         m20(static_cast<T>(m.m20)), m21(static_cast<T>(m.m21)), m22(static_cast<T>(m.m22)), m23(static_cast<T>(m.m23)),
                                                                         m30(static_cast<T>(m.m30)), m31(static_cast<T>(m.m31)), m32(static_cast<T>(m.m32)), m33(static_cast<T>(m.m33)) {}
 
     template <typename U>
-    MATH_FUNCTION_QUALIFIERS MATH_EXPLICIT mat(U m00, U m01, U m02, U m03,
+    MATH_INLINE MATH_EXPLICIT mat(U m00, U m01, U m02, U m03,
                                                U m10, U m11, U m12, U m13,
                                                U m20, U m21, U m22, U m23,
                                                U m30, U m31, U m32, U m33) : m00(static_cast<T>(m00)), m01(static_cast<T>(m01)), m02(static_cast<T>(m02)), m03(static_cast<T>(m03)),
@@ -96,10 +99,10 @@ struct mat<4, 4, T>
                                                                              m30(static_cast<T>(m30)), m31(static_cast<T>(m31)), m32(static_cast<T>(m32)), m33(static_cast<T>(m33)) {}
 
     template <typename U>
-    MATH_FUNCTION_QUALIFIERS MATH_EXPLICIT mat(const vec<4, U> &v0, const vec<4, U> &v1, const vec<4, U> &v2, const vec<4, U> &v3) : c{v0, v1, v2, v3} {}
+    MATH_INLINE MATH_EXPLICIT mat(const vec<4, U> &v0, const vec<4, U> &v1, const vec<4, U> &v2, const vec<4, U> &v3) : c{v0, v1, v2, v3} {}
 
     // --initializer list constructor-- //
-    MATH_FUNCTION_QUALIFIERS mat(std::initializer_list<T> list)
+    MATH_INLINE mat(std::initializer_list<T> list)
     {
         if (list.size() != 16)
         {
@@ -124,7 +127,7 @@ struct mat<4, 4, T>
         m33 = *it;
     }
 
-    MATH_FUNCTION_QUALIFIERS mat(std::initializer_list<vec<4, T>> list)
+    MATH_INLINE mat(std::initializer_list<vec<4, T>> list)
     {
         if (list.size() != 4)
         {
@@ -138,12 +141,12 @@ struct mat<4, 4, T>
     }
 
     // --unary arithmetic operators-- //
-    MATH_FUNCTION_QUALIFIERS mat operator+() const
+    MATH_INLINE mat operator+() const
     {
         return *this;
     }
 
-    MATH_FUNCTION_QUALIFIERS mat operator-() const
+    MATH_INLINE mat operator-() const
     {
         return mat(-m00, -m01, -m02, -m03,
                    -m10, -m11, -m12, -m13,
@@ -152,7 +155,7 @@ struct mat<4, 4, T>
     }
 
     template <typename U>
-    MATH_FUNCTION_QUALIFIERS mat &operator+=(U scalar)
+    MATH_INLINE mat &operator+=(U scalar)
     {
         m00 += scalar;
         m01 += scalar;
@@ -174,7 +177,7 @@ struct mat<4, 4, T>
     }
 
     template <typename U>
-    MATH_FUNCTION_QUALIFIERS mat &operator+=(const mat<4, 4, U> &m)
+    MATH_INLINE mat &operator+=(const mat<4, 4, U> &m)
     {
         m00 += m.m00;
         m01 += m.m01;
@@ -196,7 +199,7 @@ struct mat<4, 4, T>
     }
 
     template <typename U>
-    MATH_FUNCTION_QUALIFIERS mat &operator-=(U scalar)
+    MATH_INLINE mat &operator-=(U scalar)
     {
         m00 -= scalar;
         m01 -= scalar;
@@ -218,7 +221,7 @@ struct mat<4, 4, T>
     }
 
     template <typename U>
-    MATH_FUNCTION_QUALIFIERS mat &operator-=(const mat<4, 4, U> &m)
+    MATH_INLINE mat &operator-=(const mat<4, 4, U> &m)
     {
         m00 -= m.m00;
         m01 -= m.m01;
@@ -240,7 +243,7 @@ struct mat<4, 4, T>
     }
 
     template <typename U>
-    MATH_FUNCTION_QUALIFIERS mat &operator*=(U scalar)
+    MATH_INLINE mat &operator*=(U scalar)
     {
         m00 *= scalar;
         m01 *= scalar;
@@ -262,7 +265,7 @@ struct mat<4, 4, T>
     }
 
     template <typename U>
-    MATH_FUNCTION_QUALIFIERS mat &operator*=(const mat<4, 4, U> &m)
+    MATH_INLINE mat &operator*=(const mat<4, 4, U> &m)
     {
         m00 *= m.m00;
         m01 *= m.m01;
@@ -284,7 +287,7 @@ struct mat<4, 4, T>
     }
 
     template <typename U>
-    MATH_FUNCTION_QUALIFIERS mat &operator/=(U scalar)
+    MATH_INLINE mat &operator/=(U scalar)
     {
         m00 /= scalar;
         m01 /= scalar;
@@ -306,7 +309,7 @@ struct mat<4, 4, T>
     }
 
     template <typename U>
-    MATH_FUNCTION_QUALIFIERS mat &operator/=(const mat<4, 4, U> &m)
+    MATH_INLINE mat &operator/=(const mat<4, 4, U> &m)
     {
         m00 /= m.m00;
         m01 /= m.m01;
@@ -328,7 +331,7 @@ struct mat<4, 4, T>
     }
 
     // --increment and decrement operators-- //
-    MATH_FUNCTION_QUALIFIERS mat &operator++()
+    MATH_INLINE mat &operator++()
     {
         static_assert(std::is_integral<T>::value, "mat<T>::operator++(): T must be an integral type.");
 
@@ -351,7 +354,7 @@ struct mat<4, 4, T>
         return *this;
     }
 
-    MATH_FUNCTION_QUALIFIERS mat operator++(int)
+    MATH_INLINE mat operator++(int)
     {
         static_assert(std::is_integral<T>::value, "mat<T>::operator++(int): T must be an integral type.");
 
@@ -360,7 +363,7 @@ struct mat<4, 4, T>
         return temp;
     }
 
-    MATH_FUNCTION_QUALIFIERS mat &operator--()
+    MATH_INLINE mat &operator--()
     {
         static_assert(std::is_integral<T>::value, "mat<T>::operator--(): T must be an integral type.");
 
@@ -383,7 +386,7 @@ struct mat<4, 4, T>
         return *this;
     }
 
-    MATH_FUNCTION_QUALIFIERS mat operator--(int)
+    MATH_INLINE mat operator--(int)
     {
         static_assert(std::is_integral<T>::value, "mat<T>::operator--(int): T must be an integral type.");
 
@@ -393,7 +396,7 @@ struct mat<4, 4, T>
     }
 
     // --binary arithmetic operators-- //
-    friend MATH_FUNCTION_QUALIFIERS mat operator+(const mat &m, T scalar)
+    friend MATH_INLINE mat operator+(const mat &m, T scalar)
     {
         return {m.m00 + scalar, m.m01 + scalar, m.m02 + scalar, m.m03 + scalar,
                 m.m10 + scalar, m.m11 + scalar, m.m12 + scalar, m.m13 + scalar,
@@ -401,7 +404,7 @@ struct mat<4, 4, T>
                 m.m30 + scalar, m.m31 + scalar, m.m32 + scalar, m.m33 + scalar};
     }
 
-    friend MATH_FUNCTION_QUALIFIERS mat operator+(T scalar, const mat &m)
+    friend MATH_INLINE mat operator+(T scalar, const mat &m)
     {
         return {m.m00 + scalar, m.m01 + scalar, m.m02 + scalar, m.m03 + scalar,
                 m.m10 + scalar, m.m11 + scalar, m.m12 + scalar, m.m13 + scalar,
@@ -409,7 +412,7 @@ struct mat<4, 4, T>
                 m.m30 + scalar, m.m31 + scalar, m.m32 + scalar, m.m33 + scalar};
     }
 
-    friend MATH_FUNCTION_QUALIFIERS mat operator+(const mat &m1, const mat &m2)
+    friend MATH_INLINE mat operator+(const mat &m1, const mat &m2)
     {
         return {m1.m00 + m2.m00, m1.m01 + m2.m01, m1.m02 + m2.m02, m1.m03 + m2.m03,
                 m1.m10 + m2.m10, m1.m11 + m2.m11, m1.m12 + m2.m12, m1.m13 + m2.m13,
@@ -417,7 +420,7 @@ struct mat<4, 4, T>
                 m1.m30 + m2.m30, m1.m31 + m2.m31, m1.m32 + m2.m32, m1.m33 + m2.m33};
     }
 
-    friend MATH_FUNCTION_QUALIFIERS mat operator-(const mat &m, T scalar)
+    friend MATH_INLINE mat operator-(const mat &m, T scalar)
     {
         return {m.m00 - scalar, m.m01 - scalar, m.m02 - scalar, m.m03 - scalar,
                 m.m10 - scalar, m.m11 - scalar, m.m12 - scalar, m.m13 - scalar,
@@ -425,7 +428,7 @@ struct mat<4, 4, T>
                 m.m30 - scalar, m.m31 - scalar, m.m32 - scalar, m.m33 - scalar};
     }
 
-    friend MATH_FUNCTION_QUALIFIERS mat operator-(T scalar, const mat &m)
+    friend MATH_INLINE mat operator-(T scalar, const mat &m)
     {
         return {scalar - m.m00, scalar - m.m01, scalar - m.m02, scalar - m.m03,
                 scalar - m.m10, scalar - m.m11, scalar - m.m12, scalar - m.m13,
@@ -433,7 +436,7 @@ struct mat<4, 4, T>
                 scalar - m.m30, scalar - m.m31, scalar - m.m32, scalar - m.m33};
     }
 
-    friend MATH_FUNCTION_QUALIFIERS mat operator-(const mat &m1, const mat &m2)
+    friend MATH_INLINE mat operator-(const mat &m1, const mat &m2)
     {
         return {m1.m00 - m2.m00, m1.m01 - m2.m01, m1.m02 - m2.m02, m1.m03 - m2.m03,
                 m1.m10 - m2.m10, m1.m11 - m2.m11, m1.m12 - m2.m12, m1.m13 - m2.m13,
@@ -441,7 +444,7 @@ struct mat<4, 4, T>
                 m1.m30 - m2.m30, m1.m31 - m2.m31, m1.m32 - m2.m32, m1.m33 - m2.m33};
     }
 
-    friend MATH_FUNCTION_QUALIFIERS mat operator*(const mat &m, T scalar)
+    friend MATH_INLINE mat operator*(const mat &m, T scalar)
     {
         return {m.m00 * scalar, m.m01 * scalar, m.m02 * scalar, m.m03 * scalar,
                 m.m10 * scalar, m.m11 * scalar, m.m12 * scalar, m.m13 * scalar,
@@ -449,7 +452,7 @@ struct mat<4, 4, T>
                 m.m30 * scalar, m.m31 * scalar, m.m32 * scalar, m.m33 * scalar};
     }
 
-    friend MATH_FUNCTION_QUALIFIERS mat operator*(T scalar, const mat &m)
+    friend MATH_INLINE mat operator*(T scalar, const mat &m)
     {
         return {m.m00 * scalar, m.m01 * scalar, m.m02 * scalar, m.m03 * scalar,
                 m.m10 * scalar, m.m11 * scalar, m.m12 * scalar, m.m13 * scalar,
@@ -457,7 +460,7 @@ struct mat<4, 4, T>
                 m.m30 * scalar, m.m31 * scalar, m.m32 * scalar, m.m33 * scalar};
     }
 
-    friend MATH_FUNCTION_QUALIFIERS mat operator*(const mat &m1, const mat &m2)
+    friend MATH_INLINE mat operator*(const mat &m1, const mat &m2)
     {
         return {m1.m00 * m2.m00, m1.m01 * m2.m01, m1.m02 * m2.m02, m1.m03 * m2.m03,
                 m1.m10 * m2.m10, m1.m11 * m2.m11, m1.m12 * m2.m12, m1.m13 * m2.m13,
@@ -465,7 +468,7 @@ struct mat<4, 4, T>
                 m1.m30 * m2.m30, m1.m31 * m2.m31, m1.m32 * m2.m32, m1.m33 * m2.m33};
     }
 
-    friend MATH_FUNCTION_QUALIFIERS mat operator/(const mat &m, T scalar)
+    friend MATH_INLINE mat operator/(const mat &m, T scalar)
     {
         return {m.m00 / scalar, m.m01 / scalar, m.m02 / scalar, m.m03 / scalar,
                 m.m10 / scalar, m.m11 / scalar, m.m12 / scalar, m.m13 / scalar,
@@ -473,7 +476,7 @@ struct mat<4, 4, T>
                 m.m30 / scalar, m.m31 / scalar, m.m32 / scalar, m.m33 / scalar};
     }
 
-    friend MATH_FUNCTION_QUALIFIERS mat operator/(T scalar, const mat &m)
+    friend MATH_INLINE mat operator/(T scalar, const mat &m)
     {
         return {scalar / m.m00, scalar / m.m01, scalar / m.m02, scalar / m.m03,
                 scalar / m.m10, scalar / m.m11, scalar / m.m12, scalar / m.m13,
@@ -481,7 +484,7 @@ struct mat<4, 4, T>
                 scalar / m.m30, scalar / m.m31, scalar / m.m32, scalar / m.m33};
     }
 
-    friend MATH_FUNCTION_QUALIFIERS mat operator/(const mat &m1, const mat &m2)
+    friend MATH_INLINE mat operator/(const mat &m1, const mat &m2)
     {
         return {m1.m00 / m2.m00, m1.m01 / m2.m01, m1.m02 / m2.m02, m1.m03 / m2.m03,
                 m1.m10 / m2.m10, m1.m11 / m2.m11, m1.m12 / m2.m12, m1.m13 / m2.m13,
@@ -490,7 +493,7 @@ struct mat<4, 4, T>
     }
 
     // --comparison operators-- //
-    friend MATH_FUNCTION_QUALIFIERS bool operator==(const mat &m1, const mat &m2)
+    friend MATH_INLINE bool operator==(const mat &m1, const mat &m2)
     {
         return m1.m00 == m2.m00 && m1.m01 == m2.m01 && m1.m02 == m2.m02 && m1.m03 == m2.m03 &&
                m1.m10 == m2.m10 && m1.m11 == m2.m11 && m1.m12 == m2.m12 && m1.m13 == m2.m13 &&
@@ -498,7 +501,7 @@ struct mat<4, 4, T>
                m1.m30 == m2.m30 && m1.m31 == m2.m31 && m1.m32 == m2.m32 && m1.m33 == m2.m33;
     }
 
-    friend MATH_FUNCTION_QUALIFIERS bool operator!=(const mat &m1, const mat &m2)
+    friend MATH_INLINE bool operator!=(const mat &m1, const mat &m2)
     {
         return m1.m00 != m2.m00 || m1.m01 != m2.m01 || m1.m02 != m2.m02 || m1.m03 != m2.m03 ||
                m1.m10 != m2.m10 || m1.m11 != m2.m11 || m1.m12 != m2.m12 || m1.m13 != m2.m13 ||

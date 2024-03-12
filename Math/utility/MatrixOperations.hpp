@@ -118,27 +118,71 @@ static MATH_FUNCTION_QUALIFIERS mat<N, M, T> transpose(mat<M, N, T> const &m)
 }
 
 template <LENGTH_TYPE M, LENGTH_TYPE N, typename T>
+static MATH_FUNCTION_QUALIFIERS T cofactor(mat<M, N, T> const &m, LENGTH_TYPE row, LENGTH_TYPE col)
+{
+    mat<M - 1, N - 1, T> subMatrix;
+    for (LENGTH_TYPE i = 0; i < M; ++i)
+    {
+        for (LENGTH_TYPE j = 0; j < N; ++j)
+        {
+            if (i != row && j != col)
+            {
+                LENGTH_TYPE sub_i = i < row ? i : i - 1;
+                LENGTH_TYPE sub_j = j < col ? j : j - 1;
+                subMatrix[sub_i][sub_j] = m[i][j];
+            }
+        }
+    }
+    T sign = ((row + col) % 2 == 0) ? static_cast<T>(1) : static_cast<T>(-1);
+    return sign * determinant(subMatrix);
+}
+
+template <LENGTH_TYPE M, LENGTH_TYPE N, typename T>
+static MATH_FUNCTION_QUALIFIERS mat<M, N, T> minor(mat<M, N, T> const &m, LENGTH_TYPE row, LENGTH_TYPE col)
+{
+    mat<M - 1, N - 1, T> result;
+    for (LENGTH_TYPE i = 0; i < M; ++i)
+    {
+        for (LENGTH_TYPE j = 0; j < N; ++j)
+        {
+            if (i != row && j != col)
+            {
+                LENGTH_TYPE sub_i = i < row ? i : i - 1;
+                LENGTH_TYPE sub_j = j < col ? j : j - 1;
+                result[sub_i][sub_j] = m[i][j];
+            }
+        }
+    }
+    return result;
+}
+
+template <LENGTH_TYPE M, LENGTH_TYPE N, typename T>
 static MATH_FUNCTION_QUALIFIERS T determinant(mat<M, N, T> const &m)
 {
     static_assert(M == N, "determinant is only defined for square matrices");
     T result = 0;
-    for (LENGTH_TYPE i = 0; i < M; ++i)
+    if constexpr (M == 2)
     {
-        T product = 1;
-        for (LENGTH_TYPE j = 0; j < M; ++j)
-        {
-            product *= m[j][(i + j) % M];
-        }
-        result += product;
+        result = m[0][0] * m[1][1] - m[0][1] * m[1][0];
     }
+    else
+    {
+        for (LENGTH_TYPE i = 0; i < M; ++i)
+        {
+            result += m[i][0] * cofactor(m, i, 0);
+        }
+    }
+    return result;
+}
+
+template <LENGTH_TYPE M, LENGTH_TYPE N, typename T>
+static MATH_FUNCTION_QUALIFIERS T trace(mat<M, N, T> const &m)
+{
+    static_assert(M == N, "trace is only defined for square matrices");
+    T result = 0;
     for (LENGTH_TYPE i = 0; i < M; ++i)
     {
-        T product = 1;
-        for (LENGTH_TYPE j = 0; j < M; ++j)
-        {
-            product *= m[j][(i - j + M) % M];
-        }
-        result -= product;
+        result += m[i][i];
     }
     return result;
 }
@@ -170,6 +214,8 @@ static MATH_FUNCTION_QUALIFIERS mat<M, N, T> inverse(mat<M, N, T> const &m)
     return adjugate(m) / det;
 }
 
+// TODO:: extend this to support non-square matrices
+// Only Support Squared Matrices
 template <LENGTH_TYPE M, LENGTH_TYPE N, typename T>
 static MATH_FUNCTION_QUALIFIERS vec<M, T> operator*(mat<M, N, T> const &m, vec<N, T> const &v)
 {

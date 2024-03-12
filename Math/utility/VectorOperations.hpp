@@ -87,7 +87,7 @@ static MATH_FUNCTION_QUALIFIERS vec<N, T> round(vec<N, T> const &v)
 template <LENGTH_TYPE N, typename T>
 static MATH_FUNCTION_QUALIFIERS bool is_zero(vec<N, T> const &v, T const &epsilon = std::numeric_limits<T>::epsilon())
 {
-    if MATH_FUNCTION_QUALIFIERS (std::is_floating_point<T>::value)
+    if MATH_CONSTEXPR (std::is_floating_point<T>::value)
     {
         for (LENGTH_TYPE i = 0; i < N; ++i)
         {

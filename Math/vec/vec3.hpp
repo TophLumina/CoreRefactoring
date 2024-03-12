@@ -29,12 +29,12 @@ struct vec<3, T>
     };
 
     // --accessors-- //
-    MATH_FUNCTION_QUALIFIERS LENGTH_TYPE size() const
+    MATH_INLINE LENGTH_TYPE size() const
     {
         return 3;
     }
 
-    MATH_FUNCTION_QUALIFIERS T &operator[](LENGTH_TYPE i)
+    MATH_INLINE T &operator[](LENGTH_TYPE i)
     {
         if (i < 0 || i >= 3)
         {
@@ -43,7 +43,7 @@ struct vec<3, T>
         return c[i];
     }
 
-    MATH_FUNCTION_QUALIFIERS T const &operator[](LENGTH_TYPE i) const
+    MATH_INLINE T const &operator[](LENGTH_TYPE i) const
     {
         if (i < 0 || i >= 3)
         {
@@ -53,42 +53,42 @@ struct vec<3, T>
     }
 
     // --implicit basic constructors-- //
-    MATH_FUNCTION_QUALIFIERS vec() = default;
-    MATH_FUNCTION_QUALIFIERS vec(const vec &v) = default;
-    MATH_FUNCTION_QUALIFIERS vec &operator=(const vec &v) = default;
-    MATH_FUNCTION_QUALIFIERS vec(vec &&v) = default;
-    MATH_FUNCTION_QUALIFIERS vec &operator=(vec &&v) = default;
+    MATH_INLINE vec() : x(0), y(0), z(0) {}
+    MATH_INLINE vec(const vec &v) = default;
+    MATH_INLINE vec &operator=(const vec &v) = default;
+    MATH_INLINE vec(vec &&v) = default;
+    MATH_INLINE vec &operator=(vec &&v) = default;
 
     // --explicit conversion constructors-- //
     template <typename U>
-    MATH_FUNCTION_QUALIFIERS MATH_EXPLICIT vec(U scalar) : x(static_cast<T>(scalar)), y(static_cast<T>(scalar)), z(static_cast<T>(scalar)) {}
+    MATH_INLINE MATH_EXPLICIT vec(U scalar) : x(static_cast<T>(scalar)), y(static_cast<T>(scalar)), z(static_cast<T>(scalar)) {}
 
     template <typename U>
-    MATH_FUNCTION_QUALIFIERS MATH_EXPLICIT vec(const vec<3, U> &v) : x(static_cast<T>(v.x)), y(static_cast<T>(v.y)), z(static_cast<T>(v.z)) {}
+    MATH_INLINE MATH_EXPLICIT vec(const vec<3, U> &v) : x(static_cast<T>(v.x)), y(static_cast<T>(v.y)), z(static_cast<T>(v.z)) {}
 
     template <typename U>
-    MATH_FUNCTION_QUALIFIERS MATH_EXPLICIT vec(const vec<4, U> &v) : x(static_cast<T>(v.x)), y(static_cast<T>(v.y)), z(static_cast<T>(v.z)) {}
+    MATH_INLINE MATH_EXPLICIT vec(const vec<4, U> &v) : x(static_cast<T>(v.x)), y(static_cast<T>(v.y)), z(static_cast<T>(v.z)) {}
 
     template <typename A, typename B>
-    MATH_FUNCTION_QUALIFIERS MATH_EXPLICIT vec(A x, const vec<2, B> &v) : x(static_cast<T>(x)), y(static_cast<T>(v.x)), z(static_cast<T>(v.y)) {}
+    MATH_INLINE MATH_EXPLICIT vec(A x, const vec<2, B> &v) : x(static_cast<T>(x)), y(static_cast<T>(v.x)), z(static_cast<T>(v.y)) {}
 
     template <typename A, typename B>
-    MATH_FUNCTION_QUALIFIERS MATH_EXPLICIT vec(const vec<2, A> &v, B z) : x(static_cast<T>(v.x)), y(static_cast<T>(v.y)), z(static_cast<T>(z)) {}
+    MATH_INLINE MATH_EXPLICIT vec(const vec<2, A> &v, B z) : x(static_cast<T>(v.x)), y(static_cast<T>(v.y)), z(static_cast<T>(z)) {}
 
     template <typename A, typename B, typename C>
-    MATH_FUNCTION_QUALIFIERS MATH_EXPLICIT vec(A x, B y, C z) : x(static_cast<T>(x)), y(static_cast<T>(y)), z(static_cast<T>(z)) {}
+    MATH_INLINE MATH_EXPLICIT vec(A x, B y, C z) : x(static_cast<T>(x)), y(static_cast<T>(y)), z(static_cast<T>(z)) {}
 
     template <typename A, typename B, typename C>
-    MATH_FUNCTION_QUALIFIERS MATH_EXPLICIT vec(const vec<1, A> &v, B y, C z) : x(static_cast<T>(v.x)), y(static_cast<T>(y)), z(static_cast<T>(z)) {}
+    MATH_INLINE MATH_EXPLICIT vec(const vec<1, A> &v, B y, C z) : x(static_cast<T>(v.x)), y(static_cast<T>(y)), z(static_cast<T>(z)) {}
 
     template <typename A, typename B, typename C>
-    MATH_FUNCTION_QUALIFIERS MATH_EXPLICIT vec(A x, const vec<1, B> &v, C z) : x(static_cast<T>(x)), y(static_cast<T>(v.x)), z(static_cast<T>(z)) {}
+    MATH_INLINE MATH_EXPLICIT vec(A x, const vec<1, B> &v, C z) : x(static_cast<T>(x)), y(static_cast<T>(v.x)), z(static_cast<T>(z)) {}
 
     template <typename A, typename B, typename C>
-    MATH_FUNCTION_QUALIFIERS MATH_EXPLICIT vec(A x, B y, const vec<1, C> &v) : x(static_cast<T>(x)), y(static_cast<T>(y)), z(static_cast<T>(v.x)) {}
+    MATH_INLINE MATH_EXPLICIT vec(A x, B y, const vec<1, C> &v) : x(static_cast<T>(x)), y(static_cast<T>(y)), z(static_cast<T>(v.x)) {}
 
     // --initialization list constructor-- //
-    MATH_FUNCTION_QUALIFIERS vec(std::initializer_list<T> list)
+    MATH_INLINE vec(std::initializer_list<T> list)
     {
         if (list.size() != 3)
         {
@@ -101,18 +101,18 @@ struct vec<3, T>
     }
 
     // --unary arithmetic operators-- //
-    MATH_FUNCTION_QUALIFIERS vec operator+() const
+    MATH_INLINE vec operator+() const
     {
         return *this;
     }
 
-    MATH_FUNCTION_QUALIFIERS vec operator-() const
+    MATH_INLINE vec operator-() const
     {
         return vec(-x, -y, -z);
     }
 
     template <typename U>
-    MATH_FUNCTION_QUALIFIERS vec &operator+=(U scalar)
+    MATH_INLINE vec &operator+=(U scalar)
     {
         x += static_cast<T>(scalar);
         y += static_cast<T>(scalar);
@@ -121,7 +121,7 @@ struct vec<3, T>
     }
 
     template <typename U>
-    MATH_FUNCTION_QUALIFIERS vec &operator+=(const vec<1, U> &v)
+    MATH_INLINE vec &operator+=(const vec<1, U> &v)
     {
         x += static_cast<T>(v.x);
         y += static_cast<T>(v.x);
@@ -130,7 +130,7 @@ struct vec<3, T>
     }
 
     template <typename U>
-    MATH_FUNCTION_QUALIFIERS vec &operator+=(const vec<3, U> &v)
+    MATH_INLINE vec &operator+=(const vec<3, U> &v)
     {
         x += static_cast<T>(v.x);
         y += static_cast<T>(v.y);
@@ -139,7 +139,7 @@ struct vec<3, T>
     }
 
     template <typename U>
-    MATH_FUNCTION_QUALIFIERS vec &operator-=(U scalar)
+    MATH_INLINE vec &operator-=(U scalar)
     {
         x -= static_cast<T>(scalar);
         y -= static_cast<T>(scalar);
@@ -148,7 +148,7 @@ struct vec<3, T>
     }
 
     template <typename U>
-    MATH_FUNCTION_QUALIFIERS vec &operator-=(const vec<1, U> &v)
+    MATH_INLINE vec &operator-=(const vec<1, U> &v)
     {
         x -= static_cast<T>(v.x);
         y -= static_cast<T>(v.x);
@@ -157,7 +157,7 @@ struct vec<3, T>
     }
 
     template <typename U>
-    MATH_FUNCTION_QUALIFIERS vec &operator-=(const vec<3, U> &v)
+    MATH_INLINE vec &operator-=(const vec<3, U> &v)
     {
         x -= static_cast<T>(v.x);
         y -= static_cast<T>(v.y);
@@ -166,7 +166,7 @@ struct vec<3, T>
     }
 
     template <typename U>
-    MATH_FUNCTION_QUALIFIERS vec &operator*=(U scalar)
+    MATH_INLINE vec &operator*=(U scalar)
     {
         x *= static_cast<T>(scalar);
         y *= static_cast<T>(scalar);
@@ -175,7 +175,7 @@ struct vec<3, T>
     }
 
     template <typename U>
-    MATH_FUNCTION_QUALIFIERS vec &operator*=(const vec<1, U> &v)
+    MATH_INLINE vec &operator*=(const vec<1, U> &v)
     {
         x *= static_cast<T>(v.x);
         y *= static_cast<T>(v.x);
@@ -184,7 +184,7 @@ struct vec<3, T>
     }
 
     template <typename U>
-    MATH_FUNCTION_QUALIFIERS vec &operator*=(const vec<3, U> &v)
+    MATH_INLINE vec &operator*=(const vec<3, U> &v)
     {
         x *= static_cast<T>(v.x);
         y *= static_cast<T>(v.y);
@@ -193,7 +193,7 @@ struct vec<3, T>
     }
 
     template <typename U>
-    MATH_FUNCTION_QUALIFIERS vec &operator/=(U scalar)
+    MATH_INLINE vec &operator/=(U scalar)
     {
         x /= static_cast<T>(scalar);
         y /= static_cast<T>(scalar);
@@ -202,7 +202,7 @@ struct vec<3, T>
     }
 
     template <typename U>
-    MATH_FUNCTION_QUALIFIERS vec &operator/=(const vec<1, U> &v)
+    MATH_INLINE vec &operator/=(const vec<1, U> &v)
     {
         x /= static_cast<T>(v.x);
         y /= static_cast<T>(v.x);
@@ -211,7 +211,7 @@ struct vec<3, T>
     }
 
     template <typename U>
-    MATH_FUNCTION_QUALIFIERS vec &operator/=(const vec<3, U> &v)
+    MATH_INLINE vec &operator/=(const vec<3, U> &v)
     {
         x /= static_cast<T>(v.x);
         y /= static_cast<T>(v.y);
@@ -220,7 +220,7 @@ struct vec<3, T>
     }
 
     // --increment and decrement operators-- //
-    MATH_FUNCTION_QUALIFIERS vec &operator++()
+    MATH_INLINE vec &operator++()
     {
         static_assert(std::is_integral<T>::value, "vec3<T>::operator++(): T must be an integral type.");
 
@@ -230,7 +230,7 @@ struct vec<3, T>
         return *this;
     }
 
-    MATH_FUNCTION_QUALIFIERS vec operator++(int)
+    MATH_INLINE vec operator++(int)
     {
         static_assert(std::is_integral<T>::value, "vec3<T>::operator++(int): T must be an integral type.");
 
@@ -239,7 +239,7 @@ struct vec<3, T>
         return temp;
     }
 
-    MATH_FUNCTION_QUALIFIERS vec &operator--()
+    MATH_INLINE vec &operator--()
     {
         static_assert(std::is_integral<T>::value, "vec3<T>::operator--(): T must be an integral type.");
 
@@ -249,7 +249,7 @@ struct vec<3, T>
         return *this;
     }
 
-    MATH_FUNCTION_QUALIFIERS vec operator--(int)
+    MATH_INLINE vec operator--(int)
     {
         static_assert(std::is_integral<T>::value, "vec3<T>::operator--(int): T must be an integral type.");
 
@@ -261,113 +261,113 @@ struct vec<3, T>
     // TODO:: implement bit operators
 
     // --binary arithmetic operators-- //
-    friend MATH_FUNCTION_QUALIFIERS vec operator+(const vec &v, T scalar)
+    friend MATH_INLINE vec operator+(const vec &v, T scalar)
     {
         return {v.x + scalar, v.y + scalar, v.z + scalar};
     }
 
-    friend MATH_FUNCTION_QUALIFIERS vec operator+(T scalar, const vec &v)
+    friend MATH_INLINE vec operator+(T scalar, const vec &v)
     {
         return {scalar + v.x, scalar + v.y, scalar + v.z};
     }
 
-    friend MATH_FUNCTION_QUALIFIERS vec operator+(const vec<1, T> &v1, const vec &v2)
+    friend MATH_INLINE vec operator+(const vec<1, T> &v1, const vec &v2)
     {
         return {v1.x + v2.x, v1.x + v2.y, v1.x + v2.z};
     }
 
-    friend MATH_FUNCTION_QUALIFIERS vec operator+(const vec &v1, const vec<1, T> &v2)
+    friend MATH_INLINE vec operator+(const vec &v1, const vec<1, T> &v2)
     {
         return {v1.x + v2.x, v1.y + v2.x, v1.z + v2.x};
     }
 
-    friend MATH_FUNCTION_QUALIFIERS vec operator+(const vec &v1, const vec &v2)
+    friend MATH_INLINE vec operator+(const vec &v1, const vec &v2)
     {
         return {v1.x + v2.x, v1.y + v2.y, v1.z + v2.z};
     }
 
-    friend MATH_FUNCTION_QUALIFIERS vec operator-(const vec &v, T scalar)
+    friend MATH_INLINE vec operator-(const vec &v, T scalar)
     {
         return {v.x - scalar, v.y - scalar, v.z - scalar};
     }
 
-    friend MATH_FUNCTION_QUALIFIERS vec operator-(T scalar, const vec &v)
+    friend MATH_INLINE vec operator-(T scalar, const vec &v)
     {
         return {scalar - v.x, scalar - v.y, scalar - v.z};
     }
 
-    friend MATH_FUNCTION_QUALIFIERS vec operator-(const vec<1, T> &v1, const vec &v2)
+    friend MATH_INLINE vec operator-(const vec<1, T> &v1, const vec &v2)
     {
         return {v1.x - v2.x, v1.x - v2.y, v1.x - v2.z};
     }
 
-    friend MATH_FUNCTION_QUALIFIERS vec operator-(const vec &v1, const vec<1, T> &v2)
+    friend MATH_INLINE vec operator-(const vec &v1, const vec<1, T> &v2)
     {
         return {v1.x - v2.x, v1.y - v2.x, v1.z - v2.x};
     }
 
-    friend MATH_FUNCTION_QUALIFIERS vec operator-(const vec &v1, const vec &v2)
+    friend MATH_INLINE vec operator-(const vec &v1, const vec &v2)
     {
         return {v1.x - v2.x, v1.y - v2.y, v1.z - v2.z};
     }
 
-    friend MATH_FUNCTION_QUALIFIERS vec operator*(const vec &v, T scalar)
+    friend MATH_INLINE vec operator*(const vec &v, T scalar)
     {
         return {v.x * scalar, v.y * scalar, v.z * scalar};
     }
 
-    friend MATH_FUNCTION_QUALIFIERS vec operator*(T scalar, const vec &v)
+    friend MATH_INLINE vec operator*(T scalar, const vec &v)
     {
         return {scalar * v.x, scalar * v.y, scalar * v.z};
     }
 
-    friend MATH_FUNCTION_QUALIFIERS vec operator*(const vec<1, T> &v1, const vec &v2)
+    friend MATH_INLINE vec operator*(const vec<1, T> &v1, const vec &v2)
     {
         return {v1.x * v2.x, v1.x * v2.y, v1.x * v2.z};
     }
 
-    friend MATH_FUNCTION_QUALIFIERS vec operator*(const vec &v1, const vec<1, T> &v2)
+    friend MATH_INLINE vec operator*(const vec &v1, const vec<1, T> &v2)
     {
         return {v1.x * v2.x, v1.y * v2.x, v1.z * v2.x};
     }
 
-    friend MATH_FUNCTION_QUALIFIERS vec operator*(const vec &v1, const vec &v2)
+    friend MATH_INLINE vec operator*(const vec &v1, const vec &v2)
     {
         return {v1.x * v2.x, v1.y * v2.y, v1.z * v2.z};
     }
 
-    friend MATH_FUNCTION_QUALIFIERS vec operator/(const vec &v, T scalar)
+    friend MATH_INLINE vec operator/(const vec &v, T scalar)
     {
         return {v.x / scalar, v.y / scalar, v.z / scalar};
     }
 
-    friend MATH_FUNCTION_QUALIFIERS vec operator/(T scalar, const vec &v)
+    friend MATH_INLINE vec operator/(T scalar, const vec &v)
     {
         return {scalar / v.x, scalar / v.y, scalar / v.z};
     }
 
-    friend MATH_FUNCTION_QUALIFIERS vec operator/(const vec<1, T> &v1, const vec &v2)
+    friend MATH_INLINE vec operator/(const vec<1, T> &v1, const vec &v2)
     {
         return {v1.x / v2.x, v1.x / v2.y, v1.x / v2.z};
     }
 
-    friend MATH_FUNCTION_QUALIFIERS vec operator/(const vec &v1, const vec<1, T> &v2)
+    friend MATH_INLINE vec operator/(const vec &v1, const vec<1, T> &v2)
     {
         return {v1.x / v2.x, v1.y / v2.x, v1.z / v2.x};
     }
 
-    friend MATH_FUNCTION_QUALIFIERS vec operator/(const vec &v1, const vec &v2)
+    friend MATH_INLINE vec operator/(const vec &v1, const vec &v2)
     {
         return {v1.x / v2.x, v1.y / v2.y, v1.z / v2.z};
     }
 
     // --comparison operators-- //
-    friend MATH_FUNCTION_QUALIFIERS bool operator==(const vec &v1, const vec &v2)
+    friend MATH_INLINE bool operator==(const vec &v1, const vec &v2)
     {
         return v1.x == v2.x && v1.y == v2.y && v1.z == v2.z;
     }
 
-    friend MATH_FUNCTION_QUALIFIERS bool operator!=(const vec &v1, const vec &v2)
+    friend MATH_INLINE bool operator!=(const vec &v1, const vec &v2)
     {
         return v1.x != v2.x || v1.y != v2.y || v1.z != v2.z;
     }
