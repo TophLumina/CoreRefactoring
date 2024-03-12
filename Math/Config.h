@@ -8,7 +8,7 @@
 #define VECTOR_NAMESPACE_BEGIN namespace Vector {
 #define VECTOR_NAMESPACE_END }
 #define MATRIX_NAMESPACE_BEGIN namespace Matrix {
-#define MATRIX_NAMESPACE_END }
+#define MATRIX_NAMESPACE_END } 
 
 #ifdef MATH_SUPPORT_CONSTEXPR
     #define MATH_CONSTEXPR constexpr
