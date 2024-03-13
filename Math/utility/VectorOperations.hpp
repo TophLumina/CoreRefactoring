@@ -1,8 +1,7 @@
 #pragma once
 
-#include "../include/vec.h"
+#include "../structures.h"
 #include "../numeric/Numeric.hpp"
-#include "../numeric/Random.hpp"
 
 
 MATH_NAMESPACE_BEGIN

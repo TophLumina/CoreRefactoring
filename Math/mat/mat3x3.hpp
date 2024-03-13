@@ -1,7 +1,7 @@
 #pragma once
 
 #include "../Config.h"
-#include "../sturctures.h"
+#include "../structures.h"
 
 #include <initializer_list>
 

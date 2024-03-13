@@ -1,6 +1,5 @@
 #pragma once
 
-#include "../include/mat.h"
 #include "../numeric/Numeric.hpp"
 #include "../numeric/Random.hpp"
 

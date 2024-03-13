@@ -1,6 +1,5 @@
 #pragma once
-
-#include "../include/vec.h"
+#include "../structures.h"
 #include "Numeric.hpp"
 
 

@@ -4,7 +4,6 @@
 #include "Constants.h"
 
 #include <cmath>
-#include <limits>
 
 MATH_NAMESPACE_BEGIN
 
