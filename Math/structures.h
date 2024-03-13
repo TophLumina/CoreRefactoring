@@ -6,7 +6,6 @@
 #include <string>
 #include <typeinfo>
 
-
 MATH_NAMESPACE_BEGIN
 
 #define LENGTH_TYPE size_t
