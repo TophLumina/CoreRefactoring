@@ -15,7 +15,7 @@ static MATH_FUNCTION_QUALIFIERS mat<M, N, T> abs(mat<M, N, T> const &m)
     {
         for (LENGTH_TYPE j = 0; j < N; ++j)
         {
-            result[i][j] = abs(m[i][j]);
+            result[i][j] = Math::abs(m[i][j]);
         }
     }
     return result;
