@@ -1,8 +1,9 @@
 #pragma once
 
+#include "../include/vec.h"
 #include "../numeric/Numeric.hpp"
 #include "../numeric/Random.hpp"
-#include "../include/vec.h"
+
 
 MATH_NAMESPACE_BEGIN
 VECTOR_NAMESPACE_BEGIN
@@ -19,7 +20,7 @@ static MATH_FUNCTION_QUALIFIERS vec<N, T> abs(vec<N, T> const &v)
 }
 
 template <LENGTH_TYPE N, typename T>
-static MATH_FUNCTION_QUALIFIERS vec<N, T>random_range(vec<N, T> const &min, vec<N, T> const &max)
+static MATH_FUNCTION_QUALIFIERS vec<N, T> random_range(vec<N, T> const &min, vec<N, T> const &max)
 {
     vec<N, T> result;
     for (LENGTH_TYPE i = 0; i < N; ++i)

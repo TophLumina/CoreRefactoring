@@ -1,7 +1,8 @@
 #pragma once
 
-#include "Numeric.hpp"
 #include "../include/vec.h"
+#include "Numeric.hpp"
+
 
 #include <random>
 

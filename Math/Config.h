@@ -1,8 +1,5 @@
 #pragma once
 
-#include <iostream>
-#include <typeinfo>
-
 #define MATH_NAMESPACE_BEGIN namespace Math {
 #define MATH_NAMESPACE_END }
 #define VECTOR_NAMESPACE_BEGIN namespace Vector {

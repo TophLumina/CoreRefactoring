@@ -3,6 +3,7 @@
 #include "../sturctures.h"
 
 #include <initializer_list>
+#include <stdexcept>
 
 MATH_NAMESPACE_BEGIN
 VECTOR_NAMESPACE_BEGIN

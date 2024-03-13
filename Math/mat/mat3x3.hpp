@@ -13,7 +13,7 @@ struct mat<3, 3, T>
 {
     union
     {
-        vec<3, T> c[3];
+        Vector::vec<3, T> c[3];
         T data[9];
         struct
         {
@@ -34,7 +34,7 @@ struct mat<3, 3, T>
         return 3;
     }
 
-    MATH_INLINE vec<3, T> &operator[](LENGTH_TYPE i)
+    MATH_INLINE Vector::vec<3, T> &operator[](LENGTH_TYPE i)
     {
         if (i < 0 || i >= 3)
         {
@@ -43,7 +43,7 @@ struct mat<3, 3, T>
         return c[i];
     }
 
-    MATH_INLINE const vec<3, T> &operator[](LENGTH_TYPE i) const
+    MATH_INLINE const Vector::vec<3, T> &operator[](LENGTH_TYPE i) const
     {
         if (i < 0 || i >= 3)
         {
@@ -51,13 +51,11 @@ struct mat<3, 3, T>
         }
         return c[i];
     }
-
-    
 
     // --implicit basic constructors-- //
     MATH_INLINE mat() : m00(0), m01(0), m02(0),
-                                     m10(0), m11(0), m12(0),
-                                     m20(0), m21(0), m22(0) {}
+                        m10(0), m11(0), m12(0),
+                        m20(0), m21(0), m22(0) {}
     MATH_INLINE mat(const mat &m) = default;
     MATH_INLINE mat &operator=(const mat &m) = default;
     MATH_INLINE mat(mat &&m) = default;
@@ -66,33 +64,33 @@ struct mat<3, 3, T>
     // --explicit conversion constructors-- //
     template <typename U>
     MATH_INLINE MATH_EXPLICIT mat(U scalar) : m00(static_cast<T>(scalar)), m01(static_cast<T>(0)), m02(static_cast<T>(0)),
-                                                           m10(static_cast<T>(0)), m11(static_cast<T>(scalar)), m12(static_cast<T>(0)),
-                                                           m20(static_cast<T>(0)), m21(static_cast<T>(0)), m22(static_cast<T>(scalar)) {}
+                                              m10(static_cast<T>(0)), m11(static_cast<T>(scalar)), m12(static_cast<T>(0)),
+                                              m20(static_cast<T>(0)), m21(static_cast<T>(0)), m22(static_cast<T>(scalar)) {}
 
     template <typename U>
     MATH_INLINE MATH_EXPLICIT mat(const mat<2, 2, U> &m) : m00(static_cast<T>(m.m00)), m01(static_cast<T>(m.m01)), m02(static_cast<T>(0)),
-                                                                        m10(static_cast<T>(m.m10)), m11(static_cast<T>(m.m11)), m12(static_cast<T>(0)),
-                                                                        m20(static_cast<T>(0)), m21(static_cast<T>(0)), m22(static_cast<T>(1)) {}
+                                                           m10(static_cast<T>(m.m10)), m11(static_cast<T>(m.m11)), m12(static_cast<T>(0)),
+                                                           m20(static_cast<T>(0)), m21(static_cast<T>(0)), m22(static_cast<T>(1)) {}
 
     template <typename U>
     MATH_INLINE MATH_EXPLICIT mat(const mat<3, 3, U> &m) : m00(static_cast<T>(m.m00)), m01(static_cast<T>(m.m01)), m02(static_cast<T>(m.m02)),
-                                                                        m10(static_cast<T>(m.m10)), m11(static_cast<T>(m.m11)), m12(static_cast<T>(m.m12)),
-                                                                        m20(static_cast<T>(m.m20)), m21(static_cast<T>(m.m21)), m22(static_cast<T>(m.m22)) {}
+                                                           m10(static_cast<T>(m.m10)), m11(static_cast<T>(m.m11)), m12(static_cast<T>(m.m12)),
+                                                           m20(static_cast<T>(m.m20)), m21(static_cast<T>(m.m21)), m22(static_cast<T>(m.m22)) {}
 
     template <typename U>
     MATH_INLINE MATH_EXPLICIT mat(const mat<4, 4, U> &m) : m00(static_cast<T>(m.m00)), m01(static_cast<T>(m.m01)), m02(static_cast<T>(m.m02)),
-                                                                        m10(static_cast<T>(m.m10)), m11(static_cast<T>(m.m11)), m12(static_cast<T>(m.m12)),
-                                                                        m20(static_cast<T>(m.m20)), m21(static_cast<T>(m.m21)), m22(static_cast<T>(m.m22)) {}
+                                                           m10(static_cast<T>(m.m10)), m11(static_cast<T>(m.m11)), m12(static_cast<T>(m.m12)),
+                                                           m20(static_cast<T>(m.m20)), m21(static_cast<T>(m.m21)), m22(static_cast<T>(m.m22)) {}
 
     template <typename U>
     MATH_INLINE MATH_EXPLICIT mat(U m00, U m01, U m02, U m10, U m11, U m12, U m20, U m21, U m22) : m00(static_cast<T>(m00)), m01(static_cast<T>(m01)), m02(static_cast<T>(m02)),
-                                                                                                                m10(static_cast<T>(m10)), m11(static_cast<T>(m11)), m12(static_cast<T>(m12)),
-                                                                                                                m20(static_cast<T>(m20)), m21(static_cast<T>(m21)), m22(static_cast<T>(m22)) {}
+                                                                                                   m10(static_cast<T>(m10)), m11(static_cast<T>(m11)), m12(static_cast<T>(m12)),
+                                                                                                   m20(static_cast<T>(m20)), m21(static_cast<T>(m21)), m22(static_cast<T>(m22)) {}
 
     template <typename U>
-    MATH_INLINE MATH_EXPLICIT mat(const vec<3, U> &v0, const vec<3, U> &v1, const vec<3, U> &v2) : m00(static_cast<T>(v0.x)), m01(static_cast<T>(v0.y)), m02(static_cast<T>(v0.z)),
-                                                                                                                m10(static_cast<T>(v1.x)), m11(static_cast<T>(v1.y)), m12(static_cast<T>(v1.z)),
-                                                                                                                m20(static_cast<T>(v2.x)), m21(static_cast<T>(v2.y)), m22(static_cast<T>(v2.z)) {}
+    MATH_INLINE MATH_EXPLICIT mat(const Vector::vec<3, U> &v0, const Vector::vec<3, U> &v1, const Vector::vec<3, U> &v2) : m00(static_cast<T>(v0.x)), m01(static_cast<T>(v0.y)), m02(static_cast<T>(v0.z)),
+                                                                                                                           m10(static_cast<T>(v1.x)), m11(static_cast<T>(v1.y)), m12(static_cast<T>(v1.z)),
+                                                                                                                           m20(static_cast<T>(v2.x)), m21(static_cast<T>(v2.y)), m22(static_cast<T>(v2.z)) {}
 
     // --initializer list constructor-- //
     MATH_INLINE mat(std::initializer_list<T> list)
@@ -113,7 +111,7 @@ struct mat<3, 3, T>
         m22 = *it;
     }
 
-    MATH_INLINE mat(std::initializer_list<vec<3, T>> list)
+    MATH_INLINE mat(std::initializer_list<Vector::vec<3, T>> list)
     {
         if (list.size() != 3)
         {

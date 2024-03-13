@@ -13,7 +13,7 @@ struct mat<2, 2, T>
 {
     union
     {
-        vec<2, T> c[2];
+        Vector::vec<2, T> c[2];
         T data[4];
         struct
         {
@@ -32,7 +32,7 @@ struct mat<2, 2, T>
         return 2;
     }
 
-    MATH_INLINE vec<2, T> &operator[](LENGTH_TYPE i)
+    MATH_INLINE Vector::vec<2, T> &operator[](LENGTH_TYPE i)
     {
         if (i < 0 || i >= 2)
         {
@@ -41,7 +41,7 @@ struct mat<2, 2, T>
         return c[i];
     }
 
-    MATH_INLINE vec<2, T> const &operator[](LENGTH_TYPE i) const
+    MATH_INLINE Vector::vec<2, T> const &operator[](LENGTH_TYPE i) const
     {
         if (i < 0 || i >= 2)
         {
@@ -52,7 +52,7 @@ struct mat<2, 2, T>
 
     // --implicit basic constructors-- //
     MATH_INLINE mat() : m00(0), m01(0),
-                                     m10(0), m11(0) {}
+                        m10(0), m11(0) {}
     MATH_INLINE mat(const mat &m) = default;
     MATH_INLINE mat &operator=(const mat &m) = default;
     MATH_INLINE mat(mat &&m) = default;
@@ -61,27 +61,27 @@ struct mat<2, 2, T>
     // --explicit conversion constructors-- //
     template <typename U>
     MATH_INLINE MATH_EXPLICIT mat(U scalar) : m00(static_cast<T>(scalar)), m01(static_cast<T>(0)),
-                                                           m10(static_cast<T>(0)), m11(static_cast<T>(scalar)) {}
+                                              m10(static_cast<T>(0)), m11(static_cast<T>(scalar)) {}
 
     template <typename U>
     MATH_INLINE MATH_EXPLICIT mat(const mat<2, 2, U> &m) : m00(static_cast<T>(m.m00)), m01(static_cast<T>(m.m01)),
-                                                                        m10(static_cast<T>(m.m10)), m11(static_cast<T>(m.m11)) {}
+                                                           m10(static_cast<T>(m.m10)), m11(static_cast<T>(m.m11)) {}
 
     template <typename U>
     MATH_INLINE MATH_EXPLICIT mat(const mat<3, 3, U> &m) : m00(static_cast<T>(m.m00)), m01(static_cast<T>(m.m01)),
-                                                                        m10(static_cast<T>(m.m10)), m11(static_cast<T>(m.m11)) {}
+                                                           m10(static_cast<T>(m.m10)), m11(static_cast<T>(m.m11)) {}
 
     template <typename U>
     MATH_INLINE MATH_EXPLICIT mat(const mat<4, 4, U> &m) : m00(static_cast<T>(m.m00)), m01(static_cast<T>(m.m01)),
-                                                                        m10(static_cast<T>(m.m10)), m11(static_cast<T>(m.m11)) {}
+                                                           m10(static_cast<T>(m.m10)), m11(static_cast<T>(m.m11)) {}
 
     template <typename U>
     MATH_INLINE MATH_EXPLICIT mat(U m00, U m01, U m10, U m11) : m00(static_cast<T>(m00)), m01(static_cast<T>(m01)),
-                                                                             m10(static_cast<T>(m10)), m11(static_cast<T>(m11)) {}
+                                                                m10(static_cast<T>(m10)), m11(static_cast<T>(m11)) {}
 
     template <typename U>
-    MATH_INLINE MATH_EXPLICIT mat(const vec<2, U> v0, vec<2, U> v1) : m00(static_cast<T>(v0.x)), m01(static_cast<T>(v0.y)),
-                                                                                   m10(static_cast<T>(v1.x)), m11(static_cast<T>(v1.y)) {}
+    MATH_INLINE MATH_EXPLICIT mat(const Vector::vec<2, U> v0, Vector::vec<2, U> v1) : m00(static_cast<T>(v0.x)), m01(static_cast<T>(v0.y)),
+                                                                                      m10(static_cast<T>(v1.x)), m11(static_cast<T>(v1.y)) {}
 
     // --initialization list constructors-- //
     MATH_INLINE mat(std::initializer_list<T> list)
@@ -97,7 +97,7 @@ struct mat<2, 2, T>
         m11 = *it;
     }
 
-    MATH_INLINE mat(std::initializer_list<vec<2, T>> list)
+    MATH_INLINE mat(std::initializer_list<Vector::vec<2, T>> list)
     {
         if (list.size() < 2)
         {
