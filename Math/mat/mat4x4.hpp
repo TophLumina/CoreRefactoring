@@ -36,7 +36,7 @@ struct mat<4, 4, T>
         return 4;
     }
 
-    MATH_INLINE Vector::vec<4, T> &operator[](LENGTH_TYPE i)
+    MATH_INLINE Vector::vec<4, T> &at(LENGTH_TYPE i)
     {
         if (i < 0 || i >= 4)
         {
@@ -45,7 +45,7 @@ struct mat<4, 4, T>
         return c[i];
     }
 
-    MATH_INLINE Vector::vec<4, T> const &operator[](LENGTH_TYPE i) const
+    MATH_INLINE Vector::vec<4, T> const &at(LENGTH_TYPE i) const
     {
         if (i < 0 || i >= 4)
         {
@@ -54,6 +54,17 @@ struct mat<4, 4, T>
         return c[i];
     }
 
+    // operator[] will not have out of range checks for performance
+    MATH_INLINE T &operator[](LENGTH_TYPE i)
+    {
+        return c[i];
+    }
+
+    MATH_INLINE T const &operator[](LENGTH_TYPE i) const
+    {
+        return c[i];
+    }
+    
     // --implicit basic constructors-- //
     MATH_INLINE mat() : m00(0), m01(0), m02(0), m03(0),
                         m10(0), m11(0), m12(0), m13(0),

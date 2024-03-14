@@ -32,7 +32,7 @@ struct mat<2, 2, T>
         return 2;
     }
 
-    MATH_INLINE Vector::vec<2, T> &operator[](LENGTH_TYPE i)
+    MATH_INLINE Vector::vec<2, T> &at(LENGTH_TYPE i)
     {
         if (i < 0 || i >= 2)
         {
@@ -41,12 +41,23 @@ struct mat<2, 2, T>
         return c[i];
     }
 
-    MATH_INLINE Vector::vec<2, T> const &operator[](LENGTH_TYPE i) const
+    MATH_INLINE Vector::vec<2, T> const &at(LENGTH_TYPE i) const
     {
         if (i < 0 || i >= 2)
         {
             throw std::out_of_range(OUT_OF_RANGE_MSG("mat2x2"));
         }
+        return c[i];
+    }
+
+    // operator[] will not have out of range checks for performance
+    MATH_INLINE T &operator[](LENGTH_TYPE i)
+    {
+        return c[i];
+    }
+
+    MATH_INLINE T const &operator[](LENGTH_TYPE i) const
+    {
         return c[i];
     }
 
