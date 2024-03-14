@@ -51,12 +51,12 @@ struct mat<2, 2, T>
     }
 
     // operator[] will not have out of range checks for performance
-    MATH_INLINE T &operator[](LENGTH_TYPE i)
+    MATH_INLINE Vector::vec<2, T> &operator[](LENGTH_TYPE i)
     {
         return c[i];
     }
 
-    MATH_INLINE T const &operator[](LENGTH_TYPE i) const
+    MATH_INLINE Vector::vec<2, T> const &operator[](LENGTH_TYPE i) const
     {
         return c[i];
     }
