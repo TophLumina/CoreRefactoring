@@ -533,6 +533,18 @@ std::ostream &operator<<(std::ostream &os, const mat<4, 4, T> &m)
        << m.m30 << ", " << m.m31 << ", " << m.m32 << ", " << m.m33 << "}";
     return os;
 }
+
+template <typename T>
+std::string to_string(const mat<4, 4, T> &m)
+{
+    std::string str;
+    str += "mat<" + std::string(typeid(T).name()) + ">{" + '\n';
+    str += std::to_string(m.m00) + ", " + std::to_string(m.m01) + ", " + std::to_string(m.m02) + ", " + std::to_string(m.m03) + ", " + '\n';
+    str += std::to_string(m.m10) + ", " + std::to_string(m.m11) + ", " + std::to_string(m.m12) + ", " + std::to_string(m.m13) + ", " + '\n';
+    str += std::to_string(m.m20) + ", " + std::to_string(m.m21) + ", " + std::to_string(m.m22) + ", " + std::to_string(m.m23) + ", " + '\n';
+    str += std::to_string(m.m30) + ", " + std::to_string(m.m31) + ", " + std::to_string(m.m32) + ", " + std::to_string(m.m33) + "}";
+    return str;
+}
 #endif
 
 #ifdef MATH_TEMPLATE_ALIASES

@@ -11,4 +11,6 @@ NamespaceIndentation: Inner
 
 AlignTrailingComments: true
 
+AccessModifierOffset: -4
+
 ColumnLimit: 0

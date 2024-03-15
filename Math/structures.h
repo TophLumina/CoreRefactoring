@@ -3,8 +3,8 @@
 #include "Config.h"
 
 #include <iostream>
-#include <string>
 #include <typeinfo>
+#include <string>
 
 MATH_NAMESPACE_BEGIN
 

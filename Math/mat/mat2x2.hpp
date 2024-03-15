@@ -334,6 +334,14 @@ std::ostream &operator<<(std::ostream &os, const mat<2, 2, T> &m)
        << m.m01 << ", " << m.m11 << "}";
     return os;
 }
+
+template <typename T>
+std::string to_string(const mat<2, 2, T> &m)
+{
+    return "mat<" + std::string(typeid(T).name()) + ">{" + '\n' +
+           std::to_string(m.m00) + ", " + std::to_string(m.m10) + ", " + '\n' +
+           std::to_string(m.m01) + ", " + std::to_string(m.m11) + "}";
+}
 #endif
 
 #ifdef MATH_TEMPLATE_ALIASES

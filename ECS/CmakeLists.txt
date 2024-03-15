@@ -6,17 +6,10 @@ set(CMAKE_CXX_STANDARD 17)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 set(CMAKE_CXX_EXTENSIONS OFF)
 
-set(CMAKE_EXPORT_COMPILE_COMMANDS ON)
-
 # ECS DEFINITIONS
-add_compile_definitions(ENTITY_ID unsigned int)
-add_compile_definitions(MAX_COMPONENTS_PER_ENTITY 64)
-add_compile_definitions(TOTAL_ENTITIES_CAPACITY 8192)
-add_compile_definitions(DESTROYED_ENTITIES_CAPACITY 1024)
-add_compile_definitions(MAX_CHILDREN_PER_ENTITY 256)
-
-add_compile_definitions(COMPONENT_ID unsigned int)
 
 aux_source_directory(. DIR_SRC)
 
 add_executable(${PROJECT_NAME} ${DIR_SRC})
+
+target_link_libraries(${PROJECT_NAME} spdlog::spdlog)

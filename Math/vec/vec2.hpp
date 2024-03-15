@@ -372,6 +372,12 @@ std::ostream &operator<<(std::ostream &os, const vec<2, T> &v)
     os << "vec2<" << typeid(T).name() << ">(" << v.x << ", " << v.y << ")";
     return os;
 }
+
+template <typename T>
+std::string to_string(const vec<2, T> &v)
+{
+    return "vec2<" + std::string(typeid(T).name()) + ">(" + std::to_string(v.x) + ", " + std::to_string(v.y) + ")";
+}
 #endif
 
 #ifdef MATH_TEMPLATE_ALIASES
