@@ -1,6 +1,7 @@
 #pragma once
 
 #include "../Config.h"
+#include <cmath>
 
 MATH_NAMESPACE_BEGIN
 

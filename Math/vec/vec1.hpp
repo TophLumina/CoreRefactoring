@@ -1,6 +1,6 @@
 #pragma once
 
-#include "../sturctures.h"
+#include "../structures.h"
 
 #include <initializer_list>
 
@@ -25,7 +25,7 @@ struct vec<1, T>
         return 1;
     }
 
-    MATH_INLINE T &operator[](LENGTH_TYPE i)
+    MATH_INLINE T &at(LENGTH_TYPE i)
     {
         if (i < 0 || i >= 1)
         {
@@ -34,12 +34,23 @@ struct vec<1, T>
         return c[i];
     }
 
-    MATH_INLINE T const &operator[](LENGTH_TYPE i) const
+    MATH_INLINE T const &at(LENGTH_TYPE i) const
     {
         if (i < 0 || i >= 1)
         {
             throw std::out_of_range(OUT_OF_RANGE_MSG("vec1"));
         }
+        return c[i];
+    }
+
+    // operator[] will not have out of range checks for performance
+    MATH_INLINE T &operator[](LENGTH_TYPE i)
+    {
+        return c[i];
+    }
+
+    MATH_INLINE T const &operator[](LENGTH_TYPE i) const
+    {
         return c[i];
     }
 
@@ -261,6 +272,12 @@ std::ostream &operator<<(std::ostream &os, const vec<1, T> &v)
 {
     os << "vec1<" << typeid(T).name() << ">(" << v.x << ")";
     return os;
+}
+
+template <typename T>
+std::string to_string(const vec<1, T> &v)
+{
+    return "vec1<" + std::string(typeid(T).name()) + ">(" + std::to_string(v.x) + ")";
 }
 #endif
 

@@ -1,7 +1,7 @@
 #pragma once
 
 #include "../Config.h"
-#include "../sturctures.h"
+#include "../structures.h"
 
 #include <initializer_list>
 
@@ -13,7 +13,7 @@ struct mat<4, 4, T>
 {
     union
     {
-        vec<4, T> c[4];
+        Vector::vec<4, T> c[4];
         T data[16];
         struct
         {
@@ -36,7 +36,7 @@ struct mat<4, 4, T>
         return 4;
     }
 
-    MATH_INLINE vec<4, T> &operator[](LENGTH_TYPE i)
+    MATH_INLINE Vector::vec<4, T> &at(LENGTH_TYPE i)
     {
         if (i < 0 || i >= 4)
         {
@@ -45,7 +45,7 @@ struct mat<4, 4, T>
         return c[i];
     }
 
-    MATH_INLINE vec<4, T> const &operator[](LENGTH_TYPE i) const
+    MATH_INLINE Vector::vec<4, T> const &at(LENGTH_TYPE i) const
     {
         if (i < 0 || i >= 4)
         {
@@ -54,11 +54,22 @@ struct mat<4, 4, T>
         return c[i];
     }
 
+    // operator[] will not have out of range checks for performance
+    MATH_INLINE Vector::vec<4, T> &operator[](LENGTH_TYPE i)
+    {
+        return c[i];
+    }
+
+    MATH_INLINE Vector::vec<4, T> const &operator[](LENGTH_TYPE i) const
+    {
+        return c[i];
+    }
+    
     // --implicit basic constructors-- //
     MATH_INLINE mat() : m00(0), m01(0), m02(0), m03(0),
-                                     m10(0), m11(0), m12(0), m13(0),
-                                     m20(0), m21(0), m22(0), m23(0),
-                                     m30(0), m31(0), m32(0), m33(0) {}
+                        m10(0), m11(0), m12(0), m13(0),
+                        m20(0), m21(0), m22(0), m23(0),
+                        m30(0), m31(0), m32(0), m33(0) {}
     MATH_INLINE mat(const mat &m) = default;
     MATH_INLINE mat &operator=(const mat &m) = default;
     MATH_INLINE mat(mat &&m) = default;
@@ -67,39 +78,39 @@ struct mat<4, 4, T>
     // --explicit conversion constructors-- //
     template <typename U>
     MATH_INLINE MATH_EXPLICIT mat(U scalar) : m00(static_cast<T>(scalar)), m01(static_cast<T>(0)), m02(static_cast<T>(0)), m03(static_cast<T>(0)),
-                                                           m10(static_cast<T>(0)), m11(static_cast<T>(scalar)), m12(static_cast<T>(0)), m13(static_cast<T>(0)),
-                                                           m20(static_cast<T>(0)), m21(static_cast<T>(0)), m22(static_cast<T>(scalar)), m23(static_cast<T>(0)),
-                                                           m30(static_cast<T>(0)), m31(static_cast<T>(0)), m32(static_cast<T>(0)), m33(static_cast<T>(scalar)) {}
+                                              m10(static_cast<T>(0)), m11(static_cast<T>(scalar)), m12(static_cast<T>(0)), m13(static_cast<T>(0)),
+                                              m20(static_cast<T>(0)), m21(static_cast<T>(0)), m22(static_cast<T>(scalar)), m23(static_cast<T>(0)),
+                                              m30(static_cast<T>(0)), m31(static_cast<T>(0)), m32(static_cast<T>(0)), m33(static_cast<T>(scalar)) {}
 
     template <typename U>
     MATH_INLINE MATH_EXPLICIT mat(const mat<2, 2, U> &m) : m00(static_cast<T>(m.m00)), m01(static_cast<T>(m.m01)), m02(0), m03(0),
-                                                                        m10(static_cast<T>(m.m10)), m11(static_cast<T>(m.m11)), m12(0), m13(0),
-                                                                        m20(0), m21(0), m22(1), m23(0),
-                                                                        m30(0), m31(0), m32(0), m33(1) {}
+                                                           m10(static_cast<T>(m.m10)), m11(static_cast<T>(m.m11)), m12(0), m13(0),
+                                                           m20(0), m21(0), m22(1), m23(0),
+                                                           m30(0), m31(0), m32(0), m33(1) {}
 
     template <typename U>
     MATH_INLINE MATH_EXPLICIT mat(const mat<3, 3, U> &m) : m00(static_cast<T>(m.m00)), m01(static_cast<T>(m.m01)), m02(static_cast<T>(m.m02)), m03(0),
-                                                                        m10(static_cast<T>(m.m10)), m11(static_cast<T>(m.m11)), m12(static_cast<T>(m.m12)), m13(0),
-                                                                        m20(static_cast<T>(m.m20)), m21(static_cast<T>(m.m21)), m22(static_cast<T>(m.m22)), m23(0),
-                                                                        m30(0), m31(0), m32(0), m33(1) {}
+                                                           m10(static_cast<T>(m.m10)), m11(static_cast<T>(m.m11)), m12(static_cast<T>(m.m12)), m13(0),
+                                                           m20(static_cast<T>(m.m20)), m21(static_cast<T>(m.m21)), m22(static_cast<T>(m.m22)), m23(0),
+                                                           m30(0), m31(0), m32(0), m33(1) {}
 
     template <typename U>
     MATH_INLINE MATH_EXPLICIT mat(const mat<4, 4, U> &m) : m00(static_cast<T>(m.m00)), m01(static_cast<T>(m.m01)), m02(static_cast<T>(m.m02)), m03(static_cast<T>(m.m03)),
-                                                                        m10(static_cast<T>(m.m10)), m11(static_cast<T>(m.m11)), m12(static_cast<T>(m.m12)), m13(static_cast<T>(m.m13)),
-                                                                        m20(static_cast<T>(m.m20)), m21(static_cast<T>(m.m21)), m22(static_cast<T>(m.m22)), m23(static_cast<T>(m.m23)),
-                                                                        m30(static_cast<T>(m.m30)), m31(static_cast<T>(m.m31)), m32(static_cast<T>(m.m32)), m33(static_cast<T>(m.m33)) {}
+                                                           m10(static_cast<T>(m.m10)), m11(static_cast<T>(m.m11)), m12(static_cast<T>(m.m12)), m13(static_cast<T>(m.m13)),
+                                                           m20(static_cast<T>(m.m20)), m21(static_cast<T>(m.m21)), m22(static_cast<T>(m.m22)), m23(static_cast<T>(m.m23)),
+                                                           m30(static_cast<T>(m.m30)), m31(static_cast<T>(m.m31)), m32(static_cast<T>(m.m32)), m33(static_cast<T>(m.m33)) {}
 
     template <typename U>
     MATH_INLINE MATH_EXPLICIT mat(U m00, U m01, U m02, U m03,
-                                               U m10, U m11, U m12, U m13,
-                                               U m20, U m21, U m22, U m23,
-                                               U m30, U m31, U m32, U m33) : m00(static_cast<T>(m00)), m01(static_cast<T>(m01)), m02(static_cast<T>(m02)), m03(static_cast<T>(m03)),
-                                                                             m10(static_cast<T>(m10)), m11(static_cast<T>(m11)), m12(static_cast<T>(m12)), m13(static_cast<T>(m13)),
-                                                                             m20(static_cast<T>(m20)), m21(static_cast<T>(m21)), m22(static_cast<T>(m22)), m23(static_cast<T>(m23)),
-                                                                             m30(static_cast<T>(m30)), m31(static_cast<T>(m31)), m32(static_cast<T>(m32)), m33(static_cast<T>(m33)) {}
+                                  U m10, U m11, U m12, U m13,
+                                  U m20, U m21, U m22, U m23,
+                                  U m30, U m31, U m32, U m33) : m00(static_cast<T>(m00)), m01(static_cast<T>(m01)), m02(static_cast<T>(m02)), m03(static_cast<T>(m03)),
+                                                                m10(static_cast<T>(m10)), m11(static_cast<T>(m11)), m12(static_cast<T>(m12)), m13(static_cast<T>(m13)),
+                                                                m20(static_cast<T>(m20)), m21(static_cast<T>(m21)), m22(static_cast<T>(m22)), m23(static_cast<T>(m23)),
+                                                                m30(static_cast<T>(m30)), m31(static_cast<T>(m31)), m32(static_cast<T>(m32)), m33(static_cast<T>(m33)) {}
 
     template <typename U>
-    MATH_INLINE MATH_EXPLICIT mat(const vec<4, U> &v0, const vec<4, U> &v1, const vec<4, U> &v2, const vec<4, U> &v3) : c{v0, v1, v2, v3} {}
+    MATH_INLINE MATH_EXPLICIT mat(const Vector::vec<4, U> &v0, const Vector::vec<4, U> &v1, const Vector::vec<4, U> &v2, const Vector::vec<4, U> &v3) : c{v0, v1, v2, v3} {}
 
     // --initializer list constructor-- //
     MATH_INLINE mat(std::initializer_list<T> list)
@@ -127,7 +138,7 @@ struct mat<4, 4, T>
         m33 = *it;
     }
 
-    MATH_INLINE mat(std::initializer_list<vec<4, T>> list)
+    MATH_INLINE mat(std::initializer_list<Vector::vec<4, T>> list)
     {
         if (list.size() != 4)
         {
@@ -521,6 +532,18 @@ std::ostream &operator<<(std::ostream &os, const mat<4, 4, T> &m)
        << m.m20 << ", " << m.m21 << ", " << m.m22 << ", " << m.m23 << ", " << '\n'
        << m.m30 << ", " << m.m31 << ", " << m.m32 << ", " << m.m33 << "}";
     return os;
+}
+
+template <typename T>
+std::string to_string(const mat<4, 4, T> &m)
+{
+    std::string str;
+    str += "mat<" + std::string(typeid(T).name()) + ">{" + '\n';
+    str += std::to_string(m.m00) + ", " + std::to_string(m.m01) + ", " + std::to_string(m.m02) + ", " + std::to_string(m.m03) + ", " + '\n';
+    str += std::to_string(m.m10) + ", " + std::to_string(m.m11) + ", " + std::to_string(m.m12) + ", " + std::to_string(m.m13) + ", " + '\n';
+    str += std::to_string(m.m20) + ", " + std::to_string(m.m21) + ", " + std::to_string(m.m22) + ", " + std::to_string(m.m23) + ", " + '\n';
+    str += std::to_string(m.m30) + ", " + std::to_string(m.m31) + ", " + std::to_string(m.m32) + ", " + std::to_string(m.m33) + "}";
+    return str;
 }
 #endif
 

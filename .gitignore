@@ -1,4 +1,7 @@
 build
+
 .vscode
+.cache
+
 test.cpp
 glm/**

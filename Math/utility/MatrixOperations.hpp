@@ -1,6 +1,7 @@
 #pragma once
 
-#include "../include/mat.h"
+#include "../numeric/Numeric.hpp"
+#include "../numeric/Random.hpp"
 
 MATH_NAMESPACE_BEGIN
 MATRIX_NAMESPACE_BEGIN
@@ -13,7 +14,7 @@ static MATH_FUNCTION_QUALIFIERS mat<M, N, T> abs(mat<M, N, T> const &m)
     {
         for (LENGTH_TYPE j = 0; j < N; ++j)
         {
-            result[i][j] = abs(m[i][j]);
+            result[i][j] = Math::abs(m[i][j]);
         }
     }
     return result;
@@ -27,7 +28,7 @@ static MATH_FUNCTION_QUALIFIERS mat<M, N, T> random_range(mat<M, N, T> const &mi
     {
         for (LENGTH_TYPE j = 0; j < N; ++j)
         {
-            result[i][j] = random_range(min[i][j], max[i][j]);
+            result[i][j] = Math::random_range(min[i][j], max[i][j]);
         }
     }
     return result;
@@ -41,7 +42,7 @@ static MATH_FUNCTION_QUALIFIERS mat<M, N, T> min(mat<M, N, T> const &m, mat<M, N
     {
         for (LENGTH_TYPE j = 0; j < N; ++j)
         {
-            result[i][j] = min(m[i][j], n[i][j]);
+            result[i][j] = Math::min(m[i][j], n[i][j]);
         }
     }
     return result;
@@ -55,7 +56,7 @@ static MATH_FUNCTION_QUALIFIERS mat<M, N, T> max(mat<M, N, T> const &m, mat<M, N
     {
         for (LENGTH_TYPE j = 0; j < N; ++j)
         {
-            result[i][j] = max(m[i][j], n[i][j]);
+            result[i][j] = Math::max(m[i][j], n[i][j]);
         }
     }
     return result;
@@ -69,7 +70,7 @@ static MATH_FUNCTION_QUALIFIERS mat<M, N, T> clamp(mat<M, N, T> const &m, mat<M,
     {
         for (LENGTH_TYPE j = 0; j < N; ++j)
         {
-            result[i][j] = clamp(m[i][j], min[i][j], max[i][j]);
+            result[i][j] = Math::clamp(m[i][j], min[i][j], max[i][j]);
         }
     }
     return result;
@@ -83,7 +84,7 @@ static MATH_FUNCTION_QUALIFIERS mat<M, N, T> saturate(mat<M, N, T> const &m)
     {
         for (LENGTH_TYPE j = 0; j < N; ++j)
         {
-            result[i][j] = saturate(m[i][j]);
+            result[i][j] = Math::saturate(m[i][j]);
         }
     }
     return result;
@@ -97,7 +98,7 @@ static MATH_FUNCTION_QUALIFIERS mat<M, N, T> linear_lerp(mat<M, N, T> const &m, 
     {
         for (LENGTH_TYPE j = 0; j < N; ++j)
         {
-            result[i][j] = linear_lerp(m[i][j], n[i][j], a[i][j]);
+            result[i][j] = Math::linear_lerp(m[i][j], n[i][j], a[i][j]);
         }
     }
     return result;
@@ -116,6 +117,10 @@ static MATH_FUNCTION_QUALIFIERS mat<N, M, T> transpose(mat<M, N, T> const &m)
     }
     return result;
 }
+
+// forward declaration
+template <LENGTH_TYPE M, LENGTH_TYPE N, typename T>
+static MATH_FUNCTION_QUALIFIERS T determinant(mat<M, N, T> const &m);
 
 template <LENGTH_TYPE M, LENGTH_TYPE N, typename T>
 static MATH_FUNCTION_QUALIFIERS T cofactor(mat<M, N, T> const &m, LENGTH_TYPE row, LENGTH_TYPE col)
@@ -217,9 +222,9 @@ static MATH_FUNCTION_QUALIFIERS mat<M, N, T> inverse(mat<M, N, T> const &m)
 // TODO:: extend this to support non-square matrices
 // Only Support Squared Matrices
 template <LENGTH_TYPE M, LENGTH_TYPE N, typename T>
-static MATH_FUNCTION_QUALIFIERS vec<M, T> operator*(mat<M, N, T> const &m, vec<N, T> const &v)
+static MATH_FUNCTION_QUALIFIERS Vector::vec<M, T> operator*(mat<M, N, T> const &m, Vector::vec<N, T> const &v)
 {
-    vec<M, T> result;
+    Vector::vec<M, T> result;
     for (LENGTH_TYPE i = 0; i < M; ++i)
     {
         for (LENGTH_TYPE j = 0; j < N; ++j)

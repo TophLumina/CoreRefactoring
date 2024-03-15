@@ -1,0 +1,15 @@
+#pragma once
+
+#define ECS_NAMESPACE_BEGIN namespace ECS {
+#define ECS_NAMESPACE_END }
+
+#define MEMORY_NAMESPACE_BEGIN namespace Memory {
+#define MEMORY_NAMESPACE_END }
+
+#define MAX_ENTITY_INSTANCE 8192
+#define MAX_CHILDREN_PER_ENTITY 64
+#define MAX_COMPONENTS_PER_ENTITY 64
+#define MAX_COMPONENTS_PER_TYPE (MAX_ENTITY_INSTANCE * MAX_COMPONENTS_PER_ENTITY)
+
+#define EID_TYPE unsigned int
+#define CID_TYPE unsigned int

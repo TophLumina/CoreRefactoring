@@ -2,13 +2,14 @@
 
 #include "../include/mat.h"
 #include "../numeric/Numeric.hpp"
+#include "VectorOperations.hpp"
 
 MATH_NAMESPACE_BEGIN
 MATRIX_NAMESPACE_BEGIN
 
 // 3D rendering specified Matrix functions
 template <typename T>
-static MATH_FUNCTION_QUALIFIERS mat<4, 4, T> translate(mat<4, 4, T> const &m, vec<3, T> const &v)
+static MATH_FUNCTION_QUALIFIERS mat<4, 4, T> translate(mat<4, 4, T> const &m, Vector::vec<3, T> const &v)
 {
     mat<4, 4, T> result(m);
     result[3] = m[0] * v[0] + m[1] * v[1] + m[2] * v[2] + m[3];
@@ -16,13 +17,13 @@ static MATH_FUNCTION_QUALIFIERS mat<4, 4, T> translate(mat<4, 4, T> const &m, ve
 }
 
 template <typename T>
-static MATH_FUNCTION_QUALIFIERS mat<4, 4, T> rotation(mat<4, 4, T> const &m, T angle, vec<3, T> const &v)
+static MATH_FUNCTION_QUALIFIERS mat<4, 4, T> rotation(mat<4, 4, T> const &m, T angle, Vector::vec<3, T> const &v)
 {
     T a = angle;
     T c = cos(a);
     T s = sin(a);
-    vec<3, T> axis = normalize(v);
-    vec<3, T> temp = (static_cast<T>(1) - c) * axis;
+    Vector::vec<3, T> axis = normalize(v);
+    Vector::vec<3, T> temp = (static_cast<T>(1) - c) * axis;
 
     mat<4, 4, T> rotate;
     rotate[0][0] = c + temp[0] * axis[0];
@@ -45,7 +46,7 @@ static MATH_FUNCTION_QUALIFIERS mat<4, 4, T> rotation(mat<4, 4, T> const &m, T a
 }
 
 template <typename T>
-static MATH_FUNCTION_QUALIFIERS mat<4, 4, T> scale(mat<4, 4, T> const &m, vec<3, T> const &v)
+static MATH_FUNCTION_QUALIFIERS mat<4, 4, T> scale(mat<4, 4, T> const &m, Vector::vec<3, T> const &v)
 {
     mat<4, 4, T> result = m;
     result[0] = m[0] * v[0];
@@ -56,12 +57,12 @@ static MATH_FUNCTION_QUALIFIERS mat<4, 4, T> scale(mat<4, 4, T> const &m, vec<3,
 }
 
 template <typename T>
-static MATH_FUNCTION_QUALIFIERS mat<4, 4, T> lookAt(vec<3, T> const &eye, vec<3, T> const &center, vec<3, T> const &up)
+static MATH_FUNCTION_QUALIFIERS mat<4, 4, T> lookAt(Vector::vec<3, T> const &eye, Vector::vec<3, T> const &center, Vector::vec<3, T> const &up)
 {
-    vec<3, T> f = normalize(center - eye);
-    vec<3, T> u = normalize(up);
-    vec<3, T> s = normalize(cross(f, u));
-    u = cross(s, f);
+    Vector::vec<3, T> f = Vector::normalize(center - eye);
+    Vector::vec<3, T> u = Vector::normalize(up);
+    Vector::vec<3, T> s = Vector::normalize(Vector::cross(f, u));
+    u = Vector::cross(s, f);
 
     mat<4, 4, T> result(1);
     result[0][0] = s[0];
@@ -73,9 +74,9 @@ static MATH_FUNCTION_QUALIFIERS mat<4, 4, T> lookAt(vec<3, T> const &eye, vec<3,
     result[0][2] = -f[0];
     result[1][2] = -f[1];
     result[2][2] = -f[2];
-    result[3][0] = -dot(s, eye);
-    result[3][1] = -dot(u, eye);
-    result[3][2] = dot(f, eye);
+    result[3][0] = -Math::Vector::dot(s, eye);
+    result[3][1] = -Math::Vector::dot(u, eye);
+    result[3][2] = Math::Vector::dot(f, eye);
     return result;
 }
 
