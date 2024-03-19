@@ -21,28 +21,7 @@ public:
     World(std::unique_ptr<EntityManager> entityManager)
         : m_entityManager(std::move(entityManager)) {}
 
-    void Init()
-    {
-        for (auto &system : m_systems)
-        {
-            system->Init();
-        }
-    }
-
-    void Update()
-    {
-        for (auto &system : m_systems)
-        {
-            system->Update();
-        }
-    }
-
-    void Render()
-    {
-        for (auto &system : m_systems)
-        {
-            system->Render();
-        }
-    }
-
+    void Init();
+    void Update();
+    void Render();
 };
