@@ -2,17 +2,10 @@
 
 #include "Config.h"
 
-#include <bitset>
 #include <stdexcept>
 #include <vector>
 
-using Signature = std::bitset<MAX_COMPONENTS_PER_ENTITY>;
-
-struct EntityInstance
-{
-    EID_TYPE id;         // 1 to MAX_ENTITY_INSTANCE
-    Signature signature; // 0 : isValid, 1 : isActive, 2 to MAX_COMPONENTS_PER_ENTITY - 1 : component signature
-};
+#include "Entity.hpp"
 
 class EntityManager
 {
@@ -26,8 +19,6 @@ private:
     {
         m_entities.resize(m_entities.size() * 2);
         m_freeList.resize(m_freeList.size() * 2);
-        m_entities.shrink_to_fit();
-        m_freeList.shrink_to_fit();
         for (EID_TYPE i = m_instanceCount; i < m_freeList.size(); ++i)
         {
             m_freeList[i] = i + 1;
@@ -40,8 +31,6 @@ public:
     {
         m_entities.resize(MAX_ENTITY_INSTANCE);
         m_freeList.resize(MAX_ENTITY_INSTANCE);
-        m_entities.shrink_to_fit();
-        m_freeList.shrink_to_fit();
         for (EID_TYPE i = 0; i < MAX_ENTITY_INSTANCE; ++i)
         {
             m_freeList[i] = i + 1; // 1 to MAX_ENTITY_INSTANCE
