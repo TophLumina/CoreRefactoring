@@ -83,15 +83,15 @@ public:
         }
 #endif
 
-        EID_TYPE id = m_freeList[m_instanceCount];
+        EID_TYPE entity_id = m_freeList[m_instanceCount];
 
-        EID_TYPE index = id - 1;
-        m_entities[index].id = id;
+        EID_TYPE index = entity_id - 1;
+        m_entities[index].id = entity_id;
         m_entities[index].signature.set(0, true); // isValid
         m_entities[index].signature.set(1, true); // isActive
         ++m_instanceCount;
 
-        return id;
+        return entity_id;
     }
 
     void DestroyEntity(EID_TYPE id)

@@ -1,26 +1,12 @@
 #include "World.hpp"
 #include "EntityHandle.hpp"
 
-void World::Init()
+EntityHandle World::CreateEntity()
 {
-    for (auto &system : m_systems)
-    {
-        system->Init();
-    }
+    return {m_entityManager->CreateEntity(), this};
 }
 
-void World::Update()
+EntityHandle World::GetEntity(CID_TYPE component_id)
 {
-    for (auto &system : m_systems)
-    {
-        system->Update();
-    }
-}
-
-void World::Render()
-{
-    for (auto &system : m_systems)
-    {
-        system->Render();
-    }
+    return {m_entityManager->GetEntity(component_id).id, this};
 }

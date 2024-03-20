@@ -4,7 +4,7 @@
 
 #include <bitset>
 
-using Signature = std::bitset<MAX_COMPONENTS_PER_ENTITY>;
+using Signature = std::bitset<MAX_COMPONENT_TYPE>;
 
 struct EntityInstance
 {

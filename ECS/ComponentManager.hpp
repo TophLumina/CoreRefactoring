@@ -17,20 +17,20 @@ public:
     BaseComponentManager &operator=(BaseComponentManager &&) = default;
 };
 
-template <typename ComponentType>
+template <typename Component>
 class ComponentManager : public BaseComponentManager
 {
 private:
     struct ComponentData
     {
-        ComponentType data;
+        Component data;
     };
 
     std::vector<ComponentData> m_componentData;
     std::map<EID_TYPE, CID_TYPE> m_entityMap;       // entity_id to component_id
     std::vector<EID_TYPE> m_componentOwner;         // component_index(component_id - 1) to entity_id
-    std::vector<CID_TYPE> freeList;                 // 1 to MAX_COMPONENTS_PER_TYPE
-    unsigned int m_instanceCount = 0;               // 0 to MAX_COMPONENTS_PER_TYPE - 1
+    std::vector<CID_TYPE> freeList;                 // 1 to MAX_COMPONENT_TYPE
+    unsigned int m_instanceCount = 0;               // 0 to MAX_COMPONENT_TYPE - 1
 
     void selfExtend()
     {
@@ -46,16 +46,16 @@ private:
 public:
     ComponentManager()
     {
-        m_componentData.resize(MAX_COMPONENTS_PER_TYPE);
-        m_componentOwner.resize(MAX_COMPONENTS_PER_TYPE);
-        freeList.resize(MAX_COMPONENTS_PER_TYPE);
-        for (CID_TYPE i = 0; i < MAX_COMPONENTS_PER_TYPE; ++i)
+        m_componentData.resize(MAX_COMPONENT_TYPE);
+        m_componentOwner.resize(MAX_COMPONENT_TYPE);
+        freeList.resize(MAX_COMPONENT_TYPE);
+        for (CID_TYPE i = 0; i < MAX_COMPONENT_TYPE; ++i)
         {
-            freeList[i] = i + 1; // 1 to MAX_COMPONENTS_PER_TYPE
+            freeList[i] = i + 1; // 1 to MAX_COMPONENT_TYPE
         }
     }
 
-    ComponentType *GetComponent(EID_TYPE entity_id)
+    Component *GetComponent(EID_TYPE entity_id)
     {
         if (m_entityMap.find(entity_id) == m_entityMap.end())
         {
@@ -66,17 +66,17 @@ public:
         return &m_componentData[index].data;
     }
 
-    EID_TYPE GetComponentOwner(CID_TYPE component_id)
-    {
-        if (component_id < 0 || component_id >= m_instanceCount)
-        {
-            return 0;
-        }
+    // EID_TYPE GetComponentOwner(CID_TYPE component_id)
+    // {
+    //     if (component_id < 0 || component_id >= m_instanceCount)
+    //     {
+    //         return 0;
+    //     }
 
-        return m_componentOwner[component_id];
-    }
+    //     return m_componentOwner[component_id];
+    // }
 
-    CID_TYPE AddComponent(EID_TYPE entity_id, ComponentType& component)
+    CID_TYPE AddComponent(EID_TYPE entity_id, Component& component)
     {
         if (m_entityMap.find(entity_id) != m_entityMap.end())
         {
@@ -114,7 +114,7 @@ public:
         m_entityMap.erase(entity_id);
     }
 
-    void Iterate(std::function<void(ComponentType &)> func)
+    void Iterate(std::function<void(Component &)> func)
     {
         for (CID_TYPE i = 0; i < m_instanceCount; ++i)
         {

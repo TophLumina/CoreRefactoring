@@ -6,18 +6,18 @@
 template <typename ComponentType>
 struct ComponentHandle
 {
-    EntityInstance owner;
+    EID_TYPE owner_id;
     ComponentType *component;
     ComponentManager<ComponentType> *manager;
 
     ComponentHandle() {}
-    ComponentHandle(EntityInstance owner, ComponentType *component, ComponentManager<ComponentType> *manager)
-        : owner(owner), component(component), manager(manager) {}
+    ComponentHandle(EID_TYPE owner, ComponentType *component, ComponentManager<ComponentType> *manager)
+        : owner_id(owner), component(component), manager(manager) {}
 
     ComponentType *operator->() const { return component; }
 
     void Destroy()
     {
-        manager->DestroyComponent(owner.id);
+        manager->DestroyComponent(owner_id);
     }
 };
