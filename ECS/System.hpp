@@ -1,7 +1,7 @@
 #pragma once
 
 #include "Component.hpp"
-#include "Entity.hpp"
+#include "EntityManager.hpp"
 
 
 #include <vector>
@@ -27,7 +27,7 @@ public:
     // Executed once per frame
     virtual void Render() = 0;
 
-    void RegisterWorld(World *world) { world = world; }
+    void RegisterWorld(World *world) { m_world = world; }
 
     void RegisterEntity(EID_TYPE const &entity_id) { m_entities.push_back(entity_id); }
 
@@ -54,6 +54,8 @@ class System : public SystemBase
 public:
     System() : SystemBase()
     {
+        m_signature.set(0); // isValid
+        m_signature.set(1); // isActive
         (m_signature.set(GetComponentType<ComponentType>()), ...);
     }
 };

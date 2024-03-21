@@ -1,7 +1,6 @@
 #pragma once
 
 #include "ComponentManager.hpp"
-#include "Entity.hpp"
 
 template <typename ComponentType>
 struct ComponentHandle

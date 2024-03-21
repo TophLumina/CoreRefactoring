@@ -3,6 +3,7 @@
 #include "World.hpp"
 #include "ComponentHandle.hpp"
 #include <tuple>
+#include <utility>
 
 struct EntityHandle
 {
@@ -17,7 +18,7 @@ struct EntityHandle
     template <typename ComponentType>
     void AddComponent(ComponentType &&component)
     {
-        world->AddComponent<ComponentType>(entity_id, component);
+        world->AddComponent<ComponentType>(entity_id, std::forward<ComponentType>(component));
     }
 
     template <typename ComponentType>
@@ -26,6 +27,7 @@ struct EntityHandle
         world->RemoveComponent<ComponentType>(entity_id);
     }
 
+    // Might be useful in the future
     template <typename ComponentType>
     ComponentHandle<ComponentType> GetComponent()
     {

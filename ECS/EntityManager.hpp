@@ -2,15 +2,18 @@
 
 #include "Config.h"
 
+#include <bitset>
 #include <stdexcept>
 #include <vector>
 
-#include "Entity.hpp"
+
+using Signature = std::bitset<MAX_COMPONENT_TYPE>; // 0 : isValid, 1 : isActive, 2 to MAX_COMPONENTS_PER_ENTITY - 1 : component signature
 
 class EntityManager
 {
 private:
-    std::vector<EntityInstance> m_entities;
+    std::vector<EID_TYPE> m_entities;
+    std::vector<Signature> m_signatures;
     std::vector<EID_TYPE> m_freeList; // 1 to MAX_ENTITY_INSTANCE
     EID_TYPE m_instanceCount = 0;     // 0 to MAX_ENTITY_INSTANCE - 1
 
@@ -18,6 +21,7 @@ private:
     void selfExtend()
     {
         m_entities.resize(m_entities.size() * 2);
+        m_signatures.resize(m_signatures.size() * 2);
         m_freeList.resize(m_freeList.size() * 2);
         for (EID_TYPE i = m_instanceCount; i < m_freeList.size(); ++i)
         {
@@ -30,6 +34,7 @@ public:
     EntityManager()
     {
         m_entities.resize(MAX_ENTITY_INSTANCE);
+        m_signatures.resize(MAX_ENTITY_INSTANCE);
         m_freeList.resize(MAX_ENTITY_INSTANCE);
         for (EID_TYPE i = 0; i < MAX_ENTITY_INSTANCE; ++i)
         {
@@ -37,40 +42,30 @@ public:
         }
     }
 
-    EntityInstance &GetEntity(EID_TYPE id)
+    Signature &GetSignature(EID_TYPE entity_id)
     {
 #ifndef NO_RANGE_CHECK
-        if (id == 0 || id > m_freeList.size())
+        if (entity_id == 0 || entity_id > m_freeList.size())
         {
             throw std::out_of_range("Entity id out of range");
         }
 #endif
 
-        EID_TYPE index = id - 1;
-        if (!m_entities[index].signature.test(0))
-        {
-            throw std::runtime_error("Entity id is invalid");
-        }
-
-        return m_entities[index];
+        EID_TYPE index = entity_id - 1;
+        return m_signatures[index];
     }
 
-    EntityInstance const &GetEntity(EID_TYPE id) const
+    Signature const &GetSignature(EID_TYPE entity_id) const
     {
 #ifndef NO_RANGE_CHECK
-        if (id == 0 || id > m_freeList.size())
+        if (entity_id == 0 || entity_id > m_freeList.size())
         {
             throw std::out_of_range("Entity id out of range");
         }
 #endif
 
-        EID_TYPE index = id - 1;
-        if (!m_entities[index].signature.test(0))
-        {
-            throw std::runtime_error("Entity id is invalid");
-        }
-
-        return m_entities[index];
+        EID_TYPE index = entity_id - 1;
+        return m_signatures[index];
     }
 
     // if no available space in m_entities, return 0
@@ -86,9 +81,9 @@ public:
         EID_TYPE entity_id = m_freeList[m_instanceCount];
 
         EID_TYPE index = entity_id - 1;
-        m_entities[index].id = entity_id;
-        m_entities[index].signature.set(0, true); // isValid
-        m_entities[index].signature.set(1, true); // isActive
+        m_entities[index] = entity_id;
+        m_signatures[index].set(0, true); // isValid
+        m_signatures[index].set(1, true); // isActive
         ++m_instanceCount;
 
         return entity_id;
@@ -103,11 +98,11 @@ public:
         }
 #endif
         EID_TYPE index = id - 1;
-        if (!m_entities[index].signature.test(0))
+        if (!m_signatures[index].test(0))
         {
             throw std::runtime_error("Entity already destroyed");
         }
-        m_entities[index].signature.reset();
+        m_signatures[index].reset();
         --m_instanceCount;
 
         m_freeList[m_instanceCount] = id;

@@ -6,7 +6,9 @@ EntityHandle World::CreateEntity()
     return {m_entityManager->CreateEntity(), this};
 }
 
+template<typename ComponentType>
 EntityHandle World::GetEntity(CID_TYPE component_id)
 {
-    return {m_entityManager->GetEntity(component_id).id, this};
+    auto manager = getComponentManager<ComponentType>();
+    return {manager->GetComponentOwner(component_id), this};
 }

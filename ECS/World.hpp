@@ -3,7 +3,6 @@
 #include "Component.hpp"
 #include "ComponentHandle.hpp"
 #include "ComponentManager.hpp"
-#include "Entity.hpp"
 #include "EntityManager.hpp"
 #include "System.hpp"
 
@@ -12,14 +11,12 @@
 #include <tuple>
 #include <vector>
 
-
 struct EntityHandle;
 
 class World
 {
 private:
     std::unique_ptr<EntityManager> m_entityManager;
-    // std::vector<std::unique_ptr<BaseComponentManager>> m_componentManagers;
     std::map<unsigned int, std::unique_ptr<BaseComponentManager>> m_componentManagers;
     std::vector<std::unique_ptr<SystemBase>> m_systems;
 
@@ -54,6 +51,8 @@ public:
 
     // Returns an EntityHandle to the newly created entity
     EntityHandle CreateEntity();
+
+    template<typename ComponentType>
     EntityHandle GetEntity(CID_TYPE component_id);
 
     void AddSystem(std::unique_ptr<SystemBase> system)
@@ -72,13 +71,13 @@ public:
         m_entityManager->DestroyEntity(entity_id);
     }
 
-    template <typename Component>
-    void AddComponent(EID_TYPE const &entity_id, Component &&component)
+    template <typename ComponentType>
+    void AddComponent(EID_TYPE const &entity_id, ComponentType &&component)
     {
-        auto manager = getComponentManager<Component>();
-        manager->AddComponent(entity_id, std::forward<Component>(component));
+        auto manager = getComponentManager<ComponentType>();
+        manager->AddComponent(entity_id, std::forward<ComponentType>(component));
 
-        m_entityManager->GetEntity(entity_id).signature.set(GetComponentType<Component>());
+        m_entityManager->GetSignature(entity_id).set(GetComponentType<ComponentType>());
         updateSystems(entity_id);
     }
 
@@ -88,48 +87,37 @@ public:
         auto manager = getComponentManager<ComponentType>();
         manager->RemoveComponent(entity_id);
 
-        m_entityManager->GetEntity(entity_id).signature.reset(GetComponentType<ComponentType>());
+        m_entityManager->GetSignature(entity_id).reset(GetComponentType<ComponentType>());
         updateSystems(entity_id);
     }
 
-    // FIXME:: need correct Unpack implementation
-    // Returns a tuple of ComponentHandles to the requested components
-    template <typename... ComponentTypes>
-    std::tuple<ComponentHandle<ComponentTypes>...> Unpack(EID_TYPE entity_id)
+    template <typename... Args>
+    std::tuple<ComponentHandle<Args>...> Unpack(EID_TYPE entity_id)
     {
-        return std::tuple<ComponentHandle<ComponentTypes>...>(Unpack<ComponentTypes>(entity_id)...);
-    }
-
-    // Base case
-    template <typename ComponentType>
-    std::tuple<ComponentHandle<ComponentType>> Unpack(EID_TYPE entity_id)
-    {
-        auto manager = getComponentManager<ComponentType>();
-
-        return std::make_tuple(ComponentHandle<ComponentType>{entity_id, manager->GetComponent(entity_id), manager});
+        return std::make_tuple((ComponentHandle<Args>{entity_id, getComponentManager<Args>()->GetComponent(entity_id), getComponentManager<Args>()})...);
     }
 
 private:
-    template <typename Component>
-    ComponentManager<Component> *getComponentManager()
+    template <typename ComponentType>
+    ComponentManager<ComponentType> *getComponentManager()
     {
-        auto ComponentTypeID = GetComponentType<Component>();
+        unsigned int ComponentTypeID = GetComponentType<ComponentType>();
 
         if (m_componentManagers.find(ComponentTypeID) == m_componentManagers.end())
         {
-            m_componentManagers[ComponentTypeID] = std::make_unique<ComponentManager<Component>>();
+            m_componentManagers[ComponentTypeID] = std::make_unique<ComponentManager<ComponentType>>();
         }
 
-        return static_cast<ComponentManager<Component> *>(m_componentManagers[ComponentTypeID].get());
+        return static_cast<ComponentManager<ComponentType> *>(m_componentManagers[ComponentTypeID].get());
     }
 
     void updateSystems(EID_TYPE entity_id)
     {
-        auto signature = m_entityManager->GetEntity(entity_id).signature;
+        auto signature = m_entityManager->GetSignature(entity_id);
 
         for (auto &system : m_systems)
         {
-            if (system->GetSignature() == signature)
+            if ((signature & system->GetSignature() ^ system->GetSignature()).none())
             {
                 system->RegisterEntity(entity_id);
             }

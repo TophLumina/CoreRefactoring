@@ -3,6 +3,7 @@
 #include "Config.h"
 
 #include <map>
+#include <utility>
 #include <vector>
 #include <functional>
 
@@ -17,13 +18,13 @@ public:
     BaseComponentManager &operator=(BaseComponentManager &&) = default;
 };
 
-template <typename Component>
+template <typename ComponentType>
 class ComponentManager : public BaseComponentManager
 {
 private:
     struct ComponentData
     {
-        Component data;
+        ComponentType data;
     };
 
     std::vector<ComponentData> m_componentData;
@@ -55,7 +56,7 @@ public:
         }
     }
 
-    Component *GetComponent(EID_TYPE entity_id)
+    ComponentType *GetComponent(EID_TYPE entity_id)
     {
         if (m_entityMap.find(entity_id) == m_entityMap.end())
         {
@@ -66,17 +67,18 @@ public:
         return &m_componentData[index].data;
     }
 
-    // EID_TYPE GetComponentOwner(CID_TYPE component_id)
-    // {
-    //     if (component_id < 0 || component_id >= m_instanceCount)
-    //     {
-    //         return 0;
-    //     }
+    // Might be useful in the future
+    EID_TYPE GetComponentOwner(CID_TYPE component_id)
+    {
+        if (component_id < 0 || component_id >= m_instanceCount)
+        {
+            return 0;
+        }
 
-    //     return m_componentOwner[component_id];
-    // }
+        return m_componentOwner[component_id];
+    }
 
-    CID_TYPE AddComponent(EID_TYPE entity_id, Component& component)
+    CID_TYPE AddComponent(EID_TYPE entity_id, ComponentType&& component)
     {
         if (m_entityMap.find(entity_id) != m_entityMap.end())
         {
@@ -93,7 +95,7 @@ public:
 
         m_entityMap[entity_id] = component_instance;
         m_componentOwner[index] = entity_id;
-        m_componentData[index] = {component};
+        m_componentData[index] = {std::forward<ComponentType>(component)};
         ++m_instanceCount;
 
         return component_instance;
@@ -114,7 +116,7 @@ public:
         m_entityMap.erase(entity_id);
     }
 
-    void Iterate(std::function<void(Component &)> func)
+    void Iterate(std::function<void(ComponentType &)> func)
     {
         for (CID_TYPE i = 0; i < m_instanceCount; ++i)
         {
