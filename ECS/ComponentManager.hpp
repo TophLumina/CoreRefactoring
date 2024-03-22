@@ -2,7 +2,7 @@
 
 #include "Config.h"
 
-#include <map>
+#include <unordered_map>
 #include <utility>
 #include <vector>
 #include <functional>
@@ -28,7 +28,7 @@ private:
     };
 
     std::vector<ComponentData> m_componentData;
-    std::map<EID_TYPE, CID_TYPE> m_entityMap;       // entity_id to component_id
+    std::unordered_map<EID_TYPE, CID_TYPE> m_entityMap;       // entity_id to component_id
     std::vector<EID_TYPE> m_componentOwner;         // component_index(component_id - 1) to entity_id
     std::vector<CID_TYPE> freeList;                 // 1 to MAX_COMPONENT_TYPE
     unsigned int m_instanceCount = 0;               // 0 to MAX_COMPONENT_TYPE - 1

@@ -6,7 +6,7 @@
 #include "EntityManager.hpp"
 #include "System.hpp"
 
-#include <map>
+#include <unordered_map>
 #include <memory>
 #include <tuple>
 #include <vector>
@@ -17,7 +17,7 @@ class World
 {
 private:
     std::unique_ptr<EntityManager> m_entityManager;
-    std::map<unsigned int, std::unique_ptr<BaseComponentManager>> m_componentManagers;
+    std::unordered_map<unsigned int, std::unique_ptr<BaseComponentManager>> m_componentManagers;
     std::vector<std::unique_ptr<SystemBase>> m_systems;
 
 public:

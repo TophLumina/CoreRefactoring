@@ -6,3 +6,4 @@
 #include "EntityHandle.hpp"
 #include "System.hpp"
 #include "World.hpp"
+#include "EventBus.hpp"
