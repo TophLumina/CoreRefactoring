@@ -5,7 +5,7 @@ This repository is used for me trying to build a functional modern game engine b
 #### Features
 
 - Matrix/Vector Math Library
-- ECS<*still in development*>
+- ECS<*still under development*>
 - to be continue...
 
 ---
