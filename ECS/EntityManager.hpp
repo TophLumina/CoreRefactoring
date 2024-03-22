@@ -19,7 +19,7 @@ private:
     std::vector<EID_TYPE> m_freeList; // 1 to MAX_ENTITY_INSTANCE
     EID_TYPE m_instanceCount = 0;     // 0 to MAX_ENTITY_INSTANCE - 1
 
-    std::shared_mutex m_shared_mutex;
+    mutable std::shared_mutex m_shared_mutex;
 
 #ifndef NO_FORCE_SELF_EXTEND
     void selfExtend()
@@ -63,7 +63,7 @@ public:
 
     Signature const &GetSignature(EID_TYPE entity_id) const
     {
-        std::shared_lock<const std::shared_mutex> lock(m_shared_mutex);
+        std::shared_lock<std::shared_mutex> lock(m_shared_mutex);
 
     #ifndef NO_RANGE_CHECK
         if (entity_id == 0 || entity_id > m_freeList.size())

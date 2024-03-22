@@ -36,7 +36,7 @@ private:
     std::vector<CID_TYPE> freeList;                     // 1 to MAX_COMPONENT_TYPE
     unsigned int m_instanceCount = 0;                   // 0 to MAX_COMPONENT_TYPE - 1
 
-    std::shared_mutex m_shared_mutex;
+    mutable std::shared_mutex m_shared_mutex;
 
     void selfExtend()
     {
@@ -76,7 +76,7 @@ public:
 
     ComponentType const *GetComponent(EID_TYPE entity_id) const
     {
-        std::shared_lock<const std::shared_mutex> lock(m_shared_mutex);
+        std::shared_lock<std::shared_mutex> lock(m_shared_mutex);
 
         if (m_entityMap.find(entity_id) == m_entityMap.end())
         {
