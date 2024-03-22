@@ -2,10 +2,13 @@
 
 #include "Config.h"
 
+#include <functional>
+#include <mutex>
+#include <shared_mutex>
 #include <unordered_map>
 #include <utility>
 #include <vector>
-#include <functional>
+
 
 class BaseComponentManager
 {
@@ -28,10 +31,12 @@ private:
     };
 
     std::vector<ComponentData> m_componentData;
-    std::unordered_map<EID_TYPE, CID_TYPE> m_entityMap;       // entity_id to component_id
-    std::vector<EID_TYPE> m_componentOwner;         // component_index(component_id - 1) to entity_id
-    std::vector<CID_TYPE> freeList;                 // 1 to MAX_COMPONENT_TYPE
-    unsigned int m_instanceCount = 0;               // 0 to MAX_COMPONENT_TYPE - 1
+    std::unordered_map<EID_TYPE, CID_TYPE> m_entityMap; // entity_id to component_id
+    std::vector<EID_TYPE> m_componentOwner;             // component_index(component_id - 1) to entity_id
+    std::vector<CID_TYPE> freeList;                     // 1 to MAX_COMPONENT_TYPE
+    unsigned int m_instanceCount = 0;                   // 0 to MAX_COMPONENT_TYPE - 1
+
+    std::shared_mutex m_shared_mutex;
 
     void selfExtend()
     {
@@ -58,6 +63,8 @@ public:
 
     ComponentType *GetComponent(EID_TYPE entity_id)
     {
+        std::unique_lock<std::shared_mutex> lock(m_shared_mutex);
+
         if (m_entityMap.find(entity_id) == m_entityMap.end())
         {
             return nullptr;
@@ -67,9 +74,24 @@ public:
         return &m_componentData[index].data;
     }
 
+    ComponentType const *GetComponent(EID_TYPE entity_id) const
+    {
+        std::shared_lock<const std::shared_mutex> lock(m_shared_mutex);
+
+        if (m_entityMap.find(entity_id) == m_entityMap.end())
+        {
+            return nullptr;
+        }
+
+        CID_TYPE index = m_entityMap.at(entity_id) - 1;
+        return &m_componentData[index].data;
+    }
+
     // Might be useful in the future
     EID_TYPE GetComponentOwner(CID_TYPE component_id)
     {
+        std::unique_lock<std::shared_mutex> lock(m_shared_mutex);
+
         if (component_id < 0 || component_id >= m_instanceCount)
         {
             return 0;
@@ -78,8 +100,10 @@ public:
         return m_componentOwner[component_id];
     }
 
-    CID_TYPE AddComponent(EID_TYPE entity_id, ComponentType&& component)
+    CID_TYPE AddComponent(EID_TYPE entity_id, ComponentType &&component)
     {
+        std::unique_lock<std::shared_mutex> lock(m_shared_mutex);
+
         if (m_entityMap.find(entity_id) != m_entityMap.end())
         {
             return 0;
@@ -103,6 +127,8 @@ public:
 
     void DestroyComponent(EID_TYPE entity_id)
     {
+        std::unique_lock<std::shared_mutex> lock(m_shared_mutex);
+
         if (m_entityMap.find(entity_id) == m_entityMap.end())
         {
             return;
@@ -118,6 +144,8 @@ public:
 
     void Iterate(std::function<void(ComponentType &)> func)
     {
+        std::unique_lock<std::shared_mutex> lock(m_shared_mutex);
+
         for (CID_TYPE i = 0; i < m_instanceCount; ++i)
         {
             func(m_componentData[i].data);

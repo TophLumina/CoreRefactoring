@@ -19,13 +19,13 @@ public:
     SystemBase &operator=(SystemBase &&) = default;
 
     // Executed once at the start of the application
-    virtual void Init() = 0;
+    virtual void Init() {};
 
     // Executed once per frame
-    virtual void Update() = 0;
+    virtual void Update() {};
 
     // Executed once per frame
-    virtual void Render() = 0;
+    virtual void Render() {};
 
     void RegisterWorld(World *world) { m_world = world; }
 
@@ -41,11 +41,11 @@ public:
     }
 
     Signature GetSignature() const { return m_signature; }
-
 protected:
     std::vector<EID_TYPE> m_entities;
     Signature m_signature;
     World *m_world;
+    
 };
 
 template<typename ... ComponentType>

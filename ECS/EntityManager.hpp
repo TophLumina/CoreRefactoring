@@ -3,8 +3,10 @@
 #include "Config.h"
 
 #include <bitset>
+#include <mutex>
 #include <stdexcept>
 #include <vector>
+#include <shared_mutex>
 
 
 using Signature = std::bitset<MAX_COMPONENT_TYPE>; // 0 : isValid, 1 : isActive, 2 to MAX_COMPONENTS_PER_ENTITY - 1 : component signature
@@ -16,6 +18,8 @@ private:
     std::vector<Signature> m_signatures;
     std::vector<EID_TYPE> m_freeList; // 1 to MAX_ENTITY_INSTANCE
     EID_TYPE m_instanceCount = 0;     // 0 to MAX_ENTITY_INSTANCE - 1
+
+    std::shared_mutex m_shared_mutex;
 
 #ifndef NO_FORCE_SELF_EXTEND
     void selfExtend()
@@ -44,6 +48,8 @@ public:
 
     Signature &GetSignature(EID_TYPE entity_id)
     {
+        std::unique_lock<std::shared_mutex> lock(m_shared_mutex);
+
 #ifndef NO_RANGE_CHECK
         if (entity_id == 0 || entity_id > m_freeList.size())
         {
@@ -57,12 +63,14 @@ public:
 
     Signature const &GetSignature(EID_TYPE entity_id) const
     {
-#ifndef NO_RANGE_CHECK
+        std::shared_lock<const std::shared_mutex> lock(m_shared_mutex);
+
+    #ifndef NO_RANGE_CHECK
         if (entity_id == 0 || entity_id > m_freeList.size())
         {
             throw std::out_of_range("Entity id out of range");
         }
-#endif
+    #endif
 
         EID_TYPE index = entity_id - 1;
         return m_signatures[index];
@@ -71,6 +79,8 @@ public:
     // if no available space in m_entities, return 0
     EID_TYPE CreateEntity()
     {
+        std::unique_lock<std::shared_mutex> lock(m_shared_mutex);
+
 #ifndef NO_FORCE_SELF_EXTEND
         if (m_instanceCount >= m_freeList.size())
         {
@@ -91,6 +101,8 @@ public:
 
     void DestroyEntity(EID_TYPE id)
     {
+        std::unique_lock<std::shared_mutex> lock(m_shared_mutex);
+
 #ifndef NO_RANGE_CHECK
         if (id == 0 || id > m_freeList.size())
         {

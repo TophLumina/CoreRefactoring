@@ -72,14 +72,14 @@ private:
 //     int data;
 // };
 //
-// class TestClass
+// class TestSystem : System<TestSystem>
 // {
 // public:
 //      Subscription sub;
 //
 //      void Init()
 //      {
-//        sub = bus.subscribe(this, &TestClass::OnTestEvent);
+//        sub = m_bus.subscribe(this, &TestClass::OnTestEvent);
 //      }
 //
 //      void OnTestEvent(TestEvent* event)
@@ -88,7 +88,7 @@ private:
 //      }
 // };
 //
-// in publisher:
+// in publisher System:
 // TestEvent event;
 // if (Test)
 // {
