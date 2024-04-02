@@ -172,4 +172,11 @@ static MATH_FUNCTION_QUALIFIERS T log2(T const &x)
     return std::log2(x);
 }
 
+template <typename T>
+static MATH_FUNCTION_QUALIFIERS T linear2gamma(T const &x)
+{
+    static_assert(std::is_floating_point<T>::value, "T must be a floating point type");
+    return std::sqrt(x); // sqrt(x) is a fast approximation of pow(x, 1/2.2)
+}
+
 MATH_NAMESPACE_END

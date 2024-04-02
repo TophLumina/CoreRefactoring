@@ -274,5 +274,36 @@ static MATH_FUNCTION_QUALIFIERS vec<N, R> refract(vec<N, T> const &v, vec<N, R> 
     }
 }
 
+template <LENGTH_TYPE N, typename T>
+static MATH_FUNCTION_QUALIFIERS vec<N, T> project(vec<N, T> const &v, vec<N, T> const &n)
+{
+    return dot(v, n) / squared_length<N, T>(n) * n;
+}
+
+template <LENGTH_TYPE N, typename T>
+static MATH_FUNCTION_QUALIFIERS vec<N, T> reject(vec<N, T> const &v, vec<N, T> const &n)
+{
+    return v - project(v, n);
+}
+
+template <LENGTH_TYPE N, typename T>
+static MATH_FUNCTION_QUALIFIERS vec<N, T> orthogonal(vec<N, T> const &v)
+{
+    return v - project(v, v);
+}
+
+template <LENGTH_TYPE N, typename T>
+static MATH_FUNCTION_QUALIFIERS vec<N, T> linear2gamma(vec<N, T> const &v)
+{
+    static_assert(std::is_floating_point<T>::value, "T must be a floating point type");
+
+    vec<N, T> result;
+    for (LENGTH_TYPE i = 0; i < N; ++i)
+    {
+        result[i] = Math::linear2gamma(v[i]);
+    }
+    return result;
+}
+
 VECTOR_NAMESPACE_END
 MATH_NAMESPACE_END
