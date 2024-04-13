@@ -13,8 +13,8 @@ static MATH_INLINE T random_range(T const &min = std::numeric_limits<T>::min(), 
     static_assert(std::is_arithmetic<T>::value, "T must be an arithmetic type");
 
     std::random_device rd;
-    std::mt19937 gen(rd());
-    std::uniform_real_distribution<T> dis(min, max);
+    static std::mt19937 gen(rd());
+    static std::uniform_real_distribution<T> dis(min, max);
     return dis(gen);
 }
 
@@ -24,8 +24,8 @@ static MATH_INLINE T random_gaussian(T const &mean = static_cast<T>(0), T const 
     static_assert(std::is_arithmetic<T>::value, "T must be an arithmetic type");
 
     std::random_device rd;
-    std::mt19937 gen(rd());
-    std::normal_distribution<T> dis(mean, stddev);
+    static std::mt19937 gen(rd());
+    static std::normal_distribution<T> dis(mean, stddev);
     return dis(gen);
 }
 
